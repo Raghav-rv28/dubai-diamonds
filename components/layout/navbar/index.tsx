@@ -1,6 +1,8 @@
+import { CategoryMenu } from '@/components/landing/category-menu';
+import { ModeToggle } from '@/components/theme-toggle';
 import CartModal from 'components/cart/modal';
 import LogoSquare from 'components/logo-square';
-import { getMenu } from 'lib/shopify';
+import { getCollections, getMenu } from 'lib/shopify';
 import { Menu } from 'lib/shopify/types';
 import Link from 'next/link';
 import { Suspense } from 'react';
@@ -11,8 +13,9 @@ const { SITE_NAME } = process.env;
 
 export async function Navbar() {
   const menu = await getMenu('next-js-frontend-header-menu');
-
+  const diamondCategories = await getCollections(`title:"Diamond"`);
   return (
+    <>
     <nav className="relative flex items-center justify-between p-4 lg:px-6">
       <div className="block flex-none md:hidden">
         <Suspense fallback={null}>
@@ -53,9 +56,21 @@ export async function Navbar() {
           </Suspense>
         </div>
         <div className="flex justify-end md:w-1/3">
+          <div className='mr-2'>
+            <ModeToggle />
+          </div>
           <CartModal />
         </div>
       </div>
+      
     </nav>
+<div className="flex w-full items-center justify-center">
+        <Suspense fallback={<SearchSkeleton />}>
+          <CategoryMenu diamondCategories={diamondCategories}/>
+        
+        </Suspense>
+        </div>
+        <hr />
+        </>
   );
 }

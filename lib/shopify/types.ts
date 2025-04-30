@@ -110,6 +110,7 @@ export type ShopifyCart = {
 export type ShopifyCollection = {
   handle: string;
   title: string;
+  image: Image;
   description: string;
   seo: SEO;
   updatedAt: string;
@@ -217,6 +218,9 @@ export type ShopifyCollectionsOperation = {
   data: {
     collections: Connection<ShopifyCollection>;
   };
+  variables: {
+    query: string;
+  }
 };
 
 export type ShopifyMenuOperation = {

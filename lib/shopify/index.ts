@@ -332,13 +332,14 @@ export async function getCollectionProducts({
   );
 }
 
-export async function getCollections(): Promise<Collection[]> {
+export async function getCollections(query:string): Promise<Collection[]> {
   "use cache";
   cacheTag(TAGS.collections);
   cacheLife("days");
 
   const res = await shopifyFetch<ShopifyCollectionsOperation>({
     query: getCollectionsQuery,
+    variables: {query: query}
   });
   const shopifyCollections = removeEdgesAndNodes(res.body?.data?.collections);
   const collections = [
@@ -346,6 +347,12 @@ export async function getCollections(): Promise<Collection[]> {
       handle: "",
       title: "All",
       description: "All products",
+      image: {
+        url: "/images/collections/all.jpg",
+        altText: "All products",
+        width: 1200,
+        height: 800,
+      },
       seo: {
         title: "All",
         description: "All products",
