@@ -332,14 +332,14 @@ export async function getCollectionProducts({
   );
 }
 
-export async function getCollections(query:string): Promise<Collection[]> {
+export async function getCollections(query?: string): Promise<Collection[]> {
   "use cache";
   cacheTag(TAGS.collections);
   cacheLife("days");
 
   const res = await shopifyFetch<ShopifyCollectionsOperation>({
     query: getCollectionsQuery,
-    variables: {query: query}
+    variables: { query: query ?? "" },
   });
   const shopifyCollections = removeEdgesAndNodes(res.body?.data?.collections);
   const collections = [
