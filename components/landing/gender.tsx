@@ -92,17 +92,22 @@ const GenderSection = ({ gender, imageUrl, index }: GenderSectionProps) => {
 
 export default function GenderSelection() {
   return (
-    <div className="w-full lg:w-[80vw] mx-auto justify-center items-center flex flex-col md:flex-row space-y-6 md:space-y-0 px-4 md:px-0">
-      <GenderSection
-        gender="women"
-        imageUrl="https://cdn.shopify.com/s/files/1/0633/2714/2125/files/1a46fbf59aefc3cef254ed9a7b2f0b1c.jpg?v=1746067360"
-        index={0}
-      />
-      <GenderSection
-        gender="men"
-        imageUrl="https://cdn.shopify.com/s/files/1/0633/2714/2125/files/9371211f25c5e373debd51ab43c79151.jpg?v=1746048302"
-        index={1}
-      />
+    <div>
+      <h2 className="text-4xl font-semibold text-center w-full my-5">
+        Shop by Gender
+      </h2>
+      <div className="w-full lg:w-[80vw] mx-auto justify-center items-center flex flex-col md:flex-row space-y-6 md:space-y-0 px-4 md:px-0">
+        <GenderSection
+          gender="women"
+          imageUrl="https://cdn.shopify.com/s/files/1/0633/2714/2125/files/1a46fbf59aefc3cef254ed9a7b2f0b1c.jpg?v=1746067360"
+          index={0}
+        />
+        <GenderSection
+          gender="men"
+          imageUrl="https://cdn.shopify.com/s/files/1/0633/2714/2125/files/9371211f25c5e373debd51ab43c79151.jpg?v=1746048302"
+          index={1}
+        />
+      </div>
     </div>
   );
 }
