@@ -343,23 +343,23 @@ export async function getCollections(query?: string): Promise<Collection[]> {
   });
   const shopifyCollections = removeEdgesAndNodes(res.body?.data?.collections);
   const collections = [
-    {
-      handle: "",
-      title: "All",
-      description: "All products",
-      image: {
-        url: "/images/collections/all.jpg",
-        altText: "All products",
-        width: 1200,
-        height: 800,
-      },
-      seo: {
-        title: "All",
-        description: "All products",
-      },
-      path: "/search",
-      updatedAt: new Date().toISOString(),
-    },
+    // {
+    //   handle: "",
+    //   title: "All",
+    //   description: "All products",
+    //   image: {
+    //     url: "/images/collections/all.jpg",
+    //     altText: "All products",
+    //     width: 1200,
+    //     height: 800,
+    //   },
+    //   seo: {
+    //     title: "All",
+    //     description: "All products",
+    //   },
+    //   path: "/search",
+    //   updatedAt: new Date().toISOString(),
+    // },
     // Filter out the `hidden` collections.
     // Collections that start with `hidden-*` need to be hidden on the search page.
     ...reshapeCollections(shopifyCollections).filter(
