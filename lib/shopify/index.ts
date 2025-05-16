@@ -102,6 +102,12 @@ export async function shopifyFetch<T>({
       body,
     };
   } catch (e) {
+    console.log(
+      JSON.stringify({
+        error: e,
+        query,
+      })
+    );
     if (isShopifyError(e)) {
       throw {
         cause: e.cause?.toString() || "unknown",
@@ -421,7 +427,6 @@ export async function getProduct(handle: string): Promise<Product | undefined> {
       handle,
     },
   });
-
   return reshapeProduct(res.body.data.product, false);
 }
 
@@ -438,7 +443,6 @@ export async function getProductRecommendations(
       productId,
     },
   });
-
   return reshapeProducts(res.body.data.productRecommendations);
 }
 
@@ -463,7 +467,7 @@ export async function getProducts({
       sortKey,
     },
   });
-
+  console.log(res.body.data.products);
   return reshapeProducts(removeEdgesAndNodes(res.body.data.products));
 }
 
