@@ -29,6 +29,7 @@ import { getPageQuery, getPagesQuery } from "./queries/page";
 import {
   getProductQuery,
   getProductRecommendationsQuery,
+  getProductsQuery,
 } from "./queries/product";
 import { searchQuery } from "./queries/search";
 import {
@@ -53,6 +54,7 @@ import {
   ShopifyProduct,
   ShopifyProductOperation,
   ShopifyProductRecommendationsOperation,
+  ShopifyProductsOperation,
   ShopifyRemoveFromCartOperation,
   ShopifySearchOperation,
   ShopifyUpdateCartOperation,
@@ -428,6 +430,27 @@ export async function getProduct(handle: string): Promise<Product | undefined> {
     },
   });
   return reshapeProduct(res.body.data.product, false);
+}
+
+export async function getProducts(
+  query?: string,
+  reverse?: boolean,
+  sortKey?: string
+): Promise<Product[]> {
+  "use cache";
+  cacheTag(TAGS.products);
+  cacheLife("days");
+
+  const res = await shopifyFetch<ShopifyProductsOperation>({
+    query: getProductsQuery,
+    variables: {
+      query: query ?? "",
+      reverse,
+      sortKey: sortKey === "CREATED_AT" ? "CREATED" : sortKey,
+    },
+  });
+
+  return reshapeProducts(removeEdgesAndNodes(res.body.data.products));
 }
 
 export async function getProductRecommendations(
