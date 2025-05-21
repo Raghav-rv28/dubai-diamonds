@@ -125,7 +125,7 @@ export default function HeroCarousel() {
               fill
               priority
               className="object-cover object-center"
-              sizes="100vw"
+              sizes="(max-width: 768px) 100vw, 80vh"
             />
             {/* Overlay gradient for better text readability */}
             <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30" />
