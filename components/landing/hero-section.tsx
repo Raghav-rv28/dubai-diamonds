@@ -107,7 +107,7 @@ export default function HeroCarousel() {
   return (
     <section className="relative h-screen w-full overflow-hidden">
       {/* Background Carousel */}
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 bg-black">
         {carouselSlides.map((slide, index) => (
           <div
             key={index}
