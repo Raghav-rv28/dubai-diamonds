@@ -15,7 +15,7 @@ const carouselSlides = [
       title: "Discover Our Exclusive Collection",
       description:
         "Elevate your style with our premium selection of fashion and accessories",
-      buttonText: "Shop Collection",
+      buttonText: "Book a Consultation",
     },
   },
   {
@@ -26,7 +26,7 @@ const carouselSlides = [
     content: {
       title: "Elevate Your Everyday Style",
       description: "Curated pieces designed for the modern lifestyle",
-      buttonText: "Explore Now",
+      buttonText: "Book a Consultation",
     },
   },
   {
@@ -37,7 +37,7 @@ const carouselSlides = [
     content: {
       title: "Luxury Redefined",
       description: "Experience the perfect blend of comfort and sophistication",
-      buttonText: "View Luxury",
+      buttonText: "Book a Consultation",
     },
   },
 ];
@@ -174,10 +174,14 @@ export default function HeroCarousel() {
               >
                 {carouselSlides[currentSlide]?.content.description}
               </p>
-              <button className="group bg-white text-black px-8 py-4 rounded-none font-medium text-lg flex items-center transform transition-all duration-300 hover:bg-black hover:text-white hover:translate-x-1">
+              <a
+                href={"https://calendly.com/dubai-diamonds103/30min"}
+                target="_blank"
+                className="group bg-white max-w-[300px] text-black px-8 py-4 rounded-none font-medium text-lg flex items-center transform transition-all duration-300 hover:bg-black hover:text-white hover:translate-x-1"
+              >
                 {carouselSlides[currentSlide]?.content.buttonText}
                 <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
-              </button>
+              </a>
             </div>
           </div>
         </div>

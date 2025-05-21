@@ -1,15 +1,13 @@
 'use client';
 
 import { Dialog, Transition } from '@headlessui/react';
-import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { Fragment, Suspense, useEffect, useState } from 'react';
 
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
-import { Menu } from 'lib/shopify/types';
 import Search, { SearchSkeleton } from './search';
 
-export default function MobileMenu({ menu }: { menu: Menu[] }) {
+export default function MobileMenu() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [isOpen, setIsOpen] = useState(false);
@@ -76,20 +74,6 @@ export default function MobileMenu({ menu }: { menu: Menu[] }) {
                     <Search />
                   </Suspense>
                 </div>
-                {menu.length ? (
-                  <ul className="flex w-full flex-col">
-                    {menu.map((item: Menu) => (
-                      <li
-                        className="py-2 text-xl text-black transition-colors hover:text-neutral-500 dark:text-white"
-                        key={item.title}
-                      >
-                        <Link href={item.path} prefetch={true} onClick={closeMobileMenu}>
-                          {item.title}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                ) : null}
               </div>
             </Dialog.Panel>
           </Transition.Child>

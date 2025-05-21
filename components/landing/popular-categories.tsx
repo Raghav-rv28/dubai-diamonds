@@ -8,7 +8,7 @@ export default async function PopularCategories() {
   );
   return (
     <section className="w-full px-4">
-      <h2 className="text-4xl font-semibold mb-4 w-full text-center">
+      <h2 className="text-6xl font-semibold mb-4 w-full text-center">
         Popular Categories
       </h2>
       <AnimatedGrid

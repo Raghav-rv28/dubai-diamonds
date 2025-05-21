@@ -15,7 +15,7 @@ export async function Carousel() {
 
   return (
     <>
-      <h2 className="text-4xl font-semibold text-center w-full">
+      <h2 className="text-6xl font-semibold text-center w-full">
         New Arrivals
       </h2>
       <div className="w-full overflow-x-auto pb-6 pt-1">

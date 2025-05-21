@@ -10,16 +10,9 @@ export default function About() {
               We built our business on great customer service
             </h1>
             <p className="text-md mb-8 mt-4 font-semibold">
-              Jewellery is the pride of all women and at Dubai Jewelers we give you the opportunity
-              to explore the world of jewelry. Since the times of kings and queens, jewelry was
-              considered sacred and was always the center of attraction for them. With passage of
-              time only the designs have changed but the importance of jewelry remained the same. To
-              get the wide variety of jewelries, come to us, we have a vast collection which is
-              bound to please you. Be it a gold chain, necklace, earring, wedding bangles in
-              Toronto, Canada or even the birthstones, we have everything that you need. Named as
-              Dubai Jewelers, we promise to bring you the raw gold exclusively available in Dubai.
-              Gold from Dubai is popular worldwide and we are here to sell you the best jewellery in
-              Brampton, Visit our Jewellery store in GTA Now.
+            Our brand story: Since 2001, Dubai Jewellers has been a symbol of luxury, elegance, and craftsmanship.
+            Our story began in the heart of Toronto&apos;s Gerrard Street with a vision to redefine what it means to feel confident, intelligent, and radiant through jewellery.
+            From the very beginning, our commitment has been to offer more than just jewellery — we offer a legacy of design, authenticity, and enduring quality.
             </p>
             <Link
               href="/pages/about-us"
@@ -31,7 +24,7 @@ export default function About() {
         </div>
         <div className="flex w-full items-center justify-center bg-cover bg-center md:hidden">
           <Image
-            src={"https://cdn.shopify.com/s/files/1/0736/0882/3069/files/banner.jpg?v=1684516416')"}
+            src={"https://cdn.shopify.com/s/files/1/0633/2714/2125/files/intro_poster_2.1.jpg?v=1746114226"}
             alt={'banner'}
             width={1500}
             height={1000}
@@ -43,16 +36,10 @@ export default function About() {
           We built our business on great customer service
         </h1>
         <p className="mt-6 text-xl">
-          Jewellery is the pride of all women and at Dubai Jewelers we give you the opportunity to
-          explore the world of jewelry. Since the times of kings and queens, jewelry was considered
-          sacred and was always the center of attraction for them. With passage of time only the
-          designs have changed but the importance of jewelry remained the same. To get the wide
-          variety of jewelries, come to us, we have a vast collection which is bound to please you.
-          Be it a gold chain, necklace, earring, wedding bangles in Toronto, Canada or even the
-          birthstones, we have everything that you need. Named as Dubai Jewelers, we promise to
-          bring you the raw gold exclusively available in Dubai. Gold from Dubai is popular
-          worldwide and we are here to sell you the best jewellery in Brampton, Visit our Jewellery
-          store in GTA Now.
+          Our brand story: Since 2001, Dubai Jewellers has been a symbol of luxury, elegance, and craftsmanship.
+          Our story began in the heart of Toronto&apos;s Gerrard Street with a vision to redefine what it means to feel confident,
+           intelligent, and radiant through jewellery. From the very beginning, our commitment has been to offer more than just jewellery
+            — we offer a legacy of design, authenticity, and enduring quality.
         </p>
         <div className="mt-8">
           <Link
@@ -65,7 +52,7 @@ export default function About() {
       </div>
       <div className="hidden w-1/2 bg-cover bg-center md:flex">
         <Image
-          src={"https://cdn.shopify.com/s/files/1/0736/0882/3069/files/banner.jpg?v=1684516416')"}
+          src={"https://cdn.shopify.com/s/files/1/0633/2714/2125/files/intro_poster_2.1.jpg?v=1746114226"}
           alt={'banner'}
           width={1500}
           height={1000}

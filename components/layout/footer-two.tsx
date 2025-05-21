@@ -1,6 +1,6 @@
 import FooterMenu from 'components/layout/footer-menu';
 import { getMenu } from 'lib/shopify';
-import { FacebookIcon, InstagramIcon, Link2, LocateIcon, MailIcon, PhoneIcon } from 'lucide-react';
+import { InstagramIcon, LocateIcon, MailIcon, PhoneIcon } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Suspense } from 'react';
@@ -17,7 +17,7 @@ export default async function Footer() {
             <div>
               <Image
                 src={
-                  'https://cdn.shopify.com/s/files/1/0736/0882/3069/files/footer-logo.png?v=1681830146'
+                  'https://cdn.shopify.com/s/files/1/0633/2714/2125/files/D_Diamond_Logo_White_Full.png?v=1747429316'
                 }
                 className="mb-5 ml-[-20px]"
                 alt="Dubai Jewellers logo"
@@ -25,18 +25,18 @@ export default async function Footer() {
                 height={53}
               />
               <p className="text-md mb-4 text-gray-600">
-                At Dubai Jewellers, we are here to help you find the best jewelry and deals for you!
+                At Dubai Diamonds, we are here to help you find the best jewelry and deals for you!
                 We are here to create golden memories
               </p>
               <p className="mb-2 text-xl font-semibold uppercase text-gray-600">Follow Us</p>
               <div className="flex space-x-2">
-                <Link href={'https://www.facebook.com/jewellersdubai'} target="_blank">
+                {/* <Link href={'https://www.facebook.com/jewellersdubai'} target="_blank">
                   <FacebookIcon className="h-6 w-6 text-orange-300" />
-                </Link>
-                <Link href={'https://www.instagram.com/dubai.jewellers/'} target="_blank">
+                </Link> */}
+                <Link href={'https://www.instagram.com/dubai.diamondss/'} target="_blank">
                   <InstagramIcon className="h-6 w-6 text-pink-500" />
                 </Link>
-                <Link href={'https://g.co/kgs/9YN3jQH'} target="_blank">
+                {/* <Link href={'https://g.co/kgs/9YN3jQH'} target="_blank">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     x="0px"
@@ -50,7 +50,7 @@ export default async function Footer() {
                 </Link>
                 <Link href={'https://www.yelp.ca/biz/dubai-jewellers-brampton'} target="_blank">
                   <Link2 className="h-6 w-6" />
-                </Link>
+                </Link> */}
               </div>
             </div>
             <div>
@@ -61,7 +61,7 @@ export default async function Footer() {
               </div>
               <div className="mb-2 text-sm text-gray-600">
                 <MailIcon className="mr-1 inline h-4 w-4" />
-                dubai_jewellers@yahoo.com
+                dubai_diamonds@gmail.com
               </div>
               <div className="text-sm text-gray-600">
                 <PhoneIcon className="mr-1 inline h-4 w-4" />

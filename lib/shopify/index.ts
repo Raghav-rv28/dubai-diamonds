@@ -29,8 +29,8 @@ import { getPageQuery, getPagesQuery } from "./queries/page";
 import {
   getProductQuery,
   getProductRecommendationsQuery,
-  getProductsQuery,
 } from "./queries/product";
+import { searchQuery } from "./queries/search";
 import {
   Cart,
   Collection,
@@ -53,8 +53,8 @@ import {
   ShopifyProduct,
   ShopifyProductOperation,
   ShopifyProductRecommendationsOperation,
-  ShopifyProductsOperation,
   ShopifyRemoveFromCartOperation,
+  ShopifySearchOperation,
   ShopifyUpdateCartOperation,
 } from "./types";
 
@@ -446,31 +446,22 @@ export async function getProductRecommendations(
   return reshapeProducts(res.body.data.productRecommendations);
 }
 
-export async function getProducts({
-  query,
-  reverse,
-  sortKey,
-}: {
-  query?: string;
-  reverse?: boolean;
-  sortKey?: string;
-}): Promise<Product[]> {
-  "use cache";
-  cacheTag(TAGS.products);
-  cacheLife("days");
-
-  const res = await shopifyFetch<ShopifyProductsOperation>({
-    query: getProductsQuery,
+export async function search(
+  query: string,
+  reverse?: boolean,
+  sortKey?: string
+): Promise<Product[]> {
+  const res = await shopifyFetch<ShopifySearchOperation>({
+    query: searchQuery,
     variables: {
       query,
       reverse,
-      sortKey,
+      sortKey: sortKey === "CREATED_AT" ? "CREATED" : sortKey,
     },
   });
-  console.log(res.body.data.products);
-  return reshapeProducts(removeEdgesAndNodes(res.body.data.products));
+  console.log(JSON.stringify(res.body.data.search.productFilters));
+  return reshapeProducts(removeEdgesAndNodes(res.body.data.search));
 }
-
 // This is called from `app/api/revalidate.ts` so providers can control revalidation logic.
 export async function revalidate(req: NextRequest): Promise<NextResponse> {
   // We always need to respond with a 200 status code to Shopify,

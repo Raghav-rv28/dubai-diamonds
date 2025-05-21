@@ -93,7 +93,7 @@ const GenderSection = ({ gender, imageUrl, index }: GenderSectionProps) => {
 export default function GenderSelection() {
   return (
     <div>
-      <h2 className="text-4xl font-semibold text-center w-full my-5">
+      <h2 className="text-6xl font-semibold text-center w-full my-5">
         Shop by Gender
       </h2>
       <div className="w-full lg:w-[80vw] mx-auto justify-center items-center flex flex-col md:flex-row space-y-6 md:space-y-0 px-4 md:px-0">

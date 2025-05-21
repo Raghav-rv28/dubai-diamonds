@@ -8,7 +8,7 @@ export type Edge<T> = {
   node: T;
 };
 
-export type Cart = Omit<ShopifyCart, 'lines'> & {
+export type Cart = Omit<ShopifyCart, "lines"> & {
   lines: CartItem[];
 };
 
@@ -68,7 +68,7 @@ export type Page = {
   updatedAt: string;
 };
 
-export type Product = Omit<ShopifyProduct, 'variants' | 'images'> & {
+export type Product = Omit<ShopifyProduct, "variants" | "images"> & {
   variants: ProductVariant[];
   images: Image[];
 };
@@ -220,7 +220,7 @@ export type ShopifyCollectionsOperation = {
   };
   variables: {
     query: string;
-  }
+  };
 };
 
 export type ShopifyMenuOperation = {
@@ -270,6 +270,38 @@ export type ShopifyProductsOperation = {
   };
   variables: {
     query?: string;
+    reverse?: boolean;
+    sortKey?: string;
+  };
+};
+
+export type ShopifySearchOperation = {
+  data: {
+    search: {
+      edges: { node: ShopifyProduct }[];
+      productFilters: {
+        id: string;
+        label: string;
+        type: string;
+        presentation: string;
+        values: {
+          count: number;
+          image: {
+            image: {
+              altText: string;
+              id: string;
+              height: number;
+              width: number;
+              url: string;
+            };
+          };
+          label: string;
+        }[];
+      }[];
+    };
+  };
+  variables: {
+    query: string;
     reverse?: boolean;
     sortKey?: string;
   };
