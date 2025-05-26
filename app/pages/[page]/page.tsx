@@ -1,9 +1,14 @@
 import type { Metadata } from 'next';
 
+import { cn } from '@/lib/utils';
 import Prose from 'components/prose';
 import { getPage } from 'lib/shopify';
+import { Geist } from 'next/font/google';
 import { notFound } from 'next/navigation';
-
+const Giestfont = Geist({
+  weight: ["500"],
+  subsets: ["latin"]
+})
 export async function generateMetadata(props: {
   params: Promise<{ page: string }>;
 }): Promise<Metadata> {
@@ -32,7 +37,7 @@ export default async function Page(props: { params: Promise<{ page: string }> })
   return (
     <>
       <h1 className="mb-8 w-full text-center text-5xl font-bold">{page.title}</h1>
-      <Prose className="mb-8" html={page.body} />
+      <Prose className={cn("mb-8",Giestfont.className)} html={page.body} />
       <p className="text-base italic">
         {`This document was last updated on ${new Intl.DateTimeFormat(undefined, {
           year: 'numeric',

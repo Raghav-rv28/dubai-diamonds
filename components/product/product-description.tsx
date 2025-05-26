@@ -1,10 +1,16 @@
+import { cn } from '@/lib/utils';
 import { AddToCart } from 'components/cart/add-to-cart';
 import Price from 'components/price';
 import Prose from 'components/prose';
 import { Product } from 'lib/shopify/types';
+import { Geist } from 'next/font/google';
 import { ProductMetafields } from './product-metafields';
 import { VariantSelector } from './variant-selector';
 
+const Giestfont = Geist({
+  weight: ["500"],
+  subsets: ["latin"]
+})
 export function ProductDescription({ product }: { product: Product }) {
   return (
     <>
@@ -20,7 +26,7 @@ export function ProductDescription({ product }: { product: Product }) {
       <VariantSelector options={product.options} variants={product.variants} />
       {product.descriptionHtml ? (
         <Prose
-          className="mb-6 text-sm leading-tight dark:text-white/[60%]"
+          className={cn("mb-6 text-sm leading-tight dark:text-white/[60%]",Giestfont.className)}
           html={product.descriptionHtml}
         />
       ) : null}

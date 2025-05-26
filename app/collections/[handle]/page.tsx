@@ -1,7 +1,9 @@
 import ProductGridItems from "@/components/layout/product-grid-items";
 import Prose from "@/components/prose";
 import { getCollection, getCollectionProducts } from "@/lib/shopify";
+import { cn } from "@/lib/utils";
 import Grid from "components/grid";
+import { Geist } from "next/font/google";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
@@ -22,7 +24,10 @@ export async function generateMetadata(props: {
     },
   };
 }
-
+const Giestfont = Geist({
+  weight: ["500"],
+  subsets: ["latin"]
+})
 export default async function CollectionPage(props: {
   params: Promise<{ handle: string }>;
 }) {
@@ -50,7 +55,8 @@ export default async function CollectionPage(props: {
           <h1 className="mb-4 text-4xl sm:text-5xl font-bold">
             {collection.title}
           </h1>
-          <Prose className="mx-2 py-2" html={collection.description} />
+
+          <Prose className={cn("mx-2 py-2",Giestfont.className)} html={collection.description} />
           <p className="text-sm italic mb-2">
             {`This document was last updated on ${new Intl.DateTimeFormat(
               undefined,
@@ -63,7 +69,7 @@ export default async function CollectionPage(props: {
           </p>
         </div>
       </div>
-      <Grid className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+      <Grid className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 m-5">
         <ProductGridItems products={products} />
       </Grid>
     </div>
