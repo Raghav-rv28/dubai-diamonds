@@ -2,6 +2,7 @@ import { AddToCart } from 'components/cart/add-to-cart';
 import Price from 'components/price';
 import Prose from 'components/prose';
 import { Product } from 'lib/shopify/types';
+import { ProductMetafields } from './product-metafields';
 import { VariantSelector } from './variant-selector';
 
 export function ProductDescription({ product }: { product: Product }) {
@@ -23,6 +24,7 @@ export function ProductDescription({ product }: { product: Product }) {
           html={product.descriptionHtml}
         />
       ) : null}
+      <ProductMetafields metafields={product.metafields.filter((m)=> m!==null)}/>
       <AddToCart product={product} />
     </>
   );

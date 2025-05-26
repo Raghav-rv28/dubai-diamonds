@@ -54,7 +54,6 @@ export default async function ProductPage(props: {
 }) {
   const params = await props.params;
   const product = await getProduct(params.handle);
-
   if (!product) return notFound();
 
   const productJsonLd = {
@@ -113,9 +112,7 @@ export default async function ProductPage(props: {
 }
 
 async function RelatedProducts({ id }: { id: string }) {
-  console.log("id", id);
   const relatedProducts = await getProductRecommendations(id);
-  console.log("relatedProducts", relatedProducts);
   if (!relatedProducts.length) return null;
 
   return (

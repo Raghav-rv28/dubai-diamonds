@@ -38,6 +38,8 @@ import {
   Connection,
   Image,
   Menu,
+  Metafield,
+  Metaobject,
   Page,
   Product,
   ShopifyAddToCartOperation,
@@ -129,6 +131,18 @@ export async function shopifyFetch<T>({
 const removeEdgesAndNodes = <T>(array: Connection<T>): T[] => {
   return array.edges.map((edge) => edge?.node);
 };
+
+export function getMetaobjectsFromMetafield(
+  metafields: Metafield[],
+  namespace: string,
+  key: string
+): Metaobject[] {
+  const metafield = metafields.find(
+    (field) => field.namespace === namespace && field.key === key
+  );
+
+  return metafield?.references?.edges.map(edge => edge.node) || [];
+}
 
 const reshapeCart = (cart: ShopifyCart): Cart => {
   if (!cart.cost?.totalTaxAmount) {
@@ -482,7 +496,6 @@ export async function search(
       sortKey: sortKey === "CREATED_AT" ? "CREATED" : sortKey,
     },
   });
-  console.log(JSON.stringify(res.body.data.search.productFilters));
   return reshapeProducts(removeEdgesAndNodes(res.body.data.search));
 }
 // This is called from `app/api/revalidate.ts` so providers can control revalidation logic.
