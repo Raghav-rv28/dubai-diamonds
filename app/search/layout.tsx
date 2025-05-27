@@ -25,7 +25,9 @@ export default function SearchLayout({
         <div className="order-none flex-none md:order-last md:w-[125px]">
           <h3 className="text-xs text-neutral-500 dark:text-neutral-400">Filters</h3>
           <div className="hidden md:block mb-4">
+            <Suspense fallback={null}>
             <InStockCheckbox />
+            </Suspense>
           </div>
           <FilterList list={sorting} title="Sort by" />
         </div>
