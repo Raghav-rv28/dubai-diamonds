@@ -16,16 +16,26 @@ export default async function SearchPage(props: {
   const { sortKey, reverse } =
     sorting.find((item) => item.slug === sort) || defaultSort;
 
-  const products = await search(searchValue || "", reverse, sortKey,[
-    {
-      available: available === "true",
+  const productFilters = [];
+  if (available === "true") {
+    productFilters.push({
+      available: true,
       productMetafield: {
         namespace: "custom",
         key: "diamond_cut_final_test",
         value: "baguette",
       }
-    }
-  ]);
+     });
+  } else {
+    productFilters.push({
+      productMetafield: {
+        namespace: "custom",
+        key: "diamond_cut_final_test",
+        value: "baguette",
+      }
+    });
+  }
+  const products = await search(searchValue || "", reverse, sortKey,productFilters);
   const resultsText = products.length > 1 ? "results" : "result";
 
   return (

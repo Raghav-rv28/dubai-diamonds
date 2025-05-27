@@ -501,7 +501,7 @@ export async function search(
       productFilters,
     },
   });
-  console.log(res.body.data.search.productFilters);
+  console.log(res.body.data.search.productFilters[2]?.values);
   return reshapeProducts(removeEdgesAndNodes(res.body.data.search));
 }
 
