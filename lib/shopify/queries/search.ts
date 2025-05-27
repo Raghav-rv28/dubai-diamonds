@@ -1,8 +1,8 @@
 import productFragment from "../fragments/product";
 
 export const searchQuery = /* GraphQL */ `
-  query search($query: String!, $reverse: Boolean) {
-    search(query: $query, types: PRODUCT, first: 100, reverse: $reverse) {
+  query search($query: String!, $reverse: Boolean, $productFilters: [ProductFilter!]) {
+    search(query: $query, types: PRODUCT, first: 100, reverse: $reverse, productFilters: $productFilters) {
       edges {
         node {
           ...product

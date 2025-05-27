@@ -25,6 +25,7 @@ import {
   getCollectionsQuery,
 } from "./queries/collection";
 import { getMenuQuery } from "./queries/menu";
+import { getMetaObjectsQuery } from "./queries/metaobjects";
 import { getPageQuery, getPagesQuery } from "./queries/page";
 import {
   getProductQuery,
@@ -42,6 +43,7 @@ import {
   Metaobject,
   Page,
   Product,
+  ProductFilter,
   ShopifyAddToCartOperation,
   ShopifyCart,
   ShopifyCartOperation,
@@ -51,6 +53,7 @@ import {
   ShopifyCollectionsOperation,
   ShopifyCreateCartOperation,
   ShopifyMenuOperation,
+  ShopifyMetaobjectsOperation,
   ShopifyPageOperation,
   ShopifyPagesOperation,
   ShopifyProduct,
@@ -486,7 +489,8 @@ export async function getProductRecommendations(
 export async function search(
   query: string,
   reverse?: boolean,
-  sortKey?: string
+  sortKey?: string,
+  productFilters?: ProductFilter[]
 ): Promise<Product[]> {
   const res = await shopifyFetch<ShopifySearchOperation>({
     query: searchQuery,
@@ -494,9 +498,23 @@ export async function search(
       query,
       reverse,
       sortKey: sortKey === "CREATED_AT" ? "CREATED" : sortKey,
+      productFilters,
     },
   });
+  console.log(res.body.data.search.productFilters);
   return reshapeProducts(removeEdgesAndNodes(res.body.data.search));
+}
+
+export async function getMetaObjects(type: string): Promise<Metaobject[]> {
+  const res = await shopifyFetch<ShopifyMetaobjectsOperation>({
+    query: getMetaObjectsQuery,
+    variables: {
+      type,
+      first: 100,
+    },
+  });
+
+  return removeEdgesAndNodes(res.body.data.metaobjects);
 }
 // This is called from `app/api/revalidate.ts` so providers can control revalidation logic.
 export async function revalidate(req: NextRequest): Promise<NextResponse> {

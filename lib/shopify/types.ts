@@ -128,6 +128,7 @@ export type ShopifyProduct = {
     maxVariantPrice: Money;
     minVariantPrice: Money;
   };
+  productType: string;
   metafields: Metafield[];
   variants: Connection<ProductVariant>;
   featuredImage: Image;
@@ -305,9 +306,19 @@ export type ShopifySearchOperation = {
     query: string;
     reverse?: boolean;
     sortKey?: string;
+    productFilters?: ProductFilter[];
   };
 };
 
+export type ShopifyMetaobjectsOperation = {
+  data: {
+    metaobjects: ConnectionProduct<Metaobject>;
+  };
+  variables: {
+    type: string;
+    first: number;
+  };
+};
 
 export type MetaobjectField = {
   key: string;
@@ -325,6 +336,7 @@ export type Metaobject = {
 export type ConnectionProduct<T> = {
   edges: {
     node: T;
+    cursor: string;
   }[];
 };
 
@@ -335,4 +347,14 @@ export type Metafield = {
   key: string;
   namespace: string;
   references?: ConnectionProduct<Metaobject>; // Optional since not all metafields have references
+};
+
+export type ProductFilter = {
+  available?: boolean; 
+  productMetafield?: { 
+    namespace: string;
+    key: string;
+    value?: string; 
+    values?: string[]; 
+  };
 };

@@ -19,6 +19,7 @@ export default function HomePage() {
       <main className="flex flex-col gap-8 md:gap-12">
         <HeroSection />
         <PopularCategories />
+        {/* <DiamondCuts /> */}
         {/** Carousel is a collection shower, show new-arrivals or trending stuff */}
         <Carousel />
         <Gender />

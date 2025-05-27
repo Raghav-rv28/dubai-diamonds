@@ -28,6 +28,7 @@ export default function ProductGridItems({
               fill
               sizes="(min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw"
             />
+            <p>{product.productType}</p>
           </Link>
         </Grid.Item>
       ))}

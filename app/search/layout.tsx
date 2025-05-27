@@ -1,3 +1,4 @@
+import { InStockCheckbox } from "@/components/layout/search/filter/available";
 import Footer from "components/layout/footer";
 import Collections from "components/layout/search/collections";
 import FilterList from "components/layout/search/filter";
@@ -22,6 +23,10 @@ export default function SearchLayout({
           </Suspense>
         </div>
         <div className="order-none flex-none md:order-last md:w-[125px]">
+          <h3 className="text-xs text-neutral-500 dark:text-neutral-400">Filters</h3>
+          <div className="hidden md:block mb-4">
+            <InStockCheckbox />
+          </div>
           <FilterList list={sorting} title="Sort by" />
         </div>
       </div>

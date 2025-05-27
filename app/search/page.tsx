@@ -12,11 +12,20 @@ export default async function SearchPage(props: {
   searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const searchParams = await props.searchParams;
-  const { sort, q: searchValue } = searchParams as { [key: string]: string };
+  const { sort, q: searchValue, available } = searchParams as { [key: string]: string };
   const { sortKey, reverse } =
     sorting.find((item) => item.slug === sort) || defaultSort;
 
-  const products = await search(searchValue || "", reverse, sortKey);
+  const products = await search(searchValue || "", reverse, sortKey,[
+    {
+      available: available === "true",
+      productMetafield: {
+        namespace: "custom",
+        key: "diamond_cut_final_test",
+        value: "baguette",
+      }
+    }
+  ]);
   const resultsText = products.length > 1 ? "results" : "result";
 
   return (

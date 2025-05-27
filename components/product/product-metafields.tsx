@@ -80,7 +80,6 @@ function GroupedMetaobjectDisplay({ metafield, metafields }: { metafield: Metafi
   if (!metaobjects || metaobjects.length === 0) {
     return null;
   }
-  console.log(metaobjects);
   // Extract the display value from each metaobject.
   // This assumes the field you want to show has a key of 'label'.
   const displayValues = metaobjects

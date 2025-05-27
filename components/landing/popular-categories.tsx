@@ -7,7 +7,7 @@ export default async function PopularCategories() {
     (cat) => cat.image !== null && cat.image !== undefined
   );
   return (
-    <section className="w-full px-4">
+    <section className="w-full px-4 xl:px-20">
       <h2 className="text-6xl font-semibold mb-4 w-full text-center">
         Popular Categories
       </h2>
