@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
@@ -76,7 +76,7 @@ export default function HeroCarousel() {
       }, 400);
     };
 
-    const slideInterval = setInterval(nextSlide, 6000);
+    const slideInterval = setInterval(nextSlide, 10000);
 
     return () => {
       clearInterval(slideInterval);
@@ -134,19 +134,26 @@ export default function HeroCarousel() {
       </div>
 
       {/* Carousel Indicators */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-2 z-10">
-        {carouselSlides.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => goToSlide(index)}
-            className={`w-2 h-2 rounded-full transition-all duration-300 ${
-              currentSlide === index ? "w-8 bg-white" : "bg-white/50"
-            }`}
-            aria-label={`Go to slide ${index + 1}`}
-          />
-        ))}
-      </div>
-
+<div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center space-y-2 z-10">
+  <div className="flex space-x-4 mt-2">
+    <button
+      onClick={() =>
+        goToSlide((currentSlide - 1 + carouselSlides.length) % carouselSlides.length)
+      }
+      className="px-5 py-2 text-base bg-slate-500 text-white rounded transition hover:bg-slate-700 hover:cursor-pointer"
+    >
+      <ArrowLeft />
+    </button>
+    <button
+      onClick={() =>
+        goToSlide((currentSlide + 1) % carouselSlides.length)
+      }
+      className="px-5 py-2 text-base bg-slate-500 text-white rounded transition hover:bg-slate-700 hover:cursor-pointer"
+    >
+      <ArrowRight />
+    </button>
+  </div>
+</div>
       {/* Call to Action Content */}
       <div className="relative h-full w-full flex items-center">
         <div

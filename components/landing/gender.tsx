@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 type GenderSectionProps = {
-  gender: "women" | "men";
+  gender: "WOMEN" | "MEN";
   imageUrl: string;
   index: number;
 };
@@ -67,10 +67,14 @@ const GenderSection = ({ gender, imageUrl, index }: GenderSectionProps) => {
 
             {/* Label */}
             <div className="absolute bottom-0 left-0 right-0 p-6 transform transition-transform duration-500 ease-out md:group-hover:translate-y-[-8px]">
-              <h2 className="text-3xl sm:text-4xl font-bold text-white capitalize tracking-wider">
+              <h2 className="text-6xl font-bold text-white text-center uppercase tracking-wider">
                 {gender}
               </h2>
-              <div className="h-1 w-0 bg-white mt-2 transition-all duration-500 ease-out md:group-hover:w-24"></div>
+              <div className="absolute left-1/2 translate-x-[-50%] bottom-0 h-1 w-24 bg-white 
+                origin-center scale-x-0 transition-transform duration-500 ease-out 
+                md:group-hover:scale-x-100 mb-2">
+              </div>
+              {/* <div className="h-1 w-0 bg-white mt-2 transition-all duration-500 ease-out md:group-hover:w-24"></div> */}
             </div>
           </div>
 
@@ -98,12 +102,12 @@ export default function GenderSelection() {
       </h2>
       <div className="w-full lg:w-[80vw] mx-auto justify-center items-center flex flex-col md:flex-row space-y-6 md:space-y-0 px-4 md:px-0">
         <GenderSection
-          gender="women"
+          gender="WOMEN"
           imageUrl="https://cdn.shopify.com/s/files/1/0633/2714/2125/files/1a46fbf59aefc3cef254ed9a7b2f0b1c.jpg?v=1746067360"
           index={0}
         />
         <GenderSection
-          gender="men"
+          gender="MEN"
           imageUrl="https://cdn.shopify.com/s/files/1/0633/2714/2125/files/9371211f25c5e373debd51ab43c79151.jpg?v=1746048302"
           index={1}
         />

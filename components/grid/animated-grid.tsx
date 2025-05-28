@@ -57,7 +57,7 @@ const Card = ({ title, imageUrl, index, id }: CardProps) => {
           />
         </div>
         <div className="p-4">
-          <h3 className="text-lg font-semibold text-gray-800 line-clamp-2">
+          <h3 className="text-lg text-center font-semibold text-gray-800 line-clamp-2">
             {title}
           </h3>
         </div>

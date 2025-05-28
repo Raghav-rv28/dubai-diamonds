@@ -9,7 +9,7 @@ export default async function PopularCategories() {
   return (
     <section className="w-full px-4 xl:px-20">
       <h2 className="text-6xl font-semibold mb-4 w-full text-center">
-        Popular Categories
+        Our Collection
       </h2>
       <AnimatedGrid
         items={filteredCategories.map((cat) => ({

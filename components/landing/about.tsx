@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 export default function About() {
   return (
-    <div className="flex w-full">
+    <div className="flex w-full xl:px-20">
       <div className="flex flex-col justify-center text-black dark:text-white md:hidden">
         <div className="mx-auto max-w-7xl rounded-xl px-4 py-12 opacity-95 sm:px-6 md:w-1/2 lg:px-8">
           <div className="mt-12 text-center">
@@ -50,12 +50,12 @@ export default function About() {
           </Link>
         </div>
       </div>
-      <div className="hidden w-1/2 bg-cover bg-center md:flex">
+      <div className="hidden w-1/2 justify-center md:flex">
         <Image
           src={"https://cdn.shopify.com/s/files/1/0633/2714/2125/files/intro_poster_2.1.jpg?v=1746114226"}
           alt={'banner'}
-          width={1500}
-          height={1000}
+          width={736}
+          height={1100}
         />
       </div>
     </div>

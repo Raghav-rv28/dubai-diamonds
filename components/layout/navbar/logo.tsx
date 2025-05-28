@@ -8,27 +8,14 @@ export default function Logo() {
   const { theme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
-  // Wait until mounted to avoid hydration mismatch
   useEffect(() => {
     setMounted(true);
   }, []);
 
   if (!mounted) {
-    // Option 1: Render nothing until theme is known
     return (
       <div style={{ width: 180, height: 50 }} className="pt-2 pl-2" />
     );
-
-    // Option 2 (alternative): Render default logo
-    // return (
-    //   <Image
-    //     src="https://cdn.shopify.com/s/files/1/0633/2714/2125/files/D_Diamond_Logo_Full.png?v=1747429316"
-    //     alt="logo"
-    //     width={180}
-    //     height={50}
-    //     className="pt-2 pl-2"
-    //   />
-    // );
   }
 
   const logoUrl =

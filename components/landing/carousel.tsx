@@ -20,10 +20,10 @@ export async function Carousel() {
       </h2>
       <div className="w-full overflow-x-auto pb-6 pt-1">
         <ul className="flex animate-carousel gap-4">
-          {carouselProducts.map((product, i) => (
+          {carouselProducts.filter(p => p.featuredImage !== null).map((product, i) => (
             <li
               key={`${product.handle}${i}`}
-              className="relative aspect-square h-[30vh] max-h-[275px] w-2/3 max-w-[475px] flex-none md:w-1/3"
+              className="mx-2 aspect-square w-full max-w-[300px] flex-none"
             >
               <Link
                 href={`/products/${product.handle}`}
