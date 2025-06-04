@@ -3,13 +3,15 @@ import { Metafield } from "lib/shopify/types";
 
 // Helper function to format metafield keys for display
 function formatMetafieldKey(key: string): string {
+  const wordsToRemove = ['final', 'test', 'variancy'];
+  
   // Split the key by either an underscore or a hyphen
   return key
-    .split(/_|-/) 
+    .split(/_|-/)
+    .filter(word => !wordsToRemove.includes(word.toLowerCase()))
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ');
 }
-
 // Helper function to format metafield values based on type
 function formatMetafieldValue(metafield: Metafield): string | React.ReactNode {
   switch (metafield.type) {
