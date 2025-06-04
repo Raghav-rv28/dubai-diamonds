@@ -1,9 +1,9 @@
 import { cn } from '@/lib/utils';
 import { AddToCart } from 'components/cart/add-to-cart';
-import Price from 'components/price';
 import Prose from 'components/prose';
 import { Product } from 'lib/shopify/types';
 import { Geist } from 'next/font/google';
+import { DynamicPrice } from './dynamic-price';
 import { ProductMetafields } from './product-metafields';
 import { VariantSelector } from './variant-selector';
 
@@ -17,10 +17,7 @@ export function ProductDescription({ product }: { product: Product }) {
       <div className="mb-6 flex flex-col border-b pb-6 dark:border-neutral-700">
         <h1 className="mb-2 text-5xl font-medium">{product.title}</h1>
         <div className="mr-auto w-auto rounded-full bg-black dark:bg-white p-2 text-sm text-white dark:text-black">
-          <Price
-            amount={product.priceRange.maxVariantPrice.amount}
-            currencyCode={product.priceRange.maxVariantPrice.currencyCode}
-          />
+          <DynamicPrice product={product} />
         </div>
       </div>
       <VariantSelector options={product.options} variants={product.variants} />
