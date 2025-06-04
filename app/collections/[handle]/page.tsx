@@ -1,7 +1,5 @@
 import ProductGridItems from "@/components/layout/product-grid-items";
-import Prose from "@/components/prose";
 import { getCollection, getCollectionProducts } from "@/lib/shopify";
-import { cn } from "@/lib/utils";
 import Grid from "components/grid";
 import { Geist } from "next/font/google";
 import Image from "next/image";
@@ -56,7 +54,7 @@ export default async function CollectionPage(props: {
             {collection.title}
           </h1>
 
-          <Prose className={cn("mx-2 py-2",Giestfont.className)} html={collection.description} />
+          {/* <Prose className={cn("mx-2 py-2",Giestfont.className)} html={collection.description} /> */}
           <p className="text-sm italic mb-2">
             {`This document was last updated on ${new Intl.DateTimeFormat(
               undefined,
