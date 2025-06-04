@@ -1,5 +1,6 @@
 import About from "@/components/landing/about";
 import { Carousel } from "@/components/landing/carousel";
+import DiamondCuts from "@/components/landing/diamond-cuts";
 import Gender from "@/components/landing/gender";
 import HeroSection from "@/components/landing/hero-section";
 import PopularCategories from "@/components/landing/popular-categories";
@@ -19,7 +20,7 @@ export default function HomePage() {
       <main className="flex flex-col gap-8 md:gap-12">
         <HeroSection />
         <PopularCategories />
-        {/* <DiamondCuts /> */}
+        <DiamondCuts />
         {/** Carousel is a collection shower, show new-arrivals or trending stuff */}
         <Carousel />
         <Gender />
