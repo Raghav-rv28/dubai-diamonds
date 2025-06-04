@@ -3,11 +3,17 @@ import { CartProvider } from "components/cart/cart-context";
 import { Navbar } from "components/layout/navbar";
 import { getCart } from "lib/shopify";
 import { baseUrl } from "lib/utils";
-import { Playfair_Display } from "next/font/google";
+import { Space_Grotesk } from "next/font/google";
 import { ReactNode } from "react";
 import { Toaster } from "sonner";
 import "./globals.css";
 const { SITE_NAME } = process.env;
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+});
+
 
 export const metadata = {
   metadataBase: new URL(baseUrl),
@@ -20,9 +26,8 @@ export const metadata = {
     index: true,
   },
 };
-const Playfair = Playfair_Display({
-  subsets: ["latin"]
-})
+
+
 export default async function RootLayout({
   children,
 }: {
@@ -32,7 +37,7 @@ export default async function RootLayout({
   const cart = getCart();
 
   return (
-    <html lang="en" className={Playfair.className} suppressHydrationWarning>
+    <html lang="en" className={spaceGrotesk.className} suppressHydrationWarning>
       <body className="bg-neutral-50 text-black selection:bg-teal-300 dark:bg-neutral-900 dark:text-white dark:selection:bg-pink-500 dark:selection:text-white">
        <ThemeProvider
             attribute="class"

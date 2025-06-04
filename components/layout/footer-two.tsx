@@ -36,6 +36,9 @@ export default async function Footer() {
                 <Link href={'https://www.instagram.com/dubai.diamondss/'} target="_blank">
                   <InstagramIcon className="h-6 w-6 text-pink-500" />
                 </Link>
+                <Link href={'https://www.tiktok.com/@dubai.diamondss'} target="_blank">
+                  <Image src={'/tiktok.svg'} alt="tiktok" width={24} height={24} />
+                </Link>
                 {/* <Link href={'https://g.co/kgs/9YN3jQH'} target="_blank">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
