@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
+import DesignerInfo from "@/components/product/designer-info";
 import { GridTileImage } from "components/grid/tile";
 import Footer from "components/layout/footer";
 import { Gallery } from "components/product/gallery";
@@ -105,6 +106,7 @@ export default async function ProductPage(props: {
           </div>
         </div>
         <RelatedProducts id={product.id} />
+        <DesignerInfo/>
       </div>
       <Footer />
     </ProductProvider>
