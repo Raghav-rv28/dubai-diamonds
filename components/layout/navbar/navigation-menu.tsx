@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/navigation-menu"
 import { MenuItem as MenuItemShopify, ShopifyMenu } from "@/lib/shopify/types"
 import { cn } from "@/lib/utils"
+import Image from "next/image"
 
 interface ShopifyMenuBarProps {
   menu: ShopifyMenu
@@ -22,6 +23,7 @@ interface MenuItemProps {
   item: MenuItemShopify
   level: number
 }
+const approvedCuts = ['round', 'princess', 'pear', 'emerald', 'marqiuse', 'oval', 'radiant', 'cushion'];
 
 const MenuItem: React.FC<MenuItemProps> = ({ item, level }) => {
   const hasChildren = item.items && item.items.length > 0
@@ -40,6 +42,9 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, level }) => {
           )}
           target={item.target}
         >
+          {approvedCuts.includes(item.title.toLowerCase()) && (
+            <Image src={`/svg-cuts/${item.title.toLowerCase()}.svg`} alt={item.title} width={20} height={20} />
+          )}
           {item.title}
         </Link>
       </NavigationMenuItem>
@@ -62,7 +67,9 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, level }) => {
             "hover:bg-accent hover:text-accent-foreground",
           )}
         >
-          <span className="flex items-center gap-1">{item.title}</span>
+          <span className="flex items-center gap-1">
+            {item.title}
+          </span>
         </NavigationMenuTrigger>
       )}
       <NavigationMenuContent className="dark:bg-popover dark:border-border">
@@ -97,6 +104,10 @@ const SubMenuItem: React.FC<MenuItemProps> = ({ item, level }) => {
         )}
         target={item.target}
       >
+          <Image src="/svg-cuts/round.svg" alt="round" width={20} height={20} />
+        {approvedCuts.includes(item.title.toLowerCase()) && (
+          <Image src={`/svg-cuts/${item.title.toLowerCase()}.svg`} alt={item.title} width={20} height={20} />
+        )}
         <div className="text-sm font-medium leading-none">{item.title}</div>
       </Link>
     )

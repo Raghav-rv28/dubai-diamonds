@@ -7,7 +7,6 @@ import { Suspense } from "react";
 import Logo from "./logo";
 import MobileMenu from "./mobile-menu";
 import Search, { SearchSkeleton } from "./search";
-
 const { SITE_NAME } = process.env;
 
 export async function Navbar() {
