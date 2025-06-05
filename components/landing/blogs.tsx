@@ -59,7 +59,7 @@ export default async function Blogs({first}: {first?: number}) {
       {
        first && first < 5 && (
         <div className="flex justify-center">
-        <Link className={cn("mt-6", buttonVariants({variant: "default"}))} href="/blogs">
+        <Link className={cn("mt-6", buttonVariants({variant: "default"}))} href="/blogs/news">
           See More Blogs →
         </Link>
         </div>
