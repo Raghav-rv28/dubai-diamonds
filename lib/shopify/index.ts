@@ -18,6 +18,7 @@ import {
   editCartItemsMutation,
   removeFromCartMutation,
 } from "./mutations/cart";
+import { getArticleQuery, getBlogsQuery } from "./queries/blog";
 import { getCartQuery } from "./queries/cart";
 import {
   getCollectionProductsQuery,
@@ -34,6 +35,8 @@ import {
 } from "./queries/product";
 import { searchQuery } from "./queries/search";
 import {
+  Article,
+  Blog,
   Cart,
   Collection,
   Connection,
@@ -44,6 +47,8 @@ import {
   Product,
   ProductFilter,
   ShopifyAddToCartOperation,
+  ShopifyArticleOperation,
+  ShopifyBlogsOperation,
   ShopifyCart,
   ShopifyCartOperation,
   ShopifyCollection,
@@ -509,6 +514,30 @@ export async function getMetaObjects(type: string): Promise<Metaobject[]> {
   return removeEdgesAndNodes(res.body.data.metaobjects);
 }
 
+export async function getBlogs(): Promise<Blog[] | undefined> {
+  "use cache";
+  cacheTag(TAGS.products);
+  cacheLife("days");
+
+  const res = await shopifyFetch<ShopifyBlogsOperation>({
+    query: getBlogsQuery,
+  });
+  return removeEdgesAndNodes(res.body.data.blogs);
+}
+
+export async function getArticle(id: string): Promise<Article | undefined> {
+  "use cache";
+  cacheTag(TAGS.products);
+  cacheLife("days");
+
+  const res = await shopifyFetch<ShopifyArticleOperation>({
+    query: getArticleQuery,
+    variables: {
+      id,
+    },
+  });
+  return res.body.data.article;
+}
 // This is called from `app/api/revalidate.ts` so providers can control revalidation logic.
 export async function revalidate(req: NextRequest): Promise<NextResponse> {
   // We always need to respond with a 200 status code to Shopify,

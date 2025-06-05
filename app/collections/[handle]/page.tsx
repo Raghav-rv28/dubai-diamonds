@@ -53,9 +53,8 @@ export default async function CollectionPage(props: {
           <h1 className="mb-4 text-4xl sm:text-5xl font-bold">
             {collection.title}
           </h1>
-
           {/* <Prose className={cn("mx-2 py-2",Giestfont.className)} html={collection.description} /> */}
-          <p className="text-sm italic mb-2">
+          {/* <p className="text-sm italic mb-2">
             {`This document was last updated on ${new Intl.DateTimeFormat(
               undefined,
               {
@@ -64,7 +63,7 @@ export default async function CollectionPage(props: {
                 day: "numeric",
               }
             ).format(new Date(collection.updatedAt))}.`}
-          </p>
+          </p> */}
         </div>
       </div>
       <Grid className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 m-5">

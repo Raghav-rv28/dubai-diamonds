@@ -1,4 +1,5 @@
 import About from "@/components/landing/about";
+import Blogs from "@/components/landing/blogs";
 import CanvasHeroSection from "@/components/landing/canvas-hero-section";
 import { Carousel } from "@/components/landing/carousel";
 import DiamondCuts from "@/components/landing/diamond-cuts";
@@ -23,6 +24,7 @@ export default function HomePage() {
         <DiamondCuts />
         {/** Carousel is a collection shower, show new-arrivals or trending stuff */}
         <Carousel />
+        <Blogs />
         <Gender />
         <About />
       </main>

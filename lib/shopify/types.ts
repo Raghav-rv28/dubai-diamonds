@@ -365,3 +365,40 @@ export type ShopifyMenu = {
     items: MenuItem[];
     itemsCount: number;
 };
+
+export type Article = {
+    id: string;
+    title: string;
+    handle: string;
+    content: string;
+    contentHtml: string;
+    image: Image;
+};
+
+export type Blog = {
+    id: string;
+    title: string;
+    handle: string;
+    seo: SEO;
+    articles: Connection<Article>;
+};
+
+export type ShopifyBlogsOperation = {
+    data: {
+      blogs: {
+        edges: {
+          node: Blog;
+          cursor: string;
+        }[];
+      };
+    };
+};
+
+export type ShopifyArticleOperation = {
+    data: {
+      article: Article;
+    };
+    variables: {
+      id: string;
+    };
+};
