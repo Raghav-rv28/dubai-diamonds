@@ -1,7 +1,7 @@
-import { CategoryMenu } from "@/components/landing/category-menu";
+import { ShopifyMenuBar } from "@/components/landing/navigation-menu";
 import { ModeToggle } from "@/components/theme-toggle";
 import CartModal from "components/cart/modal";
-import { getCollections } from "lib/shopify";
+import { getMenu } from "lib/shopify";
 import Link from "next/link";
 import { Suspense } from "react";
 import Logo from "./logo";
@@ -11,7 +11,8 @@ import Search, { SearchSkeleton } from "./search";
 const { SITE_NAME } = process.env;
 
 export async function Navbar() {
-  const diamondCategories = await getCollections(`title:"Diamond"`);
+  const menu = await getMenu("main-menu1")
+
   return (
     <>
       <nav className="relative flex items-center justify-between p-4 lg:px-6">
@@ -45,7 +46,7 @@ export async function Navbar() {
       </nav>
       <div className="flex w-full items-center justify-center">
         <Suspense fallback={<SearchSkeleton />}>
-          <CategoryMenu diamondCategories={diamondCategories} />
+          {menu && <ShopifyMenuBar menu={menu} />}
         </Suspense>
       </div>
       <hr />

@@ -38,7 +38,6 @@ import {
   Collection,
   Connection,
   Image,
-  Menu,
   Metafield,
   Metaobject,
   Page,
@@ -52,6 +51,7 @@ import {
   ShopifyCollectionProductsOperation,
   ShopifyCollectionsOperation,
   ShopifyCreateCartOperation,
+  ShopifyMenu,
   ShopifyMenuOperation,
   ShopifyMetaobjectsOperation,
   ShopifyPageOperation,
@@ -62,7 +62,7 @@ import {
   ShopifyProductsOperation,
   ShopifyRemoveFromCartOperation,
   ShopifySearchOperation,
-  ShopifyUpdateCartOperation,
+  ShopifyUpdateCartOperation
 } from "./types";
 
 const domain = process.env.SHOPIFY_STORE_DOMAIN
@@ -395,7 +395,7 @@ export async function getCollections(query?: string): Promise<Collection[]> {
   return collections;
 }
 
-export async function getMenu(handle: string): Promise<Menu[]> {
+export async function getMenu(handle: string): Promise<ShopifyMenu | undefined> {
   "use cache";
   cacheTag(TAGS.collections);
   cacheLife("days");
@@ -407,15 +407,7 @@ export async function getMenu(handle: string): Promise<Menu[]> {
     },
   });
 
-  return (
-    res.body?.data?.menu?.items.map((item: { title: string; url: string }) => ({
-      title: item.title,
-      path: item.url
-        .replace(domain, "")
-        .replace("/collections", "/search")
-        .replace("/pages", ""),
-    })) || []
-  );
+  return res.body.data.menu;
 }
 
 export async function getPage(handle: string): Promise<Page> {
@@ -516,6 +508,7 @@ export async function getMetaObjects(type: string): Promise<Metaobject[]> {
 
   return removeEdgesAndNodes(res.body.data.metaobjects);
 }
+
 // This is called from `app/api/revalidate.ts` so providers can control revalidation logic.
 export async function revalidate(req: NextRequest): Promise<NextResponse> {
   // We always need to respond with a 200 status code to Shopify,

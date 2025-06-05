@@ -1,6 +1,6 @@
+import { Navbar } from "@/components/layout/navbar";
 import { ThemeProvider } from "@/components/theme-provider";
 import { CartProvider } from "components/cart/cart-context";
-import { Navbar } from "components/layout/navbar";
 import { getCart } from "lib/shopify";
 import { baseUrl } from "lib/utils";
 import { Space_Grotesk } from "next/font/google";

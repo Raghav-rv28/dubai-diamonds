@@ -47,11 +47,6 @@ export type Image = {
   height: number;
 };
 
-export type Menu = {
-  title: string;
-  path: string;
-};
-
 export type Money = {
   amount: string;
   currencyCode: string;
@@ -227,12 +222,7 @@ export type ShopifyCollectionsOperation = {
 
 export type ShopifyMenuOperation = {
   data: {
-    menu?: {
-      items: {
-        title: string;
-        url: string;
-      }[];
-    };
+    menu?: ShopifyMenu;
   };
   variables: {
     handle: string;
@@ -350,11 +340,28 @@ export type Metafield = {
 };
 
 export type ProductFilter = {
-  available?: boolean; 
-  productMetafield?: { 
+  available?: boolean;
+  productMetafield?: {
     namespace: string;
     key: string;
-    value?: string; 
-    values?: string[]; 
+    value?: string;
+    values?: string[];
   };
+};
+
+export type MenuItem = {
+    id: string;
+    title: string;
+    url: string;
+    target: "_blank" | "_self" | "_parent" | "_top";
+    type: "ARTICLE" | "CATEGORY" | "COLLECTION" | "COLLECTIONS" | "PAGE" | "PRODUCT" | "BLOG" | "SHOP_POLICY" | "CATALOG";
+    items: MenuItem[];
+};
+
+export type ShopifyMenu = {
+    id: string;
+    handle: string;
+    title: string;
+    items: MenuItem[];
+    itemsCount: number;
 };
