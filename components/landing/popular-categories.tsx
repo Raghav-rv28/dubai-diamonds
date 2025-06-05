@@ -1,10 +1,11 @@
 import { getCollections } from "@/lib/shopify";
 import AnimatedGrid from "../grid/animated-grid";
 
+const allowedCategories = ['bracelets','chains','men','rings','earrings','extravagant', 'trendy'];
 export default async function PopularCategories() {
   const collections = await getCollections("");
   const filteredCategories = collections.filter(
-    (cat) => cat.image !== null && cat.image !== undefined
+    (cat) => cat.image !== null && cat.image !== undefined && allowedCategories.some((allowedCategory) => cat.title.toLowerCase().includes(allowedCategory.toLowerCase()))
   );
   return (
     <section className="w-full px-4 xl:px-20">
