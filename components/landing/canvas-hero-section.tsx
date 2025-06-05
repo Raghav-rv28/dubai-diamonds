@@ -427,7 +427,7 @@ export default function Component({
             💎 Hidden in the darkness
           </div> */}
 
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight uppercase">
             Explore the Legacy of Diamonds
           </h1>
 

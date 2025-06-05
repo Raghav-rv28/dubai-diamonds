@@ -12,11 +12,7 @@ export default function Logo() {
     setMounted(true);
   }, []);
 
-  if (!mounted) {
-    return (
-      <div style={{ width: 180, height: 50 }} className="pt-2 pl-2" />
-    );
-  }
+  if (!mounted) return null; // Don't render anything until client is loaded
 
   const logoUrl =
     theme === 'dark'

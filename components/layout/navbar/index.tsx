@@ -7,7 +7,7 @@ import { Suspense } from "react";
 import Logo from "./logo";
 import MobileMenu from "./mobile-menu";
 import Search, { SearchSkeleton } from "./search";
-const { SITE_NAME } = process.env;
+
 
 export async function Navbar() {
   const menu = await getMenu("main-menu1")
@@ -24,9 +24,9 @@ export async function Navbar() {
             <Link
               href="/"
               prefetch={true}
-              className="mr-2 flex w-full items-center justify-center md:w-auto lg:mr-6"
+             className="mr-2 flex w-full items-center justify-center md:w-auto lg:mr-6"
             >
-              <Logo />
+            <Logo/>
             </Link>
           </div>
           <div className="hidden justify-center md:flex md:w-1/3">
