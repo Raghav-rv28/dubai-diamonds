@@ -81,7 +81,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, level }) => {
           )}
         >
           {item.items.map((childItem) => (
-            <SubMenuItem key={childItem.id} item={childItem} level={level + 1} />
+            <SubMenuItem key={`${childItem.id}-${childItem.title}`} item={childItem} level={level + 1} />
           ))}
         </div>
       </NavigationMenuContent>
@@ -138,10 +138,10 @@ const SubMenuItem: React.FC<MenuItemProps> = ({ item, level }) => {
 
 export const ShopifyMenuBar: React.FC<ShopifyMenuBarProps> = ({ menu, className }) => {
   return (
-    <NavigationMenu className={cn("mx-0", className)}>
+    <NavigationMenu className={cn("mx-0 mb-3", className)}>
       <NavigationMenuList className="space-x-2">
         {menu.items.map((item) => (
-          <MenuItem key={item.id} item={item} level={1} />
+          <MenuItem key={`${item.id}-${item.title}`} item={item} level={1} />
         ))}
       </NavigationMenuList>
     </NavigationMenu>
