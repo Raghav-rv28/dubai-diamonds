@@ -3,7 +3,6 @@ import { notFound } from "next/navigation";
 
 import DesignerInfo from "@/components/product/designer-info";
 import { GridTileImage } from "components/grid/tile";
-import Footer from "components/layout/footer";
 import { Gallery } from "components/product/gallery";
 import { ProductProvider } from "components/product/product-context";
 import { ProductDescription } from "components/product/product-description";
@@ -108,7 +107,6 @@ export default async function ProductPage(props: {
         <RelatedProducts id={product.id} />
         <DesignerInfo/>
       </div>
-      <Footer />
     </ProductProvider>
   );
 }

@@ -423,11 +423,11 @@ export default function Component({
             💎 Hidden in the darkness
           </div> */}
 
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight uppercase">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight uppercase text-center md:text-left">
             Explore the Legacy of Diamonds
           </h1>
 
-          <p className="text-xl md:text-2xl text-white/70 max-w-xl leading-relaxed">
+          <p className="text-xl md:text-2xl text-white/70 max-w-xl leading-relaxed text-center md:text-left">
             Best in class service and diamonds provided in Ontario,Canada. Explore our collection or book a meeting!
           </p>
 

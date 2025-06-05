@@ -5,7 +5,6 @@ import { Carousel } from "@/components/landing/carousel";
 import DiamondCuts from "@/components/landing/diamond-cuts";
 import Gender from "@/components/landing/gender";
 import PopularCategories from "@/components/landing/popular-categories";
-import Footer from "components/layout/footer-two";
 
 export const metadata = {
   title: "Dubai Diamonds | Fine Jewelry in Toronto",
@@ -51,7 +50,6 @@ export default function HomePage() {
         <Gender />
         <About />
       </main>
-      <Footer />
     </>
   );
 }

@@ -6,6 +6,7 @@ import { baseUrl } from "lib/utils";
 import { Space_Grotesk } from "next/font/google";
 import { ReactNode } from "react";
 import { Toaster } from "sonner";
+import Footer from "../components/layout/footer-two";
 import "./globals.css";
 const { SITE_NAME } = process.env;
 
@@ -52,6 +53,7 @@ export default async function RootLayout({
             <Toaster closeButton />
           </main>
         </CartProvider>
+        <Footer/>
        </ThemeProvider>
       </body>
     </html>
