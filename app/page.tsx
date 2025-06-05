@@ -1,8 +1,8 @@
 import About from "@/components/landing/about";
+import CanvasHeroSection from "@/components/landing/canvas-hero-section";
 import { Carousel } from "@/components/landing/carousel";
 import DiamondCuts from "@/components/landing/diamond-cuts";
 import Gender from "@/components/landing/gender";
-import HeroSection from "@/components/landing/hero-section";
 import PopularCategories from "@/components/landing/popular-categories";
 import Footer from "components/layout/footer-two";
 
@@ -18,7 +18,7 @@ export default function HomePage() {
   return (
     <>
       <main className="flex flex-col gap-8 md:gap-12">
-        <HeroSection />
+        <CanvasHeroSection />
         <PopularCategories />
         <DiamondCuts />
         {/** Carousel is a collection shower, show new-arrivals or trending stuff */}
