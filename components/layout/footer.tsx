@@ -39,7 +39,7 @@ export default async function Footer() {
             </div>
           }
         >
-          <FooterMenu menu={menu} />
+          {menu && <FooterMenu menu={menu} />}
         </Suspense>
         <div className="md:ml-auto">
           <a
