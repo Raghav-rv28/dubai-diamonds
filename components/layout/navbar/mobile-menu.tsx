@@ -1,91 +1,115 @@
 'use client';
 
-import { Dialog, Transition } from '@headlessui/react';
-import { usePathname, useSearchParams } from 'next/navigation';
-import { Fragment, Suspense, useEffect, useState } from 'react';
-
 import { ModeToggle } from '@/components/theme-toggle';
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { MenuItem, ShopifyMenu } from '@/lib/shopify/types';
+import { Bars3Icon } from '@heroicons/react/24/outline';
+import { ChevronDown, ChevronUp } from 'lucide-react';
+import Link from 'next/link';
+import { Suspense, useState } from 'react';
 import Search, { SearchSkeleton } from './search';
 
-export default function MobileMenu() {
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
+export default function MobileMenu({ menu }: { menu: ShopifyMenu | undefined }) {
   const [isOpen, setIsOpen] = useState(false);
   const openMobileMenu = () => setIsOpen(true);
   const closeMobileMenu = () => setIsOpen(false);
 
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth > 768) {
-        setIsOpen(false);
-      }
-    };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, [isOpen]);
-
-  useEffect(() => {
-    setIsOpen(false);
-  }, [pathname, searchParams]);
-
   return (
     <>
-      <button
-        onClick={openMobileMenu}
-        aria-label="Open mobile menu"
-        className="flex h-11 w-11 items-center justify-center rounded-md border border-neutral-200 text-black transition-colors md:hidden dark:border-neutral-700 dark:text-white"
-      >
-        <Bars3Icon className="h-4" />
-      </button>
-      <Transition show={isOpen}>
-        <Dialog onClose={closeMobileMenu} className="relative z-50">
-          <Transition.Child
-            as={Fragment}
-            enter="transition-all ease-in-out duration-300"
-            enterFrom="opacity-0 backdrop-blur-none"
-            enterTo="opacity-100 backdrop-blur-[.5px]"
-            leave="transition-all ease-in-out duration-200"
-            leaveFrom="opacity-100 backdrop-blur-[.5px]"
-            leaveTo="opacity-0 backdrop-blur-none"
+      <Sheet open={isOpen} onOpenChange={setIsOpen}>
+        {/* Mobile menu trigger button */}
+        <SheetTrigger asChild>
+          <button
+            onClick={openMobileMenu}
+            aria-label="Open mobile menu"
+            className="flex h-11 w-11 items-center justify-center rounded-md border border-neutral-200 text-black transition-colors md:hidden dark:border-neutral-700 dark:text-white"
           >
-            <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
-          </Transition.Child>
-          <Transition.Child
-            as={Fragment}
-            enter="transition-all ease-in-out duration-300"
-            enterFrom="translate-x-[-100%]"
-            enterTo="translate-x-0"
-            leave="transition-all ease-in-out duration-200"
-            leaveFrom="translate-x-0"
-            leaveTo="translate-x-[-100%]"
-          >
-            <Dialog.Panel className="fixed bottom-0 left-0 right-0 top-0 flex h-full w-full flex-col bg-white pb-6 dark:bg-black">
-              <div className="p-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <button
-                      className="mb-4 flex h-11 w-11 items-center justify-center rounded-md border border-neutral-200 text-black transition-colors dark:border-neutral-700 dark:text-white"
-                      onClick={closeMobileMenu}
-                      aria-label="Close mobile menu"
-                    >
-                      <XMarkIcon className="h-6" />
-                    </button>
-                  </div>
-                  <div className="flex items-center gap-2">
-                  <ModeToggle />
-                </div>
-                </div>
-                <div className="mb-4 w-full">
-                  <Suspense fallback={<SearchSkeleton />}>
-                    <Search />
-                  </Suspense>
-                </div>
-              </div>
-            </Dialog.Panel>
-          </Transition.Child>
-        </Dialog>
-      </Transition>
+            <Bars3Icon className="h-4" />
+          </button>
+        </SheetTrigger>
+
+        {/* Sheet content for the mobile menu */}
+        <SheetContent side="left" className="w-[250px] sm:w-[300px] bg-white dark:bg-black p-4">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2">
+              <ModeToggle />
+            </div>
+          </div>
+
+          {/* Search section */}
+          <div className="mb-4 w-full">
+            <Suspense fallback={<SearchSkeleton />}>
+              <Search />
+            </Suspense>
+          </div>
+
+          {/* Mobile Menu Content */}
+          <MobileMenuContent menu={menu} />
+        </SheetContent>
+      </Sheet>
     </>
+  );
+}
+
+function MobileDropdown({ item }: { item: MenuItem }) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className="w-full">
+      <div className="flex justify-between items-center py-2">
+        <Link href={item.url} className="text-base font-medium hover:underline">
+          {item.title}
+        </Link>
+        <button
+          onClick={() => setOpen((prev) => !prev)}
+          className="ml-2"
+          aria-label="Toggle submenu"
+        >
+          {open ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+        </button>
+      </div>
+
+      {open && item.items?.length > 0 && (
+        <div className="pl-4">
+          {item.items.map((subItem) =>
+            subItem?.items?.length > 0 ? (
+              <MobileDropdown key={`subItem.id-${subItem.id}`} item={subItem} />
+            ) : (
+              <Link
+                key={subItem.id}
+                href={subItem.url}
+                className="block py-1 text-sm text-muted-foreground hover:text-foreground"
+              >
+                {subItem.title}
+              </Link>
+            )
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+export function MobileMenuContent({ menu }: { menu: ShopifyMenu | undefined }) {
+  if (!menu) return null;
+
+  return (
+    <div className="w-full">
+      <div className="space-y-2">
+        {menu.items.map((item) =>
+          item.items.length > 0 ? (
+            <MobileDropdown key={item.id} item={item} />
+          ) : (
+            <Link
+              key={item.id}
+              href={item.url}
+              className="block py-2 text-base text-foreground hover:underline"
+            >
+              {item.title}
+            </Link>
+          )
+        )}
+      </div>
+    </div>
   );
 }

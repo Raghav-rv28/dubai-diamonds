@@ -4,11 +4,11 @@ import Link from "next/link"
 import type * as React from "react"
 
 import {
-    NavigationMenu,
-    NavigationMenuContent,
-    NavigationMenuItem,
-    NavigationMenuList,
-    NavigationMenuTrigger,
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuList,
+  NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu"
 import { MenuItem as MenuItemShopify, ShopifyMenu } from "@/lib/shopify/types"
 import { cn } from "@/lib/utils"

@@ -1,4 +1,4 @@
-import { ShopifyMenuBar } from "@/components/landing/navigation-menu";
+import { ShopifyMenuBar } from "@/components/layout/navbar/navigation-menu";
 import { ModeToggle } from "@/components/theme-toggle";
 import CartModal from "components/cart/modal";
 import { getMenu } from "lib/shopify";
@@ -12,13 +12,12 @@ const { SITE_NAME } = process.env;
 
 export async function Navbar() {
   const menu = await getMenu("main-menu1")
-
   return (
     <>
       <nav className="relative flex items-center justify-between p-4 lg:px-6">
         <div className="block flex-none md:hidden">
           <Suspense fallback={null}>
-            <MobileMenu />
+            <MobileMenu menu={menu}/>
           </Suspense>
         </div>
         <div className="flex w-full items-center">
@@ -44,7 +43,7 @@ export async function Navbar() {
           </div>
         </div>
       </nav>
-      <div className="flex w-full items-center justify-center">
+      <div className="hidden md:flex w-full items-center justify-center">
         <Suspense fallback={<SearchSkeleton />}>
           {menu && <ShopifyMenuBar menu={menu} />}
         </Suspense>
