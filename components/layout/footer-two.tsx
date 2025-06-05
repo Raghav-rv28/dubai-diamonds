@@ -85,7 +85,7 @@ export default async function Footer() {
                   </div>
                 }
               >
-                <FooterMenu menu={menu} />
+                {menu && <FooterMenu menu={menu} />}
               </Suspense>
             </div>
           </div>

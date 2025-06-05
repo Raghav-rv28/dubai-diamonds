@@ -21,6 +21,13 @@ export default function Component({
   const [mousePosition, setMousePosition] = useState({ x: -1000, y: -1000 })
   const [isMouseInCanvas, setIsMouseInCanvas] = useState(false)
 
+  // Inline SVG as data URL
+  const sparkleDataUrl = `data:image/svg+xml;base64,${btoa(`
+    <svg fill="#ffffff" width="100" height="100" viewBox="0 0 750 750" xmlns="http://www.w3.org/2000/svg">
+      <path d="M587.54,369.5c.03,10.91-5.43,16.63-16.87,17.19-24.14,1.2-47.66,5.43-70.69,12.9-27.43,8.89-47.33,25.72-58.1,52.78-8.4,21.11-16.5,42.36-25.41,63.25-5.47,12.82-11.6,25.47-18.67,37.47-3.64,6.18-9.33,11.69-15.26,15.86-9.2,6.48-19.12,3.51-23.72-6.83-2.6-5.85-3.57-12.53-4.64-18.94-2.6-15.51-4.36-31.17-7.3-46.6-10.71-56.23-45.39-90.27-99.85-104.33-20.21-5.22-41.25-7.24-61.9-10.79-4.3-.74-8.56-1.7-12.8-2.74-6.39-1.57-9.44-6.09-9.84-12.33-.4-6.2,2.05-11.2,7.82-13.94,3.13-1.49,6.52-2.53,9.87-3.48,71.73-20.5,129.09-60.82,170.33-123.36,3.13-4.74,5.97-9.67,8.88-14.56,3.12-5.25,6.25-10.14,3.45-17.08-1.21-3.01,.19-7.86,1.89-11.08,3.39-6.41,9.22-7.06,13.65-1.29,6.89,9,18.09,15.47,17.11,29.46-.23,3.33,3.19,7.02,5.22,10.37,31.3,51.75,74.28,90.17,130.41,113.34,13.71,5.66,27.74,10.55,41.7,15.59,10,3.61,14.69,9.46,14.72,19.16Zm-80.92,1.25c-3.28-2.02-5-3.32-6.91-4.24-27.84-13.36-50.78-32.97-68.9-57.56-14.5-19.67-26.86-40.91-40.11-61.5-2.47-3.84-4.64-7.88-7.87-13.4-3.67,5.5-5.88,9.15-8.42,12.56-9.4,12.63-18.22,25.77-28.51,37.62-20.23,23.31-44.3,42.23-70.47,58.55-3.76,2.34-9.04,3.51-10.19,9.6,50.44,11.92,79.34,45.91,95.47,92.54,5.28,15.26,8.96,31.06,13.36,46.62,1.25,4.41,2.45,8.84,4.48,16.17,4.19-6.21,6.92-9.95,9.34-13.88,12.16-19.75,23.73-39.88,36.47-59.24,17.54-26.65,41.24-46.22,71.02-58.19,3.47-1.4,6.71-3.37,11.24-5.67Z" />
+    </svg>
+  `)}`
+
   // Check if device is mobile
   useEffect(() => {
     const checkMobile = () => {
@@ -52,54 +59,87 @@ export default function Component({
     mountRef.current.appendChild(renderer.domElement)
     rendererRef.current = renderer
 
-    // Create sparkle particles
-    const sparkleGeometry = new THREE.BufferGeometry()
+    // Create sparkle particles using inline SVG texture
     const sparkleCount = 100
-    const sparklePositions = new Float32Array(sparkleCount * 3)
-    const sparkleOpacities = new Float32Array(sparkleCount)
-    const sparkleSizes = new Float32Array(sparkleCount)
-
-    for (let i = 0; i < sparkleCount; i++) {
-      sparklePositions[i * 3] = (Math.random() - 0.5) * 4
-      sparklePositions[i * 3 + 1] = (Math.random() - 0.5) * 4
-      sparklePositions[i * 3 + 2] = Math.random() * 0.5
-      sparkleOpacities[i] = Math.random()
-      sparkleSizes[i] = Math.random() * 15 + 5
-    }
-
-    sparkleGeometry.setAttribute('position', new THREE.BufferAttribute(sparklePositions, 3))
-    sparkleGeometry.setAttribute('opacity', new THREE.BufferAttribute(sparkleOpacities, 1))
-    sparkleGeometry.setAttribute('size', new THREE.BufferAttribute(sparkleSizes, 1))
-
-    const sparkleMaterial = new THREE.ShaderMaterial({
-      transparent: true,
-      vertexShader: `
-        attribute float opacity;
-        attribute float size;
-        varying float vOpacity;
+    const sparkles: THREE.Mesh[] = []
+    
+    // Load sparkle SVG texture from data URL
+    const sparkleTextureLoader = new THREE.TextureLoader()
+    
+    sparkleTextureLoader.load(
+      sparkleDataUrl,
+      (sparkleTexture) => {
+        sparkleTexture.minFilter = THREE.LinearFilter
+        sparkleTexture.magFilter = THREE.LinearFilter
         
-        void main() {
-          vOpacity = opacity;
-          vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-          gl_PointSize = size;
-          gl_Position = projectionMatrix * mvPosition;
-        }
-      `,
-      fragmentShader: `
-        varying float vOpacity;
-        
-        void main() {
-          float distance = length(gl_PointCoord - vec2(0.5));
-          if (distance > 0.5) discard;
+        // Create individual sparkle meshes
+        for (let i = 0; i < sparkleCount; i++) {
+          // Random size between 0.02 and 0.08
+          const size = Math.random() * 0.06 + 0.02
+          const geometry = new THREE.PlaneGeometry(size, size)
           
-          float alpha = (1.0 - distance * 2.0) * vOpacity * 0.8;
-          gl_FragColor = vec4(0.8, 0.9, 1.0, alpha);
+          const material = new THREE.MeshBasicMaterial({
+            map: sparkleTexture,
+            transparent: true,
+            opacity: Math.random() * 0.8 + 0.2,
+            blending: THREE.AdditiveBlending
+          })
+          
+          const sparkle = new THREE.Mesh(geometry, material)
+          
+          // Random position
+          sparkle.position.set(
+            (Math.random() - 0.5) * 4,
+            (Math.random() - 0.5) * 4,
+            Math.random() * 0.5
+          )
+          
+          // Store animation properties
+          sparkle.userData = {
+            baseSize: size,
+            animationOffset: Math.random() * Math.PI * 2,
+            animationSpeed: Math.random() * 2 + 1,
+            baseOpacity: material.opacity
+          }
+          
+          sparkles.push(sparkle)
+          scene.add(sparkle)
         }
-      `
-    })
-
-    const sparkles = new THREE.Points(sparkleGeometry, sparkleMaterial)
-    scene.add(sparkles)
+      },
+      (progress) => {
+        console.log('Loading sparkle texture:', progress)
+      },
+      (error) => {
+        console.error('Error loading sparkle SVG:', error)
+        // Fallback: create simple white squares if SVG fails to load
+        for (let i = 0; i < sparkleCount; i++) {
+          const size = Math.random() * 0.06 + 0.02
+          const geometry = new THREE.PlaneGeometry(size, size)
+          const material = new THREE.MeshBasicMaterial({
+            color: 0xffffff,
+            transparent: true,
+            opacity: Math.random() * 0.8 + 0.2
+          })
+          
+          const sparkle = new THREE.Mesh(geometry, material)
+          sparkle.position.set(
+            (Math.random() - 0.5) * 4,
+            (Math.random() - 0.5) * 4,
+            Math.random() * 0.5
+          )
+          
+          sparkle.userData = {
+            baseSize: size,
+            animationOffset: Math.random() * Math.PI * 2,
+            animationSpeed: Math.random() * 2 + 1,
+            baseOpacity: material.opacity
+          }
+          
+          sparkles.push(sparkle)
+          scene.add(sparkle)
+        }
+      }
+    )
 
     // Create spotlight material for diamond reveal (desktop) or simple material (mobile)
     const createMaterial = (isMobileView: boolean) => {
@@ -174,11 +214,11 @@ export default function Component({
         const height = width / imageAspectRatio
         
         if (isMobile) {
-          // For mobile, set the texture directly\
-          if(material instanceof THREE.MeshBasicMaterial){
-          material.map = texture
+          // For mobile, set the texture directly - fix the TypeScript error
+          if (material instanceof THREE.MeshBasicMaterial) {
+            material.map = texture
+            material.needsUpdate = true
           }
-          material.needsUpdate = true
         } else {
           // For desktop, set the texture in the shader uniform
           if (material instanceof THREE.ShaderMaterial && material.uniforms.uTexture) {
@@ -292,15 +332,24 @@ export default function Component({
       
       // Animate sparkles
       const time = Date.now() * 0.001
-      const positions = sparkleGeometry.attributes.position?.array as Float32Array
-      const opacities = sparkleGeometry.attributes.opacity?.array as Float32Array
       
-      for (let i = 0; i < sparkleCount; i++) {
-        const i3 = i * 3
-        opacities[i] = (Math.sin(time * 2 + i * 0.1) * 0.5 + 0.5) * 0.8
-      }
-      
-      sparkleGeometry.attributes.opacity!.needsUpdate = true
+      sparkles.forEach((sparkle) => {
+        const userData = sparkle.userData
+        
+        // Animate size - randomly grow and shrink
+        const sizeMultiplier = 0.5 + Math.sin(time * userData.animationSpeed + userData.animationOffset) * 0.5
+        const newSize = userData.baseSize * (0.3 + sizeMultiplier * 0.7)
+        sparkle.scale.setScalar(newSize / userData.baseSize)
+        
+        // Animate opacity - twinkling effect
+        const opacityMultiplier = 0.3 + Math.sin(time * userData.animationSpeed * 1.5 + userData.animationOffset) * 0.7
+        if (sparkle.material instanceof THREE.MeshBasicMaterial) {
+          sparkle.material.opacity = userData.baseOpacity * opacityMultiplier
+        }
+        
+        // Slight rotation for extra sparkle effect
+        sparkle.rotation.z = time * 0.5 + userData.animationOffset
+      })
       
       renderer.render(scene, camera)
     }
@@ -323,9 +372,16 @@ export default function Component({
         mountRef.current.removeChild(renderer.domElement)
       }
       
+      // Dispose sparkles
+      sparkles.forEach(sparkle => {
+        sparkle.geometry.dispose()
+        if (sparkle.material instanceof THREE.MeshBasicMaterial) {
+          sparkle.material.dispose()
+        }
+        scene.remove(sparkle)
+      })
+      
       renderer.dispose()
-      sparkleGeometry.dispose()
-      sparkleMaterial.dispose()
       material.dispose()
     }
   }, [imageUrl, isMobile])
@@ -372,11 +428,11 @@ export default function Component({
           </div>
 
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight">
-            Illuminate the Extraordinary
+            Explore the Legacy of Diamonds
           </h1>
 
           <p className="text-xl md:text-2xl text-white/70 max-w-xl leading-relaxed">
-            Discover brilliance that emerges from the shadows, revealing extraordinary diamonds crafted with precision.
+            Best in class service and diamonds provided in Ontario,Canada. Explore our collection or book a meeting!
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 pt-8 pointer-events-auto">
