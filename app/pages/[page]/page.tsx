@@ -31,20 +31,20 @@ export async function generateMetadata(props: {
 export default async function Page(props: { params: Promise<{ page: string }> }) {
   const params = await props.params;
   const page = await getPage(params.page);
-
+  
   if (!page) return notFound();
 
   return (
     <>
       <h1 className="mb-8 w-full text-center text-5xl font-bold">{page.title}</h1>
       <Prose className={cn("mb-8",Giestfont.className)} html={page.body} />
-      <p className="text-base italic">
+      {/* <p className="text-base italic">
         {`This document was last updated on ${new Intl.DateTimeFormat(undefined, {
           year: 'numeric',
           month: 'long',
           day: 'numeric'
         }).format(new Date(page.updatedAt))}.`}
-      </p>
+      </p> */}
     </>
   );
 }

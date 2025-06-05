@@ -1,28 +1,29 @@
 import { getBlogs } from "@/lib/shopify";
 import Image from "next/image";
+import Link from "next/link";
 import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
 } from "../ui/card";
 
-export default async function Blogs() {
+export default async function Blogs({first}: {first?: number}) {
   const blogs = await getBlogs();
-
   return (
     <div className="px-4 py-8 max-w-7xl mx-auto">
       <h2 className="text-3xl font-bold mb-6 text-center">Our Latest Blogs</h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {blogs?.flatMap((blog) =>
-          blog.articles.edges.map((edge) => {
+          blog.articles.edges.slice(0, first).map((edge) => {
             const article = edge.node;
 
             return (
+            <article key={article.id}>
+                <Link href={`/blogs/news/${article.handle}`}>
               <Card
-                key={article.id}
                 className="transition-shadow hover:shadow-xl duration-300 rounded-2xl animate-fadeIn"
               >
                 <CardHeader className="p-4 pb-2">
@@ -47,6 +48,8 @@ export default async function Blogs() {
                   </CardDescription>
                 </CardContent>
               </Card>
+              </Link>
+            </article>
             );
           })
         )}

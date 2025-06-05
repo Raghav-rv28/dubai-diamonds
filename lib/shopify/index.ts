@@ -18,7 +18,7 @@ import {
   editCartItemsMutation,
   removeFromCartMutation,
 } from "./mutations/cart";
-import { getArticleQuery, getBlogsQuery } from "./queries/blog";
+import { getArticlesQuery, getBlogsQuery } from "./queries/blog";
 import { getCartQuery } from "./queries/cart";
 import {
   getCollectionProductsQuery,
@@ -525,18 +525,18 @@ export async function getBlogs(): Promise<Blog[] | undefined> {
   return removeEdgesAndNodes(res.body.data.blogs);
 }
 
-export async function getArticle(id: string): Promise<Article | undefined> {
+export async function getArticle(handle: string): Promise<Article[]> {
   "use cache";
   cacheTag(TAGS.products);
   cacheLife("days");
 
   const res = await shopifyFetch<ShopifyArticleOperation>({
-    query: getArticleQuery,
+    query: getArticlesQuery,
     variables: {
-      id,
+      handle,
     },
   });
-  return res.body.data.article;
+  return removeEdgesAndNodes(res.body.data.articles);
 }
 // This is called from `app/api/revalidate.ts` so providers can control revalidation logic.
 export async function revalidate(req: NextRequest): Promise<NextResponse> {

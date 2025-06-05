@@ -396,9 +396,14 @@ export type ShopifyBlogsOperation = {
 
 export type ShopifyArticleOperation = {
     data: {
-      article: Article;
+      articles: {
+        edges: {
+          node: Article;
+          cursor: string;
+        }[];
+      };
     };
     variables: {
-      id: string;
+      handle: string;
     };
 };

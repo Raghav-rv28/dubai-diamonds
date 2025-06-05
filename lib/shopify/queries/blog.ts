@@ -58,10 +58,14 @@ export const getBlogsQuery = /* GraphQL */ `
     ${blogFragment}
 `;
 
-export const getArticleQuery = /* GraphQL */ `
-    query getArticle($id: ID!) {
-        article(id: $id) {
-            ...article
+export const getArticlesQuery = /* GraphQL */ `
+    query getArticles($handle: String!) {
+        articles(first: 1, query: $handle) {
+            edges {
+                node {
+                    ...article
+                }
+            }
         }
     }
     ${articleFragment}
