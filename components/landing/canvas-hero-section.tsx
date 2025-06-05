@@ -202,6 +202,10 @@ export default function Component({
     textureLoader.load(
       imageUrl,
       (texture) => {
+        if(isMobile){
+          setIsLoaded(true)
+          return
+        }
         texture.minFilter = THREE.LinearFilter
         texture.magFilter = THREE.LinearFilter
         
@@ -213,19 +217,11 @@ export default function Component({
         const width = baseWidth
         const height = width / imageAspectRatio
         
-        if (isMobile) {
-          // For mobile, set the texture directly - fix the TypeScript error
-          if (material instanceof THREE.MeshBasicMaterial) {
-            material.map = texture
-            material.needsUpdate = true
-          }
-        } else {
-          // For desktop, set the texture in the shader uniform
-          if (material instanceof THREE.ShaderMaterial && material.uniforms.uTexture) {
-            material.uniforms.uTexture.value = texture
-          }
+
+        // For desktop, set the texture in the shader uniform
+        if (material instanceof THREE.ShaderMaterial && material.uniforms.uTexture) {
+          material.uniforms.uTexture.value = texture
         }
-        
         // Create diamond plane with correct aspect ratio
         const geometry = new THREE.PlaneGeometry(width, height)
         const diamondMesh = new THREE.Mesh(geometry, material)
@@ -311,8 +307,8 @@ export default function Component({
       }
 
       // Update diamond position on resize
-      if (diamondMeshRef.current) {
-        const rightOffset = isMobile ? 0 : aspect * 0.3
+      if (diamondMeshRef.current && !isMobile) {
+        const rightOffset = aspect * 0.3
         diamondMeshRef.current.position.x = rightOffset
       }
     }
