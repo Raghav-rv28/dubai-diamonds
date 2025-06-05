@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/navigation-menu"
 import { MenuItem as MenuItemShopify, ShopifyMenu } from "@/lib/shopify/types"
 import { cn } from "@/lib/utils"
-import Image from "next/image"
 
 interface ShopifyMenuBarProps {
   menu: ShopifyMenu
@@ -42,9 +41,9 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, level }) => {
           )}
           target={item.target}
         >
-          {approvedCuts.includes(item.title.toLowerCase()) && (
+          {/* {approvedCuts.includes(item.title.toLowerCase()) && (
             <Image src={`/svg-cuts/${item.title.toLowerCase()}.svg`} alt={item.title} width={20} height={20} />
-          )}
+          )} */}
           {item.title}
         </Link>
       </NavigationMenuItem>
@@ -104,10 +103,9 @@ const SubMenuItem: React.FC<MenuItemProps> = ({ item, level }) => {
         )}
         target={item.target}
       >
-          <Image src="/svg-cuts/round.svg" alt="round" width={20} height={20} />
-        {approvedCuts.includes(item.title.toLowerCase()) && (
+        {/* {approvedCuts.includes(item.title.toLowerCase()) && (
           <Image src={`/svg-cuts/${item.title.toLowerCase()}.svg`} alt={item.title} width={20} height={20} />
-        )}
+        )} */}
         <div className="text-sm font-medium leading-none">{item.title}</div>
       </Link>
     )
