@@ -1,6 +1,8 @@
 import { getBlogs } from "@/lib/shopify";
+import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
+import { buttonVariants } from "../ui/button";
 import {
   Card,
   CardContent,
@@ -24,15 +26,15 @@ export default async function Blogs({first}: {first?: number}) {
             <article key={article.id}>
                 <Link href={`/blogs/news/${article.handle}`}>
               <Card
-                className="transition-shadow hover:shadow-xl duration-300 rounded-2xl animate-fadeIn"
+              className="h-full flex flex-col transition-shadow hover:shadow-xl duration-300 rounded-2xl animate-fadeIn"
               >
                 <CardHeader className="p-4 pb-2">
-                  <CardTitle className="text-lg line-clamp-2">
+                  <CardTitle className="text-lg line-clamp-2 min-h-[3rem]">
                     {article.title}
                   </CardTitle>
                 </CardHeader>
 
-                <CardContent className="p-4 pt-0 space-y-3">
+                <CardContent className="p-4 pt-0 space-y-3 grow">
                   {article.image?.url && (
                     <div className="w-full aspect-[4/3] relative rounded-lg overflow-hidden">
                       <Image
@@ -43,7 +45,7 @@ export default async function Blogs({first}: {first?: number}) {
                       />
                     </div>
                   )}
-                  <CardDescription className="text-muted-foreground text-sm line-clamp-3">
+                  <CardDescription className="text-muted-foreground text-sm line-clamp-3 min-h-[4.5rem]">
                     {article.content?.slice(0, 120)}...
                   </CardDescription>
                 </CardContent>
@@ -54,6 +56,15 @@ export default async function Blogs({first}: {first?: number}) {
           })
         )}
       </div>
+      {
+       first && first < 5 && (
+        <div className="flex justify-center">
+        <Link className={cn("mt-6", buttonVariants({variant: "default"}))} href="/blogs">
+          See More Blogs →
+        </Link>
+        </div>
+       )
+      }
     </div>
   );
 }
