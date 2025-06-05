@@ -4,31 +4,26 @@ import { InstagramIcon, LocateIcon, MailIcon, PhoneIcon } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Suspense } from 'react';
+import Logo from './navbar/logo';
 
 export default async function Footer() {
   const skeleton = 'w-full h-6 animate-pulse rounded bg-neutral-200 dark:bg-neutral-700';
   const menu = await getMenu('footer');
 
   return (
-    <footer className="text-sm text-neutral-500 dark:text-neutral-400">
+    <footer className="text-sm text-black dark:text-white">
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 border-t border-neutral-200 px-6 py-5 text-sm dark:border-neutral-700 md:flex-row md:gap-12 md:px-4 min-[1320px]:px-0">
         <div className="mx-auto max-w-6xl px-4">
           <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
             <div>
-              <Image
-                src={
-                  'https://cdn.shopify.com/s/files/1/0633/2714/2125/files/D_Diamond_Logo_White_Full.png?v=1747429316'
-                }
-                className="mb-5 ml-[-20px]"
-                alt="Dubai Jewellers logo"
-                width={150}
-                height={53}
-              />
-              <p className="text-md mb-4 text-gray-600">
+              <div className="mb-5">
+                <Logo />
+              </div>
+              <p className="text-md mb-4">
                 At Dubai Diamonds, we are here to help you find the best jewelry and deals for you!
                 We are here to create golden memories
               </p>
-              <p className="mb-2 text-xl font-semibold uppercase text-gray-600">Follow Us</p>
+              <p className="mb-2 text-xl font-semibold uppercase">Follow Us</p>
               <div className="flex space-x-2">
                 {/* <Link href={'https://www.facebook.com/jewellersdubai'} target="_blank">
                   <FacebookIcon className="h-6 w-6 text-orange-300" />
@@ -57,22 +52,22 @@ export default async function Footer() {
               </div>
             </div>
             <div>
-              <p className="mb-4 text-xl font-semibold uppercase text-gray-600">Contact Us</p>
-              <div className="mb-2 text-sm text-gray-600">
+              <p className="mb-4 text-xl font-semibold uppercase">Contact Us</p>
+              <div className="mb-2 text-sm">
                 <LocateIcon className="mr-1 inline h-4 w-4" />
                 2700 N Park Dr, Brampton, ON L6S 0E9
               </div>
-              <div className="mb-2 text-sm text-gray-600">
+              <div className="mb-2 text-sm">
                 <MailIcon className="mr-1 inline h-4 w-4" />
-                dubai_diamonds@gmail.com
+                info@dubaidiamonds.ca
               </div>
-              <div className="text-sm text-gray-600">
+              <div className="text-sm">
                 <PhoneIcon className="mr-1 inline h-4 w-4" />
                 +14164651200
               </div>
             </div>
             <div>
-              <p className="mb-4 text-xl font-semibold uppercase text-gray-600">Information</p>
+              <p className="mb-4 text-xl font-semibold uppercase">Information</p>
               <Suspense
                 fallback={
                   <div className="flex h-[188px] w-[200px] flex-col gap-2">
