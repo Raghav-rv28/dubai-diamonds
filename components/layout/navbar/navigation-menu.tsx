@@ -73,12 +73,13 @@ const MenuItem: React.FC<MenuItemProps> = ({ item, level }) => {
       )}
       <NavigationMenuContent className="dark:bg-popover dark:border-border">
         <div
-          className={cn(
-            "grid gap-3 p-4",
-            level === 1 && "w-[400px] grid-cols-2",
-            level === 2 && "w-[300px] grid-cols-1",
-            level === 3 && "w-[250px] grid-cols-1",
-          )}
+        className="w-[400px] grid gap-4 p-4"
+          // className={cn(
+          //   "grid gap-3 p-4",
+          //   level === 1 && "w-[400px] grid-cols-2",
+          //   level === 2 && "w-[300px] grid-cols-1",
+          //   level === 3 && "w-[250px] grid-cols-1",
+          // )}
         >
           {item.items.map((childItem) => (
             <SubMenuItem key={`${childItem.id}-${childItem.title}`} item={childItem} level={level + 1} />

@@ -1,9 +1,9 @@
-import { ShopifyMenuBar } from "@/components/layout/navbar/navigation-menu";
 import { ModeToggle } from "@/components/theme-toggle";
 import CartModal from "components/cart/modal";
 import { getMenu } from "lib/shopify";
 import Link from "next/link";
 import { Suspense } from "react";
+import DashingMenu from "./dashing-menu";
 import Logo from "./logo";
 import MobileMenu from "./mobile-menu";
 import Search, { SearchSkeleton } from "./search";
@@ -44,7 +44,8 @@ export async function Navbar() {
       </nav>
       <div className="hidden md:flex w-full items-center justify-center">
         <Suspense fallback={<SearchSkeleton />}>
-          {menu && <ShopifyMenuBar menu={menu} />}
+          {/* {menu && <ShopifyMenuBar menu={menu} />} */}
+          {menu && <DashingMenu menu={menu} />}
         </Suspense>
       </div>
       <hr />
