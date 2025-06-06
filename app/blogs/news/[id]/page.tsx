@@ -1,4 +1,3 @@
-import Footer from "@/components/layout/footer-two";
 import Prose from "@/components/prose";
 import { getArticle } from "@/lib/shopify";
 import Image from "next/image";
@@ -38,7 +37,6 @@ export default async function BlogPage({
         className="rounded-lg shadow max-h-[400px] object-contain w-full h-auto mb-6"
       />}
       <Prose className="mb-20 text-lg" html={article[0]?.contentHtml || ""} />
-      <Footer />
     </div>
   );
 }
