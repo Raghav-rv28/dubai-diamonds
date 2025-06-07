@@ -6,9 +6,9 @@ export default function About() {
       <div className="flex flex-col justify-center text-black dark:text-white md:hidden">
         <div className="mx-auto max-w-7xl rounded-xl px-4 py-12 opacity-95 sm:px-6 md:w-1/2 lg:px-8">
           <div className="mt-12 text-center">
-            <h1 className="text-5xl font-bold leading-tight">
+            <h2 className="text-5xl font-bold leading-tight">
               We built our business on great customer service
-            </h1>
+            </h2>
             <p className="text-md mb-8 mt-4 font-semibold">
             Our brand story: Since 2001, Dubai Jewellers has been a symbol of luxury, elegance, and craftsmanship.
             Our story began in the heart of Toronto&apos;s Gerrard Street with a vision to redefine what it means to feel confident, intelligent, and radiant through jewellery.
@@ -32,9 +32,9 @@ export default function About() {
         </div>
       </div>
       <div className="hidden w-full flex-col justify-center p-5 text-black dark:text-white md:flex md:w-1/2 md:p-20">
-        <h1 className="text-2xl font-bold md:text-4xl lg:text-6xl">
+        <h2 className="text-2xl font-bold md:text-4xl lg:text-6xl">
           We built our business on great customer service
-        </h1>
+        </h2>
         <p className="mt-6 text-xl">
           Our brand story: Since 2001, Dubai Jewellers has been a symbol of luxury, elegance, and craftsmanship.
           Our story began in the heart of Toronto&apos;s Gerrard Street with a vision to redefine what it means to feel confident,

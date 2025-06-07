@@ -30,7 +30,7 @@ export default async function Blogs({first}: {first?: number}) {
               >
                 <CardHeader className="p-4 pb-2">
                   <CardTitle className="text-lg line-clamp-2 min-h-[3rem]">
-                    {article.title}
+                    <strong>{article.title}</strong>
                   </CardTitle>
                 </CardHeader>
 
