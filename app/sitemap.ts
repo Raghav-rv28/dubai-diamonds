@@ -1,10 +1,12 @@
-import { getCollections, getPages, getProducts } from "lib/shopify";
+import { getBlogs, getCollections, getPages, getProducts } from "lib/shopify";
 import { baseUrl, validateEnvironmentVariables } from "lib/utils";
 import { MetadataRoute } from "next";
 
 type Route = {
   url: string;
-  lastModified: string;
+  lastModified?: string;
+  description?: string;
+  title?: string;
 };
 
 export const dynamic = "force-dynamic";
@@ -38,11 +40,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }))
   );
 
+
+  const blogsPromise = getBlogs().then((blogs) => {
+    const blog = blogs.filter((blog) => blog.handle === "news")[0]
+    if(!blog) return []
+    return blog.articles?.edges.map((article) => ({
+      url: `${baseUrl}/blogs/news/${article?.node?.handle}`,
+      description: article?.node?.content,
+      title: article?.node?.title,
+    }))
+  })
+  
   let fetchedRoutes: Route[] = [];
 
   try {
     fetchedRoutes = (
-      await Promise.all([collectionsPromise, productsPromise, pagesPromise])
+      await Promise.all([collectionsPromise, productsPromise, pagesPromise, blogsPromise])
     ).flat();
   } catch (error) {
     throw JSON.stringify(error, null, 2);

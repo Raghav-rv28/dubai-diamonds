@@ -514,7 +514,7 @@ export async function getMetaObjects(type: string): Promise<Metaobject[]> {
   return removeEdgesAndNodes(res.body.data.metaobjects);
 }
 
-export async function getBlogs(): Promise<Blog[] | undefined> {
+export async function getBlogs(): Promise<Blog[]> {
   "use cache";
   cacheTag(TAGS.products);
   cacheLife("days");
