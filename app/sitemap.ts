@@ -35,7 +35,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const pagesPromise = getPages().then((pages) =>
     pages.map((page) => ({
-      url: `${baseUrl}/${page.handle}`,
+      url: `${baseUrl}/pages/${page.handle}`,
       lastModified: page.updatedAt,
     }))
   );

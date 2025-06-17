@@ -67,7 +67,7 @@ export default function DashingMenu({menu}: {menu: ShopifyMenu}) {
                     <div key={item.id} className="relative group">
                         <Link 
                             href={item.url}
-                            onMouseEnter={() => setOpen(`${item.url}-${item.title}`)}
+                            onMouseEnter={() => {if(item.items.length > 0) {setOpen(`${item.url}-${item.title}`)}}}
                             className="relative flex items-center gap-2 px-6 py-3 font-medium text-foreground transition-all duration-300 ease-out hover:text-muted-foreground group"
                         >
                             <span className="relative z-10">{item.title}</span>
