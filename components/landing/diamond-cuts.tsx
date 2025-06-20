@@ -45,7 +45,7 @@ export default async function DiamondCuts() {
                                                     alt={key}
                                                     width={100}
                                                     height={100}
-                                                    className="lg:w-38 lg:h-38 object-contain hover:scale-105 transition-transform duration-300"
+                                                    className="lg:w-38 lg:h-38 object-contain hover:scale-110 transition-transform duration-300"
                                                 />
                                             ) : (
                                                 <Card className="w-25 h-25 lg:w-28 lg:h-28 flex items-center justify-center">

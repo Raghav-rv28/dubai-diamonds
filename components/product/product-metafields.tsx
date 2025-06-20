@@ -3,7 +3,7 @@ import { Metafield, ProductOption } from "lib/shopify/types";
 
 // Helper function to format metafield keys for display
 function formatMetafieldKey(key: string): string {
-  const wordsToRemove = ['final', 'test', 'variancy'];
+  const wordsToRemove = ['final', 'test', 'variancy',"custom"];
   
   // Split the key by either an underscore or a hyphen
   return key
