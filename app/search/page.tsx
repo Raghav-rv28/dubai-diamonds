@@ -38,7 +38,6 @@ export default async function SearchPage(props: {
   // }
   const products = await search(searchValue || "", reverse, sortKey,productFilters);
   const resultsText = products.length > 1 ? "results" : "result";
-
   return (
     <>
       {searchValue ? (

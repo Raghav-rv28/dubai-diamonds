@@ -6,10 +6,26 @@ import { FilterItem } from './item';
 export type ListItem = SortFilterItem | PathFilterItem;
 export type PathFilterItem = { title: string; path: string; available?: boolean };
 
+const skipCollections = [
+  "round",
+  "princess",
+  "pear",
+  "emerald",
+  "marqiuse",
+  "oval",
+  "radiant",
+  "cushion",
+]
 function FilterItemList({ list }: { list: ListItem[] }) {
+  const filteredList = list.filter((item: ListItem) => {
+    if ('path' in item) {
+      return !skipCollections.includes(item.title.toLowerCase());
+    }
+    return true;
+  });
   return (
     <>
-      {list.map((item: ListItem, i) => (
+      {filteredList.map((item: ListItem, i) => (
         <FilterItem key={i} item={item} />
       ))}
     </>

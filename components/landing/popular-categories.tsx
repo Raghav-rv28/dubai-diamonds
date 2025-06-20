@@ -1,7 +1,7 @@
 import { getCollections } from "@/lib/shopify";
 import AnimatedGrid from "../grid/animated-grid";
 
-const allowedCategories = ['bracelets','chains','men','rings','earrings','extravagant', 'trendy'];
+const allowedCategories = ['bracelets','chains','men','engagement','earrings','extravagant', 'trendy', 'bangles'];
 export default async function PopularCategories() {
   const collections = await getCollections("");
   const filteredCategories = collections.filter(
