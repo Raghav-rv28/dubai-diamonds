@@ -17,7 +17,6 @@ export async function generateMetadata(props: {
 }): Promise<Metadata> {
   const params = await props.params;
   const product = await getProduct(params.handle);
-  console.log(product?.metafields.filter((m) => m && m.value).map((m) => `${m.namespace}:${m.key}:${m.value}`));
   if (!product) return notFound();
 
   const { url, width, height, altText: alt } = product.featuredImage || {};

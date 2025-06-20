@@ -27,7 +27,7 @@ export function ProductDescription({ product }: { product: Product }) {
           html={product.descriptionHtml}
         />
       ) : null}
-      <ProductMetafields metafields={product.metafields.filter((m)=> m!==null)}/>
+      <ProductMetafields metafields={product.metafields.filter((m)=> m!==null)} options={product.options}/>
       <AddToCart product={product} />
     </>
   );

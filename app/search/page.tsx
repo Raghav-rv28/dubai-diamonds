@@ -1,4 +1,5 @@
 import { search } from "@/lib/shopify";
+import { ProductFilter } from "@/lib/shopify/types";
 import Grid from "components/grid";
 import ProductGridItems from "components/layout/product-grid-items";
 import { defaultSort, sorting } from "lib/constants";
@@ -16,25 +17,25 @@ export default async function SearchPage(props: {
   const { sortKey, reverse } =
     sorting.find((item) => item.slug === sort) || defaultSort;
 
-  const productFilters = [];
-  if (available === "true") {
-    productFilters.push({
-      available: true,
-      productMetafield: {
-        namespace: "custom",
-        key: "diamond_cut_final_test",
-        value: "baguette",
-      }
-     });
-  } else {
-    productFilters.push({
-      productMetafield: {
-        namespace: "custom",
-        key: "diamond_cut_final_test",
-        value: "baguette",
-      }
-    });
-  }
+  const productFilters: ProductFilter[] = [];
+  // if (available === "true") {
+  //   productFilters.push({
+  //     available: true,
+  //     productMetafield: {
+  //       namespace: "custom",
+  //       key: "diamond_cut_final_test",
+  //       value: "baguette",
+  //     }
+  //    });
+  // } else {
+  //   productFilters.push({
+  //     productMetafield: {
+  //       namespace: "custom",
+  //       key: "diamond_cut_final_test",
+  //       value: "baguette",
+  //     }
+  //   });
+  // }
   const products = await search(searchValue || "", reverse, sortKey,productFilters);
   const resultsText = products.length > 1 ? "results" : "result";
 

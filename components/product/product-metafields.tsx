@@ -1,5 +1,5 @@
 import { getMetaobjectsFromMetafield } from "lib/shopify";
-import { Metafield } from "lib/shopify/types";
+import { Metafield, ProductOption } from "lib/shopify/types";
 
 // Helper function to format metafield keys for display
 function formatMetafieldKey(key: string): string {
@@ -119,10 +119,11 @@ function GroupedMetaobjectDisplay({ metafield, metafields }: { metafield: Metafi
 }
 
 // Main component to display all metafields
-export function ProductMetafields({ metafields }: { metafields: Metafield[] }) {
+export function ProductMetafields({ metafields, options }: { metafields: Metafield[]; options: ProductOption[] }) {
   // Filter out empty metafields and system metafields you might not want to show
   const displayableMetafields = metafields.filter(metafield =>
     metafield && 
+    !options.map((option)=> option.name.toLowerCase()).includes(formatMetafieldKey(metafield.key).toLowerCase()) &&
     metafield.value && 
     metafield.value.trim() !== '' &&
     !metafield.key.startsWith('_') // Filter out system metafields that start with underscore

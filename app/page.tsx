@@ -47,7 +47,7 @@ export default function HomePage() {
         <DiamondCuts />
         {/** Carousel is a collection shower, show new-arrivals or trending stuff */}
         <Carousel />
-        <Blogs first={4} />
+        <Blogs first={3} />
         <Gender />
         <About />
       </main>
