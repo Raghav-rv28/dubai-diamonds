@@ -1,5 +1,6 @@
 import { Navbar } from "@/components/layout/navbar";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Analytics } from "@vercel/analytics/next";
 import { CartProvider } from "components/cart/cart-context";
 import { getCart } from "lib/shopify";
 import { baseUrl } from "lib/utils";
@@ -55,6 +56,7 @@ export default async function RootLayout({
         </CartProvider>
         <Footer/>
        </ThemeProvider>
+       <Analytics />
       </body>
     </html>
   );
