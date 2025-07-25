@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from "react";
 const carouselSlides = [
   {
     image: {
-      src: "https://cdn.shopify.com/s/files/1/0633/2714/2125/files/shoot_1_website_banner_insta_posts-01.png?v=1747421661",
+      src: "https://cdn.shopify.com/s/files/1/0633/2714/2125/files/garden_diamond_website_banner-20.png?v=1753483160",
       alt: "Luxury fashion collection",
     },
     content: {
@@ -20,7 +20,7 @@ const carouselSlides = [
   },
   {
     image: {
-      src: "https://cdn.shopify.com/s/files/1/0633/2714/2125/files/shoot_1_website_banner_insta_posts-04.png?v=1747421661",
+      src: "https://cdn.shopify.com/s/files/1/0633/2714/2125/files/dd_website_banners-04.jpg?v=1753483827",
       alt: "Premium lifestyle products",
     },
     content: {
@@ -31,7 +31,7 @@ const carouselSlides = [
   },
   {
     image: {
-      src: "https://cdn.shopify.com/s/files/1/0633/2714/2125/files/shoot_1_website_banner_insta_posts-03.png?v=1747421661",
+      src: "https://cdn.shopify.com/s/files/1/0633/2714/2125/files/dd_website_banners-02.jpg?v=1753483764",
       alt: "Exclusive designer items",
     },
     content: {
@@ -128,7 +128,7 @@ export default function HeroCarousel() {
               sizes="(max-width: 768px) 100vw, 80vh"
             />
             {/* Overlay gradient for better text readability */}
-            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30" />
+            {/* <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30" /> */}
           </div>
         ))}
       </div>
@@ -169,7 +169,7 @@ export default function HeroCarousel() {
                   : "opacity-100 translate-y-0"
               }`}
             >
-              <h1
+              {/* <h1
                 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight"
                 style={{ textShadow: "0 2px 4px rgba(0,0,0,0.3)" }}
               >
@@ -180,7 +180,7 @@ export default function HeroCarousel() {
                 style={{ textShadow: "0 1px 2px rgba(0,0,0,0.3)" }}
               >
                 {carouselSlides[currentSlide]?.content.description}
-              </p>
+              </p> */}
               <a
                 href={"https://calendly.com/dubai-diamonds103/30min"}
                 target="_blank"
