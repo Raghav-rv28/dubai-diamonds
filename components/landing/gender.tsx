@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
@@ -50,18 +49,16 @@ const GenderSection = ({ gender, imageUrl, index, url }: GenderSectionProps) => 
         <div className="group relative overflow-hidden shadow-xl cursor-pointer">
           {/* Image container with 3D hover effect on desktop only */}
           <div
-            className="relative h-[70vh] sm:h-[80vh] w-full overflow-hidden 
+            className="relative h-[80vh] sm:h-[80vh] w-full overflow-hidden 
             transition-all duration-500 ease-out
             md:group-hover:scale-[1.02] md:transform-gpu md:perspective-[1000px]"
           >
-            <Image
+            <img
               src={imageUrl || "/placeholder.svg"}
               alt={`${gender} fashion`}
-              fill
               className="object-cover transition-transform duration-700 ease-out
                 md:group-hover:scale-105 md:transform-gpu"
               sizes="(max-width: 768px) 100vw, 50vw"
-              priority
             />
 
             {/* Overlay gradient */}
@@ -105,15 +102,15 @@ export default function GenderSelection() {
       <div className="w-full lg:w-[80vw] mx-auto justify-center items-center flex flex-col md:flex-row space-y-6 md:space-y-0 px-4 md:px-0">
         <GenderSection
           gender="WOMEN"
-          imageUrl="https://cdn.shopify.com/s/files/1/0633/2714/2125/files/1a46fbf59aefc3cef254ed9a7b2f0b1c.jpg?v=1746067360"
+          imageUrl="https://cdn.shopify.com/s/files/1/0633/2714/2125/files/DSC03052.jpg?v=1753459437"
           index={0}
-          url={'/collections/men-jewelry'}
+          url={'/collections/women-jewelry'}
         />
         <GenderSection
           gender="MEN"
-          imageUrl="https://cdn.shopify.com/s/files/1/0633/2714/2125/files/9371211f25c5e373debd51ab43c79151.jpg?v=1746048302"
+          imageUrl="https://cdn.shopify.com/s/files/1/0633/2714/2125/files/dd_pool_table_shoot_photos-06.jpg?v=1753459582"
           index={1}
-          url={'/collections/women0jewelry'}
+          url={'/collections/men-jewelry'}
         />
       </div>
     </div>
