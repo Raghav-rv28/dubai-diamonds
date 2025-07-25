@@ -62,6 +62,9 @@ const productFragment = /* GraphQL */ `
     ,{key: "age-group", namespace: "shopify"}
     ,{key: "bracelet_length", namespace: "custom"}
     ,{key: "diamond_setting", namespace: "custom"}
+    ,{key: "source", namespace: "custom"}
+    ,{key: "earrings_diameter", namespace: "custom"}
+    ,{key: "earrings_backing", namespace: "custom"}
     ,{key: "ring_design_custom", namespace: "custom"}
     ]) {
       value

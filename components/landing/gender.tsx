@@ -8,9 +8,11 @@ type GenderSectionProps = {
   gender: "WOMEN" | "MEN";
   imageUrl: string;
   index: number;
+  url: string;
 };
 
-const GenderSection = ({ gender, imageUrl, index }: GenderSectionProps) => {
+
+const GenderSection = ({ gender, imageUrl, index, url }: GenderSectionProps) => {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
 
@@ -44,7 +46,7 @@ const GenderSection = ({ gender, imageUrl, index }: GenderSectionProps) => {
       className={`relative w-full transition-all duration-700 ease-out transform 
         ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"}`}
     >
-      <Link href={`/products/${gender}`}>
+      <Link href={url}>
         <div className="group relative overflow-hidden shadow-xl cursor-pointer">
           {/* Image container with 3D hover effect on desktop only */}
           <div
@@ -105,11 +107,13 @@ export default function GenderSelection() {
           gender="WOMEN"
           imageUrl="https://cdn.shopify.com/s/files/1/0633/2714/2125/files/1a46fbf59aefc3cef254ed9a7b2f0b1c.jpg?v=1746067360"
           index={0}
+          url={'/collections/men-jewelry'}
         />
         <GenderSection
           gender="MEN"
           imageUrl="https://cdn.shopify.com/s/files/1/0633/2714/2125/files/9371211f25c5e373debd51ab43c79151.jpg?v=1746048302"
           index={1}
+          url={'/collections/women0jewelry'}
         />
       </div>
     </div>

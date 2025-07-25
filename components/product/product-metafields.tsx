@@ -121,6 +121,7 @@ function GroupedMetaobjectDisplay({ metafield, metafields }: { metafield: Metafi
 // Main component to display all metafields
 export function ProductMetafields({ metafields, options }: { metafields: Metafield[]; options: ProductOption[] }) {
   // Filter out empty metafields and system metafields you might not want to show
+  console.log(metafields.map((m)=> m.key));
   const displayableMetafields = metafields.filter(metafield =>
     metafield && 
     !options.map((option)=> option.name.toLowerCase()).includes(formatMetafieldKey(metafield.key).toLowerCase()) &&
@@ -128,7 +129,8 @@ export function ProductMetafields({ metafields, options }: { metafields: Metafie
     metafield.value.trim() !== '' &&
     !metafield.key.startsWith('_') // Filter out system metafields that start with underscore
   );
-
+  console.log(JSON.stringify(displayableMetafields.map(m => m.value)));
+  console.log(JSON.stringify(displayableMetafields.map((m)=> m.references),null,2 ));
   if (!displayableMetafields.length) {
     return null;
   }
@@ -145,8 +147,7 @@ export function ProductMetafields({ metafields, options }: { metafields: Metafie
             {/* <div className="font-medium text-gray-900 dark:text-white">
               {formatMetafieldKey(metafield.key)}
             </div> */}
-            
-            <div className="text-gray-700 dark:text-gray-300">
+           <div className="text-gray-700 dark:text-gray-300">
               {metafield.type === 'list.metaobject_reference' || metafield.type === 'metaobject_reference' ? (
                 // <MetaobjectReferences metafield={metafield} metafields={metafields} />
                 <GroupedMetaobjectDisplay metafield={metafield} metafields={metafields} />

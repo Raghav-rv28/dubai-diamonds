@@ -82,7 +82,7 @@ export default function DashingMenu({menu}: {menu: ShopifyMenu}) {
             {/* Submenu Dropdown - Full Width */}
             <div 
                 className={`w-full bg-background border-b transition-all duration-500 ease-out overflow-hidden ${
-                    open ? 'max-h-[60vh] opacity-100' : 'max-h-0 opacity-0'
+                    open ? 'max-h-[75vh] opacity-100' : 'max-h-0 opacity-0'
                 }`}
                 onMouseEnter={() => {}}
                 onMouseLeave={() => setOpen(null)}
