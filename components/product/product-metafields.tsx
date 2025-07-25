@@ -129,7 +129,7 @@ export function ProductMetafields({ metafields, options }: { metafields: Metafie
     metafield.value.trim() !== '' &&
     !metafield.key.startsWith('_') // Filter out system metafields that start with underscore
   );
-  console.log(JSON.stringify(displayableMetafields.map(m => m.value)));
+  console.log(JSON.stringify(displayableMetafields.map(m => `${m.value} ${m.namespace}`)));
   console.log(JSON.stringify(displayableMetafields.map((m)=> m.references),null,2 ));
   if (!displayableMetafields.length) {
     return null;

@@ -60,12 +60,12 @@ const productFragment = /* GraphQL */ `
     ,{key: "ring-design", namespace: "shopify"}
     ,{key: "ring-metal", namespace: "shopify"}
     ,{key: "age-group", namespace: "shopify"}
-    ,{key: "bracelet_length", namespace: "custom"}
-    ,{key: "diamond_setting", namespace: "custom"}
+    ,{key: "bracelet-length", namespace: "custom"}
+    ,{key: "diamond-setting", namespace: "custom"}
     ,{key: "source", namespace: "custom"}
-    ,{key: "earrings_diameter", namespace: "custom"}
-    ,{key: "earrings_backing", namespace: "custom"}
-    ,{key: "ring_design_custom", namespace: "custom"}
+    ,{key: "earrings-diameter", namespace: "custom"}
+    ,{key: "earrings-backing", namespace: "custom"}
+    ,{key: "ring-design-custom", namespace: "custom"}
     ]) {
       value
       type

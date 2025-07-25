@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
@@ -53,7 +54,9 @@ const GenderSection = ({ gender, imageUrl, index, url }: GenderSectionProps) => 
             transition-all duration-500 ease-out
             md:group-hover:scale-[1.02] md:transform-gpu md:perspective-[1000px]"
           >
-            <img
+            <Image
+             loading="lazy"
+              fill
               src={imageUrl || "/placeholder.svg"}
               alt={`${gender} fashion`}
               className="object-cover transition-transform duration-700 ease-out
@@ -108,7 +111,7 @@ export default function GenderSelection() {
         />
         <GenderSection
           gender="MEN"
-          imageUrl="https://cdn.shopify.com/s/files/1/0633/2714/2125/files/dd_pool_table_shoot_photos-06.jpg?v=1753459582"
+          imageUrl="https://cdn.shopify.com/s/files/1/0633/2714/2125/files/dd_pool_table_shoot_photos-12.jpg?v=1753482614"
           index={1}
           url={'/collections/men-jewelry'}
         />
