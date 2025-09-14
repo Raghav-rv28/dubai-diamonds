@@ -13,8 +13,12 @@ export function LabNaturalCheckbox() {
 
   const handleChange = (value: string) => {
     const params = new URLSearchParams(searchParams.toString());
-    params.set('tag', value);
-
+    if(value === "All"){
+        params.delete("tag");
+    } else {
+        params.set('tag', value);
+    }
+    
     startTransition(() => {
       router.push(`${pathname}?${params.toString()}`);
     });
@@ -22,6 +26,15 @@ export function LabNaturalCheckbox() {
 
   return (
     <div className="w-full border-b border-gray-200 dark:border-gray-700 pt-4">
+        <label className="flex w-full items-center gap-2 text-sm md:text-base">
+        <input
+          type="radio"
+          checked={!value || value === 'All'}
+          onChange={() => handleChange('All')}
+          className="h-4 w-4"
+        />
+        All
+      </label>
       <label className="flex w-full items-center gap-2 text-sm md:text-base">
         <input
           type="radio"

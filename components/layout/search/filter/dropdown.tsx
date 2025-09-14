@@ -26,14 +26,22 @@ export default function FilterItemDropdown({ list }: { list: ListItem[] }) {
   }, []);
 
   useEffect(() => {
+    let foundMatch = false;
+    
     list.forEach((listItem: ListItem) => {
       if (
         ('path' in listItem && pathname === listItem.path) ||
         ('slug' in listItem && searchParams.get('sort') === listItem.slug)
       ) {
         setActive(listItem.title);
+        foundMatch = true;
       }
     });
+    
+    // Reset active state if no match was found
+    if (!foundMatch) {
+      setActive('');
+    }
   }, [pathname, list, searchParams]);
 
   return (
