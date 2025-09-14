@@ -344,6 +344,10 @@ export async function getCollectionProducts({
   "use cache";
   cacheTag(TAGS.collections, TAGS.products);
   cacheLife("days");
+  console.log(collection);
+
+  // Convert tag string to ProductFilter array if tag is provided
+  const productFilters = tag ? { tag } : undefined;
 
   const res = await shopifyFetch<ShopifyCollectionProductsOperation>({
     query: getCollectionProductsQuery,
@@ -351,9 +355,7 @@ export async function getCollectionProducts({
       handle: collection,
       reverse,
       sortKey: sortKey === "CREATED_AT" ? "CREATED" : sortKey,
-      tag: {
-        tag: tag || "",
-      },
+      tag: productFilters,
     },
   });
 
@@ -361,7 +363,7 @@ export async function getCollectionProducts({
     console.log(`No collection found for \`${collection}\``);
     return [];
   }
-
+  console.log(res.body.data.collection.products.edges.length)
   return reshapeProducts(
     removeEdgesAndNodes(res.body.data.collection.products)
   );
