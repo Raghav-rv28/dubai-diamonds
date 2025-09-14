@@ -6,6 +6,7 @@ import { Geist } from 'next/font/google';
 import Link from 'next/link';
 import { DynamicPrice } from './dynamic-price';
 import { ProductMetafields } from './product-metafields';
+import { ProductTags } from './product-tags';
 import { VariantSelector } from './variant-selector';
 
 const Giestfont = Geist({
@@ -28,6 +29,7 @@ export function ProductDescription({ product }: { product: Product }) {
           html={product.descriptionHtml}
         />
       ) : null}
+      <ProductTags tags={product.tags} />
       <ProductMetafields metafields={product.metafields.filter((m)=> m!==null)} options={product.options}/>
       <AddToCart product={product} />
       <Link href='https://calendly.com/dubai-diamonds103/30min' target="_blank" className='mt-4 relative flex w-full items-center justify-center rounded-full 
