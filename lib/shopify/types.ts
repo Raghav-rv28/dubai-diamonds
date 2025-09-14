@@ -336,11 +336,13 @@ export type Metafield = {
   type: string;
   key: string;
   namespace: string;
+  reference: ConnectionProduct<Metaobject>;
   references?: ConnectionProduct<Metaobject>; // Optional since not all metafields have references
 };
 
 export type ProductFilter = {
   available?: boolean;
+  tag?: string;
   productMetafield?: {
     namespace: string;
     key: string;

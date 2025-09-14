@@ -13,11 +13,16 @@ export default async function SearchPage(props: {
   searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const searchParams = await props.searchParams;
-  const { sort, q: searchValue, available } = searchParams as { [key: string]: string };
+  const { sort, q: searchValue, available, tag } = searchParams as { [key: string]: string };
   const { sortKey, reverse } =
     sorting.find((item) => item.slug === sort) || defaultSort;
 
   const productFilters: ProductFilter[] = [];
+  if (tag) {
+    productFilters.push({
+      tag,
+    });
+  }
   // if (available === "true") {
   //   productFilters.push({
   //     available: true,

@@ -1,4 +1,5 @@
 import { InStockCheckbox } from "@/components/layout/search/filter/available";
+import { LabNaturalCheckbox } from "@/components/layout/search/filter/lab-nat";
 import Footer from "components/layout/footer";
 import Collections from "components/layout/search/collections";
 import FilterList from "components/layout/search/filter";
@@ -27,6 +28,7 @@ export default function SearchLayout({
           <div className="hidden md:block mb-4">
             <Suspense fallback={null}>
             <InStockCheckbox />
+            <LabNaturalCheckbox />
             </Suspense>
           </div>
           <FilterList list={sorting} title="Sort by" />
