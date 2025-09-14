@@ -334,10 +334,12 @@ export async function getCollectionProducts({
   collection,
   reverse,
   sortKey,
+  tag,
 }: {
   collection: string;
   reverse?: boolean;
   sortKey?: string;
+  tag?: string;
 }): Promise<Product[]> {
   "use cache";
   cacheTag(TAGS.collections, TAGS.products);
@@ -349,6 +351,9 @@ export async function getCollectionProducts({
       handle: collection,
       reverse,
       sortKey: sortKey === "CREATED_AT" ? "CREATED" : sortKey,
+      tag: {
+        tag: tag || "",
+      },
     },
   });
 
