@@ -355,7 +355,6 @@ export async function getCollectionProducts({
   "use cache";
   cacheTag(TAGS.collections, TAGS.products);
   cacheLife("days");
-  console.log(collection);
 
   // Convert tag string to ProductFilter array if tag is provided
   const productFilters = tag ? { tag } : undefined;
@@ -374,7 +373,6 @@ export async function getCollectionProducts({
     console.log(`No collection found for \`${collection}\``);
     return [];
   }
-  console.log(res.body.data.collection.products.edges.length)
   return reshapeProducts(
     removeEdgesAndNodes(res.body.data.collection.products)
   );
@@ -516,7 +514,6 @@ export async function search(
       productFilters,
     },
   });
-  console.log(res.body.data.search.productFilters);
   return reshapeProducts(removeEdgesAndNodes(res.body.data.search));
 }
 

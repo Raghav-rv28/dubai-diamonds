@@ -77,7 +77,7 @@ function formatMetafieldValue(metafield: Metafield): string | React.ReactNode {
 function GroupedMetaobjectDisplay({ metafield, metafields }: { metafield: Metafield; metafields: Metafield[] }) {
   // Fetches all metaobjects associated with this specific key
   const metaobjects = getMetaobjectsFromMetafield(metafields, metafield.namespace, metafield.key);
-  console.log(metaobjects);
+
   if (!metaobjects || metaobjects.length === 0) {
     return null;
   }

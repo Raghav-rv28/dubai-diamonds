@@ -13,14 +13,23 @@ export default async function SearchPage(props: {
   searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const searchParams = await props.searchParams;
-  const { sort, q: searchValue, available, tag } = searchParams as { [key: string]: string };
+  const { sort, q: searchValue, available, tag, ringSize } = searchParams as { [key: string]: string };
   const { sortKey, reverse } =
     sorting.find((item) => item.slug === sort) || defaultSort;
-
+  console.log("Ring size:", ringSize)
   const productFilters: ProductFilter[] = [];
   if (tag) {
     productFilters.push({
       tag,
+    });
+  }
+  if (ringSize) {
+    productFilters.push({
+      productMetafield: {
+        namespace: "shopify",
+        key: "ring-size",
+        value: ringSize,
+      },
     });
   }
   // if (available === "true") {
@@ -41,6 +50,7 @@ export default async function SearchPage(props: {
   //     }
   //   });
   // }
+  console.log(productFilters);
   const products = await search(searchValue || "", reverse, sortKey,productFilters);
   const resultsText = products.length > 1 ? "results" : "result";
   return (

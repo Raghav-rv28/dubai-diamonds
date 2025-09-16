@@ -1,5 +1,6 @@
 import { InStockCheckbox } from "@/components/layout/search/filter/available";
 import { LabNaturalCheckbox } from "@/components/layout/search/filter/lab-nat";
+import RingSizeFilter from "@/components/layout/search/filter/ring-size";
 import Footer from "components/layout/footer";
 import Collections from "components/layout/search/collections";
 import FilterList from "components/layout/search/filter";
@@ -29,6 +30,7 @@ export default function SearchLayout({
             <Suspense fallback={null}>
             <InStockCheckbox />
             <LabNaturalCheckbox />
+            <RingSizeFilter />
             </Suspense>
           </div>
           <FilterList list={sorting} title="Sort by" />
