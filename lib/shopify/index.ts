@@ -149,7 +149,18 @@ export function getMetaobjectsFromMetafield(
     (field) => field.namespace === namespace && field.key === key
   );
 
-  return metafield?.references?.edges.map(edge => edge.node) || [];
+  if (!metafield) return [];
+
+  const listReferences = metafield.references?.edges.map((edge) => edge.node) || [];
+
+  // Some metafields are a single metaobject reference
+  // GraphQL shape: metafield.reference -> Metaobject
+  // Fall back to empty array if not present
+  const singleReference = (metafield as any).reference
+    ? [((metafield as any).reference as Metaobject)]
+    : [];
+
+  return [...listReferences, ...singleReference];
 }
 
 const reshapeCart = (cart: ShopifyCart): Cart => {

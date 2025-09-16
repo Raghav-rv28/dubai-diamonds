@@ -70,7 +70,6 @@ function formatMetafieldValue(metafield: Metafield): string | React.ReactNode {
           {metafield.value}
         </div>
       );
-    
     default:
       return metafield.value;
   }
@@ -78,7 +77,7 @@ function formatMetafieldValue(metafield: Metafield): string | React.ReactNode {
 function GroupedMetaobjectDisplay({ metafield, metafields }: { metafield: Metafield; metafields: Metafield[] }) {
   // Fetches all metaobjects associated with this specific key
   const metaobjects = getMetaobjectsFromMetafield(metafields, metafield.namespace, metafield.key);
-
+  console.log(metaobjects);
   if (!metaobjects || metaobjects.length === 0) {
     return null;
   }
@@ -121,7 +120,6 @@ function GroupedMetaobjectDisplay({ metafield, metafields }: { metafield: Metafi
 // Main component to display all metafields
 export function ProductMetafields({ metafields, options }: { metafields: Metafield[]; options: ProductOption[] }) {
   // Filter out empty metafields and system metafields you might not want to show
-  console.log(metafields.map((m)=> m.key));
   const displayableMetafields = metafields.filter(metafield =>
     metafield && 
     !options.map((option)=> option.name.toLowerCase()).includes(formatMetafieldKey(metafield.key).toLowerCase()) &&
@@ -129,8 +127,6 @@ export function ProductMetafields({ metafields, options }: { metafields: Metafie
     metafield.value.trim() !== '' &&
     !metafield.key.startsWith('_') // Filter out system metafields that start with underscore
   );
-  console.log(JSON.stringify(displayableMetafields.map(m => `${m.value} ${m.namespace}`)));
-  console.log(JSON.stringify(displayableMetafields.map((m)=> m.reference),null,2 ));
   if (!displayableMetafields.length) {
     return null;
   }
@@ -157,7 +153,6 @@ export function ProductMetafields({ metafields, options }: { metafields: Metafie
                 </div>
               )}
             </div>
-            
             {/* Optional: Show metafield type for debugging
             <div className="text-xs text-gray-400">
               Type: {metafield.type} | Namespace: {metafield.namespace}

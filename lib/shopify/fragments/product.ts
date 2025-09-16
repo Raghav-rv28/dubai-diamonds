@@ -63,11 +63,11 @@ import seoFragment from './seo';
       ,{key: "age-group", namespace: "shopify"}
       ,{key: "target-gender", namespace: "shopify"}
       ,{key: "band-design", namespace: "shopify"}
-      ,{key: "bracelet-design", namespace: "custom"}
+      ,{key: "bracelet_length", namespace: "custom"}
       ,{key: "diamond-setting", namespace: "custom"}
-      ,{key: "source", namespace: "custom"}
-      ,{key: "earrings-diameter", namespace: "custom"}
-      ,{key: "earrings-backing", namespace: "custom"}
+      ,{key: "earrings", namespace: "custom"}
+      ,{key: "earrings-design", namespace: "shopify"}
+      ,{key: "earrings_backing", namespace: "custom"}
       ,{key: "ring-design-custom", namespace: "custom"}
       ]) {
         value
