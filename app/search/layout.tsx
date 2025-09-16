@@ -26,7 +26,7 @@ export default function SearchLayout({
         </div>
         <div className="order-none flex-none md:order-last md:w-[125px]">
           <h3 className="text-xs text-neutral-500 dark:text-neutral-400">Filters</h3>
-          <div className="hidden md:block mb-4">
+          <div className="md:block mb-4">
             <Suspense fallback={null}>
             <InStockCheckbox />
             <LabNaturalCheckbox />
