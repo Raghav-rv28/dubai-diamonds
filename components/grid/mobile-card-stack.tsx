@@ -34,6 +34,8 @@ const CARD_BG = "#0b1522"; // deep slate blue
 const CARD_TEXT = "#ffffff";
 const CARD_SHADOW = "rgba(0,0,0,0.35)";
 
+const ICON_OPTIONS = ["bed", "users", "dollar", "arrowUpRight"] as const;
+
 export default function MobileCardStack({ items }: MobileCardStackProps) {
   console.log("MobileCardStack received items:", items);
   console.log("MobileCardStack items length:", items?.length);
@@ -54,7 +56,7 @@ export default function MobileCardStack({ items }: MobileCardStackProps) {
       subtitle: "Premium Property",
       description: "Experience luxury living with world-class amenities and stunning views.",
       imageUrl: item.imageUrl,
-      icon: (["bed", "users", "dollar", "arrowUpRight"] as const)[index % 4],
+      icon: ICON_OPTIONS[index % ICON_OPTIONS.length] ?? "",
       colors: {
         primary: CARD_BG,
         secondary: "#1a2332",
@@ -81,7 +83,7 @@ export default function MobileCardStack({ items }: MobileCardStackProps) {
           id: (maxId + 1).toString(),
           title: `NEW PROPERTY ${maxId + 1}`,
           description: "A newly discovered property with unique features and amenities.",
-          icon: (["bed", "users", "dollar", "arrowUpRight"] as const)[Math.floor(Math.random() * 4)],
+          icon: ICON_OPTIONS[Math.floor(Math.random() * ICON_OPTIONS.length)] ?? "",
         };
         return [...newCards, newCard];
       }
