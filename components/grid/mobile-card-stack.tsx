@@ -1,5 +1,6 @@
 "use client";
 
+import { Badge } from "@/components/ui/badge";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight, Bed, DollarSign, Users } from "lucide-react";
 import Image from "next/image";
@@ -26,6 +27,7 @@ export type MobileCardStackProps = {
     id: string;
     title: string;
     imageUrl: string;
+    description: string;
   }>;
 };
 
@@ -53,8 +55,8 @@ export default function MobileCardStack({ items }: MobileCardStackProps) {
     const transformedCards: CardData[] = items.map((item, index) => ({
       id: item.id,
       title: item.title.toUpperCase(),
-      subtitle: "Premium Property",
-      description: "Experience luxury living with world-class amenities and stunning views.",
+      subtitle: `Premium ${item.title}`,
+      description: `${item.description.slice(0,100)}...`,
       imageUrl: item.imageUrl,
       icon: ICON_OPTIONS[index % ICON_OPTIONS.length] ?? "",
       colors: {
@@ -131,10 +133,6 @@ export default function MobileCardStack({ items }: MobileCardStackProps) {
   return (
     <div className="relative w-full px-4">
       <div className="relative h-[600px] w-full">
-        <div className="text-white bg-blue-500 p-2 mb-4">
-          <p>Debug: {visible.length} cards to render</p>
-        </div>
-
         <AnimatePresence mode="popLayout">
           {visible.map((card, index) => (
             <Card
@@ -212,52 +210,36 @@ function Card({ card, index, removeCard, getIconComponent, totalCards }: CardPro
         className="relative flex h-full flex-col overflow-hidden rounded-2xl"
         style={{ color: card.colors.text }}
       >
-        {/* Card Header */}
-        <div className="flex items-center justify-between p-4">
-          <div className="rounded-full bg-white/20 p-2">
-            {getIconComponent(card.icon)}
-          </div>
-          <Link href={`/collections/${card.id}`} className="rounded-full bg-white/20 p-2 hover:bg-white/30 transition-colors">
-            <ArrowUpRight className="h-5 w-5" />
-          </Link>
+        {/* Background Image */}
+        <div className="absolute inset-0">
+          <Image
+            src={card.imageUrl || "/placeholder.svg"}
+            alt={card.title}
+            width={1200}
+            height={800}
+            className="h-full w-full object-cover"
+          />
+          {/* Dark overlay for better text readability */}
+          <div className="absolute inset-0 bg-black/20" />
         </div>
 
-        {/* Card Title */}
-        <div className="px-4 py-2">
-          <h2 className="text-3xl font-bold">{card.title}</h2>
-          <h3 className="text-xl font-medium" style={{ color: `${card.colors.text}99` }}>
-            {card.subtitle}
-          </h3>
+        {/* Arrow Up Right Badge - Top Right */}
+        <div className="absolute top-4 right-4 z-20">
+          <Badge asChild variant="outline" className="rounded-full bg-black/40 border-white/20 hover:bg-black/60">
+            <Link href={`/collections/${card.id}`} className="p-2">
+              <ArrowUpRight className="h-5 w-5 text-white" />
+            </Link>
+          </Badge>
         </div>
 
-        {/* Card Image */}
-        <div className="mt-2 overflow-hidden px-4">
-          <div className="aspect-video w-full overflow-hidden rounded-xl">
-            <Image
-              src={card.imageUrl || "/placeholder.svg"}
-              alt={card.title}
-              width={1200}
-              height={800}
-              className="h-full w-full object-cover"
-            />
+        {/* Footer Overlay - Bottom 15% */}
+        <div className="absolute bottom-0 left-0 right-0 h-[15%] bg-gradient-to-t from-black/80 to-transparent flex items-end p-4">
+          <div>
+            <h2 className="text-2xl font-bold text-white">{card.title}</h2>
+            <h3 className="text-lg font-medium text-white/80">
+              {card.subtitle}
+            </h3>
           </div>
-        </div>
-
-        {/* Card Footer */}
-        <div className="mt-auto p-4">
-          <div
-            className="rounded-full px-3 py-1 text-sm"
-            style={{
-              backgroundColor: `${card.colors.text}20`,
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "0.25rem",
-            }}
-          >
-            <DollarSign className="h-4 w-4" />
-            {card.subtitle}
-          </div>
-          <p className="mt-3 text-sm opacity-80">{card.description}</p>
         </div>
 
         {/* Drag indicator for the top card */}

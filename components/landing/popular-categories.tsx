@@ -13,6 +13,7 @@ export default async function PopularCategories() {
     id: cat.handle,
     title: cat.title,
     imageUrl: cat.image?.url!,
+    description: cat.description,
   }));
 
   return (
