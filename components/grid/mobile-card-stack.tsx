@@ -190,7 +190,7 @@ function Card({ card, index, removeCard, getIconComponent, totalCards }: CardPro
       }}
       className="absolute left-0 top-0 h-full w-full cursor-grab overflow-hidden rounded-2xl active:cursor-grabbing"
       drag={index === 0 ? "x" : false}
-      dragConstraints={{ left: -200, right: 200 }}
+      dragConstraints={{ left: -20, right: 20 }}
       dragElastic={0.2}
       onDragEnd={(_, info) => {
         if (index === 0) {
@@ -225,7 +225,7 @@ function Card({ card, index, removeCard, getIconComponent, totalCards }: CardPro
         {/* Arrow Up Right Badge - Top Right */}
         <div className="absolute top-10 right-10 z-20">
           <Badge asChild variant="outline" className="rounded-full bg-black/40 border-white/20 hover:bg-black/60 text-xl">
-            <Link href={`/collections/${card.id}`} className="p-2">
+            <Link href={`/collections/${card.id}`} className="p-2 text-white">
               Open <ArrowUpRight className="h-16 w-16 font-xl text-white" />
             </Link>
           </Badge>
