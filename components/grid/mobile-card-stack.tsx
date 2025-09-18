@@ -44,6 +44,7 @@ export default function MobileCardStack({ items }: MobileCardStackProps) {
 
   const [cards, setCards] = useState<CardData[]>([]);
   const [loading, setLoading] = useState(true);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   // Transform items into CardData format
   useEffect(() => {
@@ -73,25 +74,22 @@ export default function MobileCardStack({ items }: MobileCardStackProps) {
 
   const removeCard = (id: string) => {
     console.log("Removing card:", id);
-    setCards((prevCards) => {
-      const newCards = prevCards.filter((card) => card.id !== id);
-      const removedCard = prevCards.find((card) => card.id === id);
-      
-      if (removedCard && newCards.length > 0) {
-        // Add the removed card to the end with updated properties
-        const maxId = Math.max(...prevCards.map((card) => parseInt(card.id) || 0));
-        const newCard: CardData = {
-          ...removedCard,
-          id: (maxId + 1).toString(),
-          title: `NEW PROPERTY ${maxId + 1}`,
-          description: "A newly discovered property with unique features and amenities.",
-          icon: ICON_OPTIONS[Math.floor(Math.random() * ICON_OPTIONS.length)] ?? "",
-        };
-        return [...newCards, newCard];
+    // Move to the next card in the circular array
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % cards.length);
+  };
+
+  // Get the visible cards based on current index (circular)
+  const getVisibleCards = () => {
+    if (cards.length === 0) return [];
+    
+    const visible = [];
+    for (let i = 0; i < Math.min(3, cards.length); i++) {
+      const index = (currentIndex + i) % cards.length;
+      if(cards[index]){
+        visible.push(cards[index]);
+          }
       }
-      
-      return newCards;
-    });
+    return visible;
   };
 
   const getIconComponent = (iconName: string) => {
@@ -126,9 +124,10 @@ export default function MobileCardStack({ items }: MobileCardStackProps) {
     );
   }
 
-  const visible = cards.slice(0, Math.min(3, cards.length));
+  const visible = getVisibleCards();
   console.log("Visible cards:", visible);
   console.log("Visible cards length:", visible.length);
+  console.log("Current index:", currentIndex);
 
   return (
     <div className="relative w-full px-4">
@@ -136,7 +135,7 @@ export default function MobileCardStack({ items }: MobileCardStackProps) {
         <AnimatePresence mode="popLayout">
           {visible.map((card, index) => (
             <Card
-              key={card.id}
+              key={`${card.id}-${currentIndex}-${index}`}
               card={card}
               index={index}
               removeCard={removeCard}
@@ -224,20 +223,20 @@ function Card({ card, index, removeCard, getIconComponent, totalCards }: CardPro
         </div>
 
         {/* Arrow Up Right Badge - Top Right */}
-        <div className="absolute top-4 right-4 z-20">
-          <Badge asChild variant="outline" className="rounded-full bg-black/40 border-white/20 hover:bg-black/60">
+        <div className="absolute top-10 right-10 z-20">
+          <Badge asChild variant="outline" className="rounded-full bg-black/40 border-white/20 hover:bg-black/60 text-xl">
             <Link href={`/collections/${card.id}`} className="p-2">
-              <ArrowUpRight className="h-5 w-5 text-white" />
+              Open <ArrowUpRight className="h-16 w-16 font-xl text-white" />
             </Link>
           </Badge>
         </div>
 
         {/* Footer Overlay - Bottom 15% */}
-        <div className="absolute bottom-0 left-0 right-0 h-[15%] bg-gradient-to-t from-black/80 to-transparent flex items-end p-4">
-          <div>
-            <h2 className="text-2xl font-bold text-white">{card.title}</h2>
+        <div className="absolute text-center bottom-0 left-0 right-0 h-[15%] bg-gradient-to-t from-black/80 to-transparent flex items-end p-4">
+          <div >
+            <h2 className="text-4xl mb-10 font-bold text-white">{card.title}</h2>
             <h3 className="text-lg font-medium text-white/80">
-              {card.subtitle}
+              {card.description}
             </h3>
           </div>
         </div>
