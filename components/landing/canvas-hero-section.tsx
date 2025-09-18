@@ -413,18 +413,6 @@ export default function Component({
         />
       )}
 
-      {/* Mobile simple image */}
-      {isMobile && (
-        <div className="absolute inset-0 flex items-center justify-center">
-          <img
-            src={imageUrl}
-            alt="Hidden image"
-            className="max-w-[80vw] w-[80vw] max-h-[50vh] object-contain"
-            loading="eager"
-            decoding="async"
-          />
-        </div>
-      )}
 
       {/* Custom cursor (no re-renders on move) */}
       {!isMobile && (
