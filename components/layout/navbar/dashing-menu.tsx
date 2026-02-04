@@ -64,7 +64,7 @@ export default function DashingMenu({menu}: {menu: ShopifyMenu}) {
             {/* Main Navigation */}
             <div className="flex items-center justify-center gap-1 px-6 py-4 border-b">
                 {menu.items.map((item) => (
-                    <div key={item.id} className="relative group">
+                    <div key={item.id + item.title} className="relative group">
                         <Link 
                             href={item.url}
                             onMouseEnter={() => {if(item.items.length > 0) {setOpen(`${item.url}-${item.title}`)}}}
@@ -106,7 +106,7 @@ export default function DashingMenu({menu}: {menu: ShopifyMenu}) {
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                             {open && menu.items.find((item) => `${item.url}-${item.title}` === open)?.items?.map((subItem, index) => (
                                 <div 
-                                    key={subItem.id}
+                                    key={subItem.id + subItem.title}
                                     className="group animate-fadeInUp"
                                     style={{animationDelay: `${index * 100}ms`}}
                                 >
@@ -140,7 +140,7 @@ export function AnotherLayer({items, delay = 0}: {items: MenuItem[], delay?: num
             {items.map((item, index) => (
                 <Link 
                     href={item.url} 
-                    key={item.id}
+                    key={item.id + item.title}
                     className="flex items-center gap-2 p-3 pl-6 rounded-md hover:bg-muted transition-all duration-300 border-l-2 border-border hover:border-foreground group animate-slideInLeft"
                     style={{animationDelay: `${delay + (index * 50)}ms`}}
                 >

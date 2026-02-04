@@ -1,6 +1,6 @@
 'use server';
 
-import { TAGS } from 'lib/constants';
+import { TAGS } from '@/lib/constants';
 import {
   addToCart,
   createCart,
@@ -22,7 +22,7 @@ export async function addItem(
 
   try {
     await addToCart([{ merchandiseId: selectedVariantId, quantity: 1 }]);
-    revalidateTag(TAGS.cart);
+    revalidateTag(TAGS.cart, "max");
   } catch (e) {
     return 'Error adding item to cart';
   }
@@ -42,7 +42,7 @@ export async function removeItem(prevState: any, merchandiseId: string) {
 
     if (lineItem && lineItem.id) {
       await removeFromCart([lineItem.id]);
-      revalidateTag(TAGS.cart);
+      revalidateTag(TAGS.cart, "max");
     } else {
       return 'Item not found in cart';
     }
@@ -87,8 +87,7 @@ export async function updateItemQuantity(
       // If the item doesn't exist in the cart and quantity > 0, add it
       await addToCart([{ merchandiseId, quantity }]);
     }
-
-    revalidateTag(TAGS.cart);
+    revalidateTag(TAGS.cart, "max");
   } catch (e) {
     console.error(e);
     return 'Error updating item quantity';

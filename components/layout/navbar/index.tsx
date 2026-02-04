@@ -1,5 +1,6 @@
 import { ModeToggle } from "@/components/theme-toggle";
 import CartModal from "components/cart/modal";
+import LoadingDots from "components/loading-dots";
 import { getMenu } from "lib/shopify";
 import Link from "next/link";
 import { Suspense } from "react";
@@ -38,7 +39,15 @@ export async function Navbar() {
             <div className="mr-2 hidden md:block">
               <ModeToggle />
             </div>
-            <CartModal />
+            <Suspense
+              fallback={
+                <div className="flex items-center">
+                  <LoadingDots className="bg-black dark:bg-white" />
+                </div>
+              }
+            >
+              <CartModal />
+            </Suspense>
           </div>
         </div>
       </nav>

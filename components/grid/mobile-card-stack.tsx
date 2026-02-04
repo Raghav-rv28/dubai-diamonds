@@ -39,9 +39,7 @@ const CARD_SHADOW = "rgba(0,0,0,0.35)";
 const ICON_OPTIONS = ["bed", "users", "dollar", "arrowUpRight"] as const;
 
 export default function MobileCardStack({ items }: MobileCardStackProps) {
-  console.log("MobileCardStack received items:", items);
-  console.log("MobileCardStack items length:", items?.length);
-
+  
   const [cards, setCards] = useState<CardData[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -125,9 +123,6 @@ export default function MobileCardStack({ items }: MobileCardStackProps) {
   }
 
   const visible = getVisibleCards();
-  console.log("Visible cards:", visible);
-  console.log("Visible cards length:", visible.length);
-  console.log("Current index:", currentIndex);
 
   return (
     <div className="relative w-full px-4">

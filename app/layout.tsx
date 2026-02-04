@@ -2,10 +2,11 @@ import { Navbar } from "@/components/layout/navbar";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Analytics } from "@vercel/analytics/next";
 import { CartProvider } from "components/cart/cart-context";
+import LoadingDots from "components/loading-dots";
 import { getCart } from "lib/shopify";
 import { baseUrl } from "lib/utils";
 import { Space_Grotesk } from "next/font/google";
-import { ReactNode } from "react";
+import { ReactNode, Suspense } from "react";
 import { Toaster } from "sonner";
 import Footer from "../components/layout/footer-two";
 import "./globals.css";
@@ -48,11 +49,19 @@ export default async function RootLayout({
             disableTransitionOnChange
           >
         <CartProvider cartPromise={cart}>
-          <Navbar />
-          <main>
-            {children}
-            <Toaster closeButton />
-          </main>
+          <Suspense
+            fallback={
+              <div className="flex w-full items-center justify-center py-6">
+                <LoadingDots className="bg-black dark:bg-white" />
+              </div>
+            }
+          >
+            <Navbar />
+            <main>
+              {children}
+              <Toaster closeButton />
+            </main>
+          </Suspense>
         </CartProvider>
         <Footer/>
        </ThemeProvider>
