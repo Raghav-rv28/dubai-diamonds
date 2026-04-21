@@ -11,6 +11,7 @@ import { Toaster } from "sonner";
 import Footer from "../components/layout/footer-two";
 import "./globals.css";
 const { SITE_NAME } = process.env;
+const isMaintenanceMode = process.env.MAINTENANCE_MODE === "true";
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -25,8 +26,8 @@ export const metadata = {
     template: `%s | ${SITE_NAME}`,
   },
   robots: {
-    follow: true,
-    index: true,
+    follow: !isMaintenanceMode,
+    index: !isMaintenanceMode,
   },
 };
 
@@ -36,6 +37,24 @@ export default async function RootLayout({
 }: {
   children: ReactNode;
 }) {
+  if (isMaintenanceMode) {
+    return (
+      <html lang="en" className={spaceGrotesk.className} suppressHydrationWarning>
+        <body className="bg-neutral-50 text-black dark:bg-neutral-900 dark:text-white">
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <main>{children}</main>
+          </ThemeProvider>
+          <Analytics />
+        </body>
+      </html>
+    );
+  }
+
   // Don't await the fetch, pass the Promise to the context provider
   const cart = getCart();
 
