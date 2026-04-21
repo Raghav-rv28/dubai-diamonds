@@ -47,7 +47,15 @@ export default async function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <main>{children}</main>
+            <Suspense
+              fallback={
+                <div className="flex w-full items-center justify-center py-6">
+                  <LoadingDots className="bg-black dark:bg-white" />
+                </div>
+              }
+            >
+              <main>{children}</main>
+            </Suspense>
           </ThemeProvider>
           <Analytics />
         </body>
