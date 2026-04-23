@@ -55,13 +55,12 @@ import seoFragment from './seo';
       metafields(identifiers: [
        {key: "diamond_carat_variancy", namespace: "custom"}
       ,{key: "material", namespace: "custom"}
-      ,{key: "diamond_clarity_variancy", namespace: "custom"}
-      ,{key: "diamond_cut_final_test", namespace: "custom"}
+      ,{key: "diamond_clarity", namespace: "custom"}
+      ,{key: "diamond_cut", namespace: "custom"}
+      ,{key: "diamond_color", namespace: "custom"}
       ,{key: "ring-size", namespace: "shopify"}
       ,{key: "ring-design", namespace: "shopify"}
       ,{key: "ring-metal", namespace: "shopify"}
-      ,{key: "age-group", namespace: "shopify"}
-      ,{key: "target-gender", namespace: "shopify"}
       ,{key: "band-design", namespace: "shopify"}
       ,{key: "bracelet_length", namespace: "custom"}
       ,{key: "diamond-setting", namespace: "custom"}
