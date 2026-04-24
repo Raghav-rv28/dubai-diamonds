@@ -5,6 +5,8 @@ import { Carousel } from "@/components/landing/carousel";
 import DiamondCuts from "@/components/landing/diamond-cuts";
 import Gender from "@/components/landing/gender";
 import PopularCategories from "@/components/landing/popular-categories";
+import Testimonials from "@/components/landing/testimonials";
+import TrustBar from "@/components/landing/trust-bar";
 import MaintenancePage from "@/components/maintenance-page";
 
 const isMaintenanceMode = process.env.MAINTENANCE_MODE === "true";
@@ -47,14 +49,14 @@ export default function HomePage() {
 
   return (
     <>
-      <main className="flex flex-col gap-8 md:gap-12">
+      <main className="flex flex-col">
         <CanvasHeroSection />
-        {/* <HeroCarousel /> */}
         <PopularCategories />
         <DiamondCuts />
-        {/** Carousel is a collection shower, show new-arrivals or trending stuff */}
+        <TrustBar />
         <Carousel />
         <Blogs first={3} />
+        <Testimonials />
         <Gender />
         <About />
       </main>

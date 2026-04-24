@@ -403,7 +403,10 @@ export default function Component({
   }, [imageUrl, spotlightRadius, starCount, isMobile]);
 
   return (
-    <section className="relative min-h-screen bg-black overflow-hidden">
+    <section
+      className="relative min-h-[92vh] md:min-h-screen overflow-hidden text-white"
+      style={{ backgroundColor: "var(--ink)" }}
+    >
       {/* Three mount only on desktop */}
       {!isMobile && (
         <div
@@ -411,6 +414,38 @@ export default function Component({
           className="absolute inset-0 w-full h-full cursor-none"
           style={{ touchAction: "none" }}
         />
+      )}
+
+      {/* Mobile fallback: elegant static starfield + soft vignette */}
+      {isMobile && (
+        <div className="absolute inset-0">
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(ellipse at 70% 50%, color-mix(in oklch, var(--champagne) 10%, transparent), transparent 55%), radial-gradient(ellipse at center, var(--ink-soft) 0%, var(--ink) 70%)",
+            }}
+          />
+          {/* sparse static sparkles */}
+          <div className="absolute inset-0 opacity-80">
+            {[
+              [12, 18], [23, 62], [34, 24], [47, 78], [58, 33],
+              [66, 70], [72, 15], [83, 52], [91, 82], [8, 44],
+              [41, 50], [55, 12], [28, 88], [77, 38], [15, 72],
+            ].map(([left, top], i) => (
+              <span
+                key={i}
+                className="absolute block h-px w-px rounded-full bg-white animate-sparkle"
+                style={{
+                  left: `${left}%`,
+                  top: `${top}%`,
+                  boxShadow: "0 0 4px 1px rgba(255,255,255,0.8)",
+                  animationDelay: `${(i % 5) * 0.4}s`,
+                }}
+              />
+            ))}
+          </div>
+        </div>
       )}
 
 
@@ -421,9 +456,9 @@ export default function Component({
           className="absolute z-20 pointer-events-none opacity-0 transition-opacity duration-150"
           style={{ width: 32, height: 32 }}
         >
-          <div className="w-8 h-8 rounded-full border-2 border-white/40 backdrop-blur-sm bg-white/10 relative">
-            <div className="w-full h-full rounded-full border border-white/60 animate-pulse" />
-            <div className="w-2 h-2 bg-white/80 rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+          <div className="relative w-8 h-8 rounded-full border border-champagne/50 backdrop-blur-sm bg-white/5">
+            <div className="w-full h-full rounded-full border border-champagne/30 animate-pulse" />
+            <div className="absolute top-1/2 left-1/2 w-1.5 h-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-champagne" />
           </div>
         </div>
       )}
@@ -431,29 +466,80 @@ export default function Component({
       {/* Loading (desktop only) */}
       {!isMobile && !isLoaded && (
         <div className="absolute inset-0 flex items-center justify-center z-10">
-          <div className="text-white/60 text-sm animate-pulse">Loading…</div>
+          <div className="eyebrow animate-pulse">Loading</div>
         </div>
       )}
 
-      {/* Overlay content */}
-      <div className="relative z-10 container mx-auto px-4 py-20 flex items-start min-h-screen pointer-events-none">
-        <div className="max-w-2xl space-y-8 mt-20">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight uppercase text-center md:text-left">
-            Explore the Legacy of Diamonds
+      {/* Overlay content — centered vertically, editorial rhythm */}
+      <div className="relative z-10 container mx-auto px-6 md:px-10 flex items-center min-h-[92vh] md:min-h-screen pointer-events-none">
+        <div className="max-w-2xl flex flex-col gap-8 md:gap-10">
+          <span
+            className="eyebrow pointer-events-auto text-center md:text-left"
+            style={{ color: "color-mix(in oklch, var(--champagne) 90%, white)" }}
+          >
+            Toronto · Fine Jewellery Since 2001
+          </span>
+
+          <h1 className="display-xl text-center md:text-left">
+            Explore the{" "}
+            <em className="italic font-light" style={{ color: "var(--champagne)" }}>
+              Legacy
+            </em>{" "}
+            of Diamonds
           </h1>
-          <p className="text-xl md:text-2xl text-white/70 max-w-xl leading-relaxed text-center md:text-left">
-            Best in class service and diamonds provided in Ontario, Canada. Explore our collection or book a meeting!
+
+          <p className="max-w-md text-base md:text-lg text-white/65 leading-relaxed text-center md:text-left">
+            Best-in-class service and exceptional diamonds, crafted in Ontario, Canada.
+            Explore the collection — or book a private consultation.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 pt-16 pointer-events-auto">
-            <Link href="/search" className="px-8 py-4 text-black bg-white font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 border border-white/10">
-              Discover More
+
+          <div className="flex flex-col sm:flex-row items-center sm:items-stretch gap-4 sm:gap-6 pt-2 pointer-events-auto">
+            <Link
+              href="/search"
+              className="group relative overflow-hidden inline-flex items-center justify-center px-8 py-3.5 text-sm tracking-[0.2em] uppercase text-ink bg-champagne hover:bg-gold transition-colors duration-500 ease-[cubic-bezier(.2,.8,.2,1)]"
+            >
+              <span className="relative z-10">Discover More</span>
+              <span className="absolute inset-0 gold-shimmer opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             </Link>
-            <Link target="_blank" href="https://calendly.com/dubai-diamonds103/30min" className="px-8 py-4 bg-white/5 backdrop-blur-sm text-white font-semibold rounded-lg border border-white/20 hover:bg-white/10 transition-all duration-200">
-              Book a Consultation
+
+            <Link
+              target="_blank"
+              href="https://calendly.com/dubai-diamonds103/30min"
+              className="group inline-flex items-center gap-3 text-sm tracking-[0.2em] uppercase text-white/80 hover:text-champagne transition-colors duration-300"
+            >
+              <span className="relative">
+                Book a Consultation
+                <span className="absolute -bottom-1 left-0 h-px w-full bg-champagne origin-left scale-x-100 md:scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-[cubic-bezier(.2,.8,.2,1)]" />
+              </span>
+              <svg
+                viewBox="0 0 24 24"
+                className="h-3.5 w-3.5 transition-transform duration-500 group-hover:translate-x-1"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+              >
+                <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
             </Link>
           </div>
         </div>
       </div>
+
+      {/* Scroll cue */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 hidden md:flex flex-col items-center gap-3 pointer-events-none">
+        <span className="eyebrow text-white/50 text-[0.6rem]">Scroll</span>
+        <span className="relative h-10 w-px overflow-hidden bg-white/20">
+          <span className="absolute inset-x-0 top-0 h-4 bg-gradient-to-b from-champagne to-transparent animate-[scroll-cue_2.4s_ease-in-out_infinite]" />
+        </span>
+      </div>
+
+      <style jsx>{`
+        @keyframes scroll-cue {
+          0% { transform: translateY(-100%); opacity: 0; }
+          40% { opacity: 1; }
+          100% { transform: translateY(260%); opacity: 0; }
+        }
+      `}</style>
     </section>
   );
 }

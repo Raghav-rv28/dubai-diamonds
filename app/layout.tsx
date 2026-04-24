@@ -5,7 +5,7 @@ import { CartProvider } from "components/cart/cart-context";
 import LoadingDots from "components/loading-dots";
 import { getCart } from "lib/shopify";
 import { baseUrl } from "lib/utils";
-import { Space_Grotesk } from "next/font/google";
+import { Cormorant_Garamond, Space_Grotesk } from "next/font/google";
 import { ReactNode, Suspense } from "react";
 import { Toaster } from "sonner";
 import Footer from "../components/layout/footer-two";
@@ -16,6 +16,16 @@ const isMaintenanceMode = process.env.MAINTENANCE_MODE === "true";
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-body",
+  display: "swap",
+});
+
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-display",
+  display: "swap",
 });
 
 
@@ -39,7 +49,7 @@ export default async function RootLayout({
 }) {
   if (isMaintenanceMode) {
     return (
-      <html lang="en" className={spaceGrotesk.className} suppressHydrationWarning>
+      <html lang="en" className={`${spaceGrotesk.variable} ${cormorant.variable} font-body`} suppressHydrationWarning>
         <body className="bg-neutral-50 text-black dark:bg-neutral-900 dark:text-white">
           <ThemeProvider
             attribute="class"
@@ -67,8 +77,8 @@ export default async function RootLayout({
   const cart = getCart();
 
   return (
-    <html lang="en" className={spaceGrotesk.className} suppressHydrationWarning>
-      <body className="bg-neutral-50 text-black  dark:bg-neutral-900 dark:text-white ">
+    <html lang="en" className={`${spaceGrotesk.variable} ${cormorant.variable} font-body`} suppressHydrationWarning>
+      <body className="bg-neutral-50 text-black dark:bg-neutral-900 dark:text-white">
        <ThemeProvider
             attribute="class"
             defaultTheme="system"

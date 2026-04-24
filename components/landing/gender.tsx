@@ -1,121 +1,109 @@
 "use client";
 
+import { SectionHeader } from "@/components/ui/divider";
+import { fadeUp, staggerContainer, viewportOnce } from "@/lib/motion";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
 
 type GenderSectionProps = {
-  gender: "WOMEN" | "MEN";
+  gender: "Women" | "Men";
+  eyebrow: string;
+  description: string;
   imageUrl: string;
-  index: number;
   url: string;
 };
 
-
-const GenderSection = ({ gender, imageUrl, index, url }: GenderSectionProps) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry?.isIntersecting) {
-          // Delay based on index for staggered animation
-          setTimeout(() => {
-            setIsVisible(true);
-          }, index * 200);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
-    };
-  }, [index]);
-
+const GenderSection = ({
+  gender,
+  eyebrow,
+  description,
+  imageUrl,
+  url,
+}: GenderSectionProps) => {
   return (
-    <div
-      ref={sectionRef}
-      className={`relative w-full transition-all duration-700 ease-out transform 
-        ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-16"}`}
-    >
+    <motion.div variants={fadeUp} className="relative w-full">
       <Link href={url}>
-        <div className="group relative overflow-hidden shadow-xl cursor-pointer">
-          {/* Image container with 3D hover effect on desktop only */}
-          <div
-            className="relative h-[80vh] sm:h-[80vh] w-full overflow-hidden 
-            transition-all duration-500 ease-out
-            md:group-hover:scale-[1.02] md:transform-gpu md:perspective-[1000px]"
-          >
+        <div className="group relative overflow-hidden cursor-pointer">
+          <div className="relative aspect-[4/5] md:aspect-[3/4] w-full overflow-hidden">
             <Image
-             loading="lazy"
+              loading="lazy"
               fill
               src={imageUrl || "/placeholder.svg"}
-              alt={`${gender} fashion`}
-              className="object-cover transition-transform duration-700 ease-out
-                md:group-hover:scale-105 md:transform-gpu"
+              alt={`${gender} fine jewellery`}
+              className="object-cover transition-transform duration-[1400ms] ease-[cubic-bezier(.2,.8,.2,1)] md:group-hover:scale-[1.04]"
               sizes="(max-width: 768px) 100vw, 50vw"
             />
 
-            {/* Overlay gradient */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-70 transition-opacity duration-500 md:group-hover:opacity-60"></div>
+            {/* Editorial ink gradient */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
 
-            {/* Label */}
-            <div className="absolute bottom-0 left-0 right-0 p-6 transform transition-transform duration-500 ease-out md:group-hover:translate-y-[-8px]">
-              <h2 className="text-6xl font-bold text-white text-center uppercase tracking-wider">
-                {gender}
-              </h2>
-              <div className="absolute left-1/2 translate-x-[-50%] bottom-0 h-1 w-24 bg-white 
-                origin-center scale-x-0 transition-transform duration-500 ease-out 
-                md:group-hover:scale-x-100 mb-2">
+            {/* Champagne frame on hover */}
+            <div className="pointer-events-none absolute inset-4 border border-champagne/0 transition-[border-color,inset] duration-700 ease-[cubic-bezier(.2,.8,.2,1)] md:group-hover:border-champagne/40 md:group-hover:inset-6" />
+
+            {/* Bottom-left editorial block */}
+            <div className="absolute inset-x-0 bottom-0 p-6 md:p-10">
+              <div className="flex flex-col gap-3 max-w-sm">
+                <span
+                  className="eyebrow"
+                  style={{
+                    color: "color-mix(in oklch, var(--champagne) 90%, white)",
+                  }}
+                >
+                  {eyebrow}
+                </span>
+                <h3 className="font-display text-4xl md:text-5xl lg:text-6xl text-white leading-[0.95]">
+                  {gender}
+                </h3>
+                <p className="text-sm md:text-base text-white/70 max-w-[22rem] leading-relaxed">
+                  {description}
+                </p>
+                <span className="mt-3 inline-flex items-center gap-2 text-[0.65rem] uppercase tracking-[0.25em] text-white/90 md:opacity-80 md:group-hover:opacity-100 transition-opacity">
+                  <span className="block h-px w-6 bg-champagne transition-[width] duration-500 md:group-hover:w-10" />
+                  Shop collection
+                </span>
               </div>
-              {/* <div className="h-1 w-0 bg-white mt-2 transition-all duration-500 ease-out md:group-hover:w-24"></div> */}
             </div>
-          </div>
-
-          {/* 3D effect elements - desktop only */}
-          <div
-            className="hidden md:block absolute inset-0 transform-gpu transition-all duration-700 ease-out 
-            opacity-0 group-hover:opacity-100 pointer-events-none"
-          >
-            <div
-              className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent 
-              transform rotate-12 translate-y-[-20%] translate-x-[-10%] scale-150"
-            ></div>
           </div>
         </div>
       </Link>
-    </div>
+    </motion.div>
   );
 };
 
 export default function GenderSelection() {
   return (
-    <div>
-      <h2 className="text-6xl font-semibold text-center w-full mt-4 mb-9">
-        Shop by Gender
-      </h2>
-      <div className="w-full lg:w-[80vw] mx-auto justify-center items-center flex flex-col md:flex-row space-y-6 md:space-y-0 px-4 md:px-0">
+    <section className="w-full px-4 md:px-8 py-16 md:py-24">
+      <SectionHeader
+        eyebrow="Made for You"
+        title="Shop by"
+        titleItalic="gender."
+        description="Two worlds, one craft. Explore pieces shaped for every personality."
+        className="mb-10 md:mb-14"
+      />
+
+      <motion.div
+        variants={staggerContainer(0.18)}
+        initial="hidden"
+        whileInView="visible"
+        viewport={viewportOnce}
+        className="w-full lg:w-[88vw] xl:max-w-7xl mx-auto flex flex-col md:flex-row gap-4 md:gap-6"
+      >
         <GenderSection
-          gender="WOMEN"
+          gender="Women"
+          eyebrow="The Feminine"
+          description="Timeless silhouettes and statement pieces for every chapter of her story."
           imageUrl="https://cdn.shopify.com/s/files/1/0633/2714/2125/files/DSC03052.jpg?v=1753459437"
-          index={0}
-          url={'/collections/women-jewelry'}
+          url="/collections/women-jewelry"
         />
         <GenderSection
-          gender="MEN"
+          gender="Men"
+          eyebrow="The Modern Man"
+          description="Bold bands, refined chains, and heirloom watches made to be worn every day."
           imageUrl="https://cdn.shopify.com/s/files/1/0633/2714/2125/files/dd_pool_table_shoot_photos-12.jpg?v=1753482614"
-          index={1}
-          url={'/collections/men-jewelry'}
+          url="/collections/men-jewelry"
         />
-      </div>
-    </div>
+      </motion.div>
+    </section>
   );
 }
