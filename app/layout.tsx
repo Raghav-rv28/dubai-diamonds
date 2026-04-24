@@ -1,3 +1,4 @@
+import HomePromoStrip from "@/components/landing/home-promo-strip";
 import { Navbar } from "@/components/layout/navbar";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Analytics } from "@vercel/analytics/next";
@@ -93,6 +94,7 @@ export default async function RootLayout({
               </div>
             }
           >
+        <HomePromoStrip />
             <Navbar />
             <main>
               {children}

@@ -266,12 +266,60 @@ button {
     animation: sparkle 3.5s ease-in-out infinite;
   }
 
+  /* Promo ticker: two identical long groups, shift by one group for a seamless wrap */
+  .ticker-marquee {
+    overflow: hidden;
+  }
+
+  .ticker-marquee-track {
+    display: flex;
+    width: max-content;
+    animation: ticker-marquee 50s linear infinite;
+    will-change: transform;
+  }
+
+  .ticker-marquee-group {
+    display: flex;
+    flex: 0 0 auto;
+    min-width: 100vw;
+  }
+
+  .ticker-marquee-item {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    white-space: nowrap;
+  }
+
+  .ticker-marquee-item::after {
+    content: "";
+    display: inline-block;
+    width: clamp(2rem, 5vw, 4rem);
+    height: 1px;
+    margin-inline: clamp(1rem, 2vw, 1.75rem);
+    background: currentColor;
+    opacity: 0.3;
+  }
+
   /* Accessibility: respect reduced motion */
   @media (prefers-reduced-motion: reduce) {
     .gold-shimmer,
     .animate-float,
     .animate-sparkle {
       animation: none !important;
+    }
+
+    .ticker-marquee-track {
+      animation: none !important;
+      width: 100%;
+      justify-content: center;
+      will-change: auto;
+    }
+
+    .ticker-marquee-track > .ticker-marquee-group:not(:first-child),
+    .ticker-marquee-group > .ticker-marquee-item:not(:first-child),
+    .ticker-marquee-item::after {
+      display: none;
     }
   }
 }
@@ -302,5 +350,14 @@ button {
   50% {
     opacity: 1;
     transform: scale(1.15);
+  }
+}
+
+@keyframes ticker-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
   }
 }
