@@ -61,15 +61,11 @@ import seoFragment from './seo';
       ,{key: "diamond_cut", namespace: "custom"}
       ,{key: "diamond_color", namespace: "custom"}
       ,{key: "ring-size", namespace: "shopify"}
-      ,{key: "ring-design", namespace: "shopify"}
       ,{key: "ring-metal", namespace: "shopify"}
       ,{key: "band-design", namespace: "shopify"}
       ,{key: "bracelet_length", namespace: "custom"}
       ,{key: "diamond-setting", namespace: "custom"}
       ,{key: "earrings", namespace: "custom"}
-      ,{key: "earrings-design", namespace: "shopify"}
-      ,{key: "earrings_backing", namespace: "custom"}
-      ,{key: "ring-design-custom", namespace: "custom"}
       ]) {
         value
         type
