@@ -39,6 +39,8 @@ import seoFragment from './seo';
               amount
               currencyCode
             }
+            weight
+            weightUnit
           }
         }
       }

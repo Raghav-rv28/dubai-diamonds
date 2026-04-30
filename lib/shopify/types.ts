@@ -74,6 +74,8 @@ export type ProductOption = {
   values: string[];
 };
 
+export type WeightUnit = "GRAMS" | "KILOGRAMS" | "OUNCES" | "POUNDS";
+
 export type ProductVariant = {
   id: string;
   title: string;
@@ -83,6 +85,8 @@ export type ProductVariant = {
     value: string;
   }[];
   price: Money;
+  weight?: number | null;
+  weightUnit?: WeightUnit;
 };
 
 export type SEO = {

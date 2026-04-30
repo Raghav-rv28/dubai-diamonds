@@ -42,6 +42,7 @@ import {
   Page,
   Product,
   ProductFilter,
+  ProductVariant,
   ShopifyAddToCartOperation,
   ShopifyArticleOperation,
   ShopifyBlogsOperation,
@@ -215,6 +216,45 @@ const reshapeImages = (images: Connection<Image>, productTitle: string) => {
   });
 };
 
+const WEIGHT_UNIT_LABELS: Record<string, string> = {
+  GRAMS: "g",
+  KILOGRAMS: "kg",
+  OUNCES: "oz",
+  POUNDS: "lb",
+};
+
+const formatVariantWeight = (
+  value: number,
+  unit: string | undefined | null,
+): string => {
+  const unitLabel = unit ? (WEIGHT_UNIT_LABELS[unit] ?? unit.toLowerCase()) : "";
+  const trimmed = Number.isInteger(value) ? value.toString() : value.toString();
+  return unitLabel ? `${trimmed} ${unitLabel}` : trimmed;
+};
+
+const buildWeightMetafield = (
+  variants: ProductVariant[],
+): Metafield | null => {
+  const formatted = Array.from(
+    new Set(
+      variants
+        .filter((v) => typeof v.weight === "number" && (v.weight ?? 0) > 0)
+        .map((v) => formatVariantWeight(v.weight as number, v.weightUnit)),
+    ),
+  );
+
+  if (formatted.length === 0) return null;
+
+  return {
+    key: "weight",
+    namespace: "shopify",
+    type: "single_line_text_field",
+    value: formatted.join(" / "),
+    reference: { edges: [] },
+    references: { edges: [] },
+  };
+};
+
 const reshapeProduct = (
   product: ShopifyProduct,
   filterHiddenProducts: boolean = true,
@@ -226,12 +266,18 @@ const reshapeProduct = (
     return undefined;
   }
 
-  const { images, variants, ...rest } = product;
+  const { images, variants, metafields, ...rest } = product;
+  const flattenedVariants = removeEdgesAndNodes(variants);
+  const weightMetafield = buildWeightMetafield(flattenedVariants);
+  const mergedMetafields = weightMetafield
+    ? [...(metafields ?? []), weightMetafield]
+    : (metafields ?? []);
 
   return {
     ...rest,
+    metafields: mergedMetafields,
     images: reshapeImages(images, product.title),
-    variants: removeEdgesAndNodes(variants),
+    variants: flattenedVariants,
   };
 };
 
