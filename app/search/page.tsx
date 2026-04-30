@@ -13,7 +13,14 @@ export default async function SearchPage(props: {
   searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const searchParams = await props.searchParams;
-  const { sort, q: searchValue, available, tag } = searchParams as { [key: string]: string };
+  const {
+    sort,
+    q: searchValue,
+    available,
+    tag,
+  } = (searchParams ?? {}) as {
+    [key: string]: string;
+  };
   const { sortKey, reverse } =
     sorting.find((item) => item.slug === sort) || defaultSort;
 
@@ -23,25 +30,17 @@ export default async function SearchPage(props: {
       tag,
     });
   }
-  // if (available === "true") {
-  //   productFilters.push({
-  //     available: true,
-  //     productMetafield: {
-  //       namespace: "custom",
-  //       key: "diamond_cut_final_test",
-  //       value: "baguette",
-  //     }
-  //    });
-  // } else {
-  //   productFilters.push({
-  //     productMetafield: {
-  //       namespace: "custom",
-  //       key: "diamond_cut_final_test",
-  //       value: "baguette",
-  //     }
-  //   });
-  // }
-  const products = await search(searchValue || "", reverse, sortKey,productFilters);
+  if (available === "true") {
+    productFilters.push({
+      available: true,
+    });
+  }
+  const products = await search(
+    searchValue || "",
+    reverse,
+    sortKey,
+    productFilters,
+  );
   const resultsText = products.length > 1 ? "results" : "result";
   return (
     <>

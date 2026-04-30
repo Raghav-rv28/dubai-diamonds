@@ -1,10 +1,11 @@
-import { getCollection, getCollectionProducts } from 'lib/shopify';
-import { Metadata } from 'next';
-import { notFound } from 'next/navigation';
+import { getCollection, getCollectionProducts } from "lib/shopify";
+import { Metadata } from "next";
+import { notFound } from "next/navigation";
 
-import Grid from 'components/grid';
-import ProductGridItems from 'components/layout/product-grid-items';
-import { defaultSort, sorting } from 'lib/constants';
+import Grid from "components/grid";
+import ProductGridItems from "components/layout/product-grid-items";
+import { defaultSort, sorting } from "lib/constants";
+import { ProductFilter } from "@/lib/shopify/types";
 
 export async function generateMetadata(props: {
   params: Promise<{ collection: string }>;
@@ -17,7 +18,9 @@ export async function generateMetadata(props: {
   return {
     title: collection.seo?.title || collection.title,
     description:
-      collection.seo?.description || collection.description || `${collection.title} products`
+      collection.seo?.description ||
+      collection.description ||
+      `${collection.title} products`,
   };
 }
 
@@ -27,9 +30,26 @@ export default async function CategoryPage(props: {
 }) {
   const searchParams = await props.searchParams;
   const params = await props.params;
-  const { sort, tag } = searchParams as { [key: string]: string };
-  const { sortKey, reverse } = sorting.find((item) => item.slug === sort) || defaultSort;
-  const products = await getCollectionProducts({ collection: params.collection, sortKey, reverse, tag });
+  const { sort, tag, available } = (searchParams ?? {}) as {
+    [key: string]: string;
+  };
+  const { sortKey, reverse } =
+    sorting.find((item) => item.slug === sort) || defaultSort;
+  const productFilters: ProductFilter[] = [];
+
+  if (tag) {
+    productFilters.push({ tag });
+  }
+  if (available === "true") {
+    productFilters.push({ available: true });
+  }
+
+  const products = await getCollectionProducts({
+    collection: params.collection,
+    sortKey,
+    reverse,
+    productFilters,
+  });
 
   return (
     <section>

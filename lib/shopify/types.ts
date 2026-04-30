@@ -208,9 +208,7 @@ export type ShopifyCollectionProductsOperation = {
     handle: string;
     reverse?: boolean;
     sortKey?: string;
-    tag?: {
-      tag: string;
-    }
+    productFilters?: ProductFilter[];
   };
 };
 
@@ -355,60 +353,69 @@ export type ProductFilter = {
 };
 
 export type MenuItem = {
-    id: string;
-    title: string;
-    url: string;
-    target: "_blank" | "_self" | "_parent" | "_top";
-    type: "ARTICLE" | "CATEGORY" | "COLLECTION" | "COLLECTIONS" | "PAGE" | "PRODUCT" | "BLOG" | "SHOP_POLICY" | "CATALOG";
-    items: MenuItem[];
+  id: string;
+  title: string;
+  url: string;
+  target: "_blank" | "_self" | "_parent" | "_top";
+  type:
+    | "ARTICLE"
+    | "CATEGORY"
+    | "COLLECTION"
+    | "COLLECTIONS"
+    | "PAGE"
+    | "PRODUCT"
+    | "BLOG"
+    | "SHOP_POLICY"
+    | "CATALOG";
+  items: MenuItem[];
 };
 
 export type ShopifyMenu = {
-    id: string;
-    handle: string;
-    title: string;
-    items: MenuItem[];
-    itemsCount: number;
+  id: string;
+  handle: string;
+  title: string;
+  items: MenuItem[];
+  itemsCount: number;
 };
 
 export type Article = {
-    id: string;
-    title: string;
-    handle: string;
-    content: string;
-    contentHtml: string;
-    image: Image;
+  id: string;
+  title: string;
+  handle: string;
+  content: string;
+  contentHtml: string;
+  image: Image;
 };
 
 export type Blog = {
-    id: string;
-    title: string;
-    handle: string;
-    seo: SEO;
-    articles: Connection<Article>;
+  id: string;
+  title: string;
+  handle: string;
+  seo: SEO;
+  articles: Connection<Article>;
 };
 
 export type ShopifyBlogsOperation = {
-    data: {
-      blogs: {
-        edges: {
-          node: Blog;
-          cursor: string;
-        }[];
-      };
+  data: {
+    blogs: {
+      edges: {
+        node: Blog;
+        cursor: string;
+      }[];
     };
+  };
 };
 
 export type ShopifyArticleOperation = {
-    data: {
-      articles: {
-        edges: {
-          node: Article;
-          cursor: string;
-        }[];
-      };
+  data: {
+    articles: {
+      edges: {
+        node: Article;
+        cursor: string;
+      }[];
     };
-    variables: {
-      handle: string;
-    };
+  };
+  variables: {
+    handle: string;
+  };
 };

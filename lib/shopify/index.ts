@@ -63,7 +63,7 @@ import {
   ShopifyProductsOperation,
   ShopifyRemoveFromCartOperation,
   ShopifySearchOperation,
-  ShopifyUpdateCartOperation
+  ShopifyUpdateCartOperation,
 } from "./types";
 
 const domain = process.env.SHOPIFY_STORE_DOMAIN
@@ -114,7 +114,7 @@ export async function shopifyFetch<T>({
       JSON.stringify({
         error: e,
         query,
-      })
+      }),
     );
     if (isShopifyError(e)) {
       throw {
@@ -139,21 +139,22 @@ const removeEdgesAndNodes = <T>(array: Connection<T>): T[] => {
 export function getMetaobjectsFromMetafield(
   metafields: Metafield[],
   namespace: string,
-  key: string
+  key: string,
 ): Metaobject[] {
   const metafield = metafields.find(
-    (field) => field.namespace === namespace && field.key === key
+    (field) => field.namespace === namespace && field.key === key,
   );
 
   if (!metafield) return [];
 
-  const listReferences = metafield.references?.edges.map((edge) => edge.node) || [];
+  const listReferences =
+    metafield.references?.edges.map((edge) => edge.node) || [];
 
   // Some metafields are a single metaobject reference
   // GraphQL shape: metafield.reference -> Metaobject
   // Fall back to empty array if not present
   const singleReference = (metafield as any).reference
-    ? [((metafield as any).reference as Metaobject)]
+    ? [(metafield as any).reference as Metaobject]
     : [];
 
   return [...listReferences, ...singleReference];
@@ -174,7 +175,7 @@ const reshapeCart = (cart: ShopifyCart): Cart => {
 };
 
 const reshapeCollection = (
-  collection: ShopifyCollection
+  collection: ShopifyCollection,
 ): Collection | undefined => {
   if (!collection) {
     return undefined;
@@ -216,7 +217,7 @@ const reshapeImages = (images: Connection<Image>, productTitle: string) => {
 
 const reshapeProduct = (
   product: ShopifyProduct,
-  filterHiddenProducts: boolean = true
+  filterHiddenProducts: boolean = true,
 ) => {
   if (
     !product ||
@@ -259,7 +260,7 @@ export async function createCart(): Promise<Cart> {
 }
 
 export async function addToCart(
-  lines: { merchandiseId: string; quantity: number }[]
+  lines: { merchandiseId: string; quantity: number }[],
 ): Promise<Cart> {
   const cartId = (await cookies()).get("cartId")?.value!;
   const res = await shopifyFetch<ShopifyAddToCartOperation>({
@@ -286,7 +287,7 @@ export async function removeFromCart(lineIds: string[]): Promise<Cart> {
 }
 
 export async function updateCart(
-  lines: { id: string; merchandiseId: string; quantity: number }[]
+  lines: { id: string; merchandiseId: string; quantity: number }[],
 ): Promise<Cart> {
   const cartId = (await cookies()).get("cartId")?.value!;
   const res = await shopifyFetch<ShopifyUpdateCartOperation>({
@@ -321,7 +322,7 @@ export async function getCart(): Promise<Cart | undefined> {
 }
 
 export async function getCollection(
-  handle: string
+  handle: string,
 ): Promise<Collection | undefined> {
   "use cache";
   cacheTag(TAGS.collections);
@@ -341,28 +342,29 @@ export async function getCollectionProducts({
   collection,
   reverse,
   sortKey,
-  tag,
+  productFilters,
 }: {
   collection: string;
   reverse?: boolean;
   sortKey?: string;
-  tag?: string;
+  productFilters?: ProductFilter[];
 }): Promise<Product[]> {
   "use cache";
   cacheTag(TAGS.collections, TAGS.products);
   cacheLife("days");
-  console.log(collection);
-
-  // Convert tag string to ProductFilter array if tag is provided
-  const productFilters = tag ? { tag } : undefined;
 
   const res = await shopifyFetch<ShopifyCollectionProductsOperation>({
     query: getCollectionProductsQuery,
     variables: {
       handle: collection,
       reverse,
-      sortKey: sortKey === "CREATED_AT" ? "CREATED" : sortKey,
-      tag: productFilters,
+      sortKey:
+        sortKey === "RELEVANCE"
+          ? undefined
+          : sortKey === "CREATED_AT"
+            ? "CREATED"
+            : sortKey,
+      productFilters,
     },
   });
 
@@ -370,9 +372,8 @@ export async function getCollectionProducts({
     console.log(`No collection found for \`${collection}\``);
     return [];
   }
-  console.log(res.body.data.collection.products.edges.length)
   return reshapeProducts(
-    removeEdgesAndNodes(res.body.data.collection.products)
+    removeEdgesAndNodes(res.body.data.collection.products),
   );
 }
 
@@ -407,14 +408,16 @@ export async function getCollections(query?: string): Promise<Collection[]> {
     // Filter out the `hidden` collections.
     // Collections that start with `hidden-*` need to be hidden on the search page.
     ...reshapeCollections(shopifyCollections).filter(
-      (collection) => !collection.handle.startsWith("hidden")
+      (collection) => !collection.handle.startsWith("hidden"),
     ),
   ];
 
   return collections;
 }
 
-export async function getMenu(handle: string): Promise<ShopifyMenu | undefined> {
+export async function getMenu(
+  handle: string,
+): Promise<ShopifyMenu | undefined> {
   "use cache";
   cacheTag(TAGS.collections);
   cacheLife("days");
@@ -463,7 +466,7 @@ export async function getProduct(handle: string): Promise<Product | undefined> {
 export async function getProducts(
   query?: string,
   reverse?: boolean,
-  sortKey?: string
+  sortKey?: string,
 ): Promise<Product[]> {
   "use cache";
   cacheTag(TAGS.products);
@@ -482,7 +485,7 @@ export async function getProducts(
 }
 
 export async function getProductRecommendations(
-  productId: string
+  productId: string,
 ): Promise<Product[]> {
   "use cache";
   cacheTag(TAGS.products);
@@ -501,7 +504,7 @@ export async function search(
   query: string,
   reverse?: boolean,
   sortKey?: string,
-  productFilters?: ProductFilter[]
+  productFilters?: ProductFilter[],
 ): Promise<Product[]> {
   const res = await shopifyFetch<ShopifySearchOperation>({
     query: searchQuery,

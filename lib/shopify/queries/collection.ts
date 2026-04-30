@@ -1,5 +1,5 @@
-import productFragment from '../fragments/product';
-import seoFragment from '../fragments/seo';
+import productFragment from "../fragments/product";
+import seoFragment from "../fragments/seo";
 
 const collectionFragment = /* GraphQL */ `
   fragment collection on Collection {
@@ -46,11 +46,16 @@ export const getCollectionProductsQuery = /* GraphQL */ `
   query getCollectionProducts(
     $handle: String!
     $sortKey: ProductCollectionSortKeys
-    $reverse: Boolean 
-    $tag: [ProductFilter!]
+    $reverse: Boolean
+    $productFilters: [ProductFilter!]
   ) {
     collection(handle: $handle) {
-      products(sortKey: $sortKey, reverse: $reverse, filters: $tag, first: 100) {
+      products(
+        sortKey: $sortKey
+        reverse: $reverse
+        filters: $productFilters
+        first: 100
+      ) {
         edges {
           node {
             ...product
