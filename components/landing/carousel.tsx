@@ -5,7 +5,9 @@ import CarouselClient from "./carousel-client";
 
 export async function Carousel() {
   const products = await getCollectionProducts({
-    collection: "trendy-modern",
+    collection: "all",
+    sortKey: "CREATED_AT",
+    reverse: true,
   });
 
   if (!products?.length) return null;

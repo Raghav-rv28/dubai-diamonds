@@ -1,5 +1,5 @@
 const PROMO_COPY =
-  "Special Mother's Day sale on selected items — up to 30% off.";
+  "Special Wedding Season Sale — up to 40% off.";
 
 const TICKER_ITEMS = Array.from({ length: 10 }, (_, index) => index);
 
