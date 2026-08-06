@@ -14,64 +14,68 @@ export function Gallery({ images }: { images: { src: string; altText: string }[]
   const previousImageIndex = imageIndex === 0 ? images.length - 1 : imageIndex - 1;
 
   const buttonClassName =
-    'h-full px-6 transition-all ease-in-out hover:scale-110 hover:text-black dark:hover:text-white flex items-center justify-center';
+    'flex h-full items-center justify-center px-5 transition-all ease-in-out hover:scale-110 hover:text-black dark:hover:text-white';
 
   return (
-    <form>
-      <div className="relative aspect-square h-full max-h-[550px] w-full overflow-hidden">
+    <form className="flex w-full flex-col gap-4">
+      <div className="relative aspect-[4/5] w-full overflow-hidden rounded-lg bg-neutral-100 dark:bg-neutral-900 sm:aspect-square lg:min-h-[min(65vh,640px)]">
         {images[imageIndex] && (
           <Image
-            className="h-full w-full object-contain"
+            className="h-full w-full object-contain p-2 sm:p-4"
             fill
-            sizes="(min-width: 1024px) 66vw, 100vw"
+            sizes="(min-width: 1024px) 55vw, 100vw"
             alt={images[imageIndex]?.altText as string}
             src={images[imageIndex]?.src as string}
             priority={true}
           />
         )}
-
-        {images.length > 1 ? (
-          <div className="absolute bottom-[15%] flex w-full justify-center">
-            <div className="mx-auto flex h-11 items-center rounded-full border border-white bg-neutral-50/80 text-neutral-500 backdrop-blur-sm dark:border-black dark:bg-neutral-900/80">
-              <button
-                formAction={() => {
-                  const newState = updateImage(previousImageIndex.toString());
-                  updateURL(newState);
-                }}
-                aria-label="Previous product image"
-                className={buttonClassName}
-              >
-                <ArrowLeftIcon className="h-5" />
-              </button>
-              <div className="mx-1 h-6 w-px bg-neutral-500"></div>
-              <button
-                formAction={() => {
-                  const newState = updateImage(nextImageIndex.toString());
-                  updateURL(newState);
-                }}
-                aria-label="Next product image"
-                className={buttonClassName}
-              >
-                <ArrowRightIcon className="h-5" />
-              </button>
-            </div>
-          </div>
-        ) : null}
       </div>
 
       {images.length > 1 ? (
-        <ul className="my-12 flex items-center flex-wrap justify-center gap-2 overflow-auto py-1 lg:mb-0">
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex h-11 items-center rounded-full border border-neutral-200 bg-neutral-50 text-neutral-500 dark:border-neutral-700 dark:bg-neutral-900">
+            <button
+              formAction={() => {
+                const newState = updateImage(previousImageIndex.toString());
+                updateURL(newState);
+              }}
+              aria-label="Previous product image"
+              className={buttonClassName}
+            >
+              <ArrowLeftIcon className="h-5" />
+            </button>
+            <div className="mx-1 h-6 w-px bg-neutral-400 dark:bg-neutral-600" />
+            <button
+              formAction={() => {
+                const newState = updateImage(nextImageIndex.toString());
+                updateURL(newState);
+              }}
+              aria-label="Next product image"
+              className={buttonClassName}
+            >
+              <ArrowRightIcon className="h-5" />
+            </button>
+          </div>
+          <p className="text-sm tabular-nums text-neutral-500 dark:text-neutral-400">
+            {imageIndex + 1} / {images.length}
+          </p>
+        </div>
+      ) : null}
+
+      {images.length > 1 ? (
+        <ul className="flex gap-2 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {images.map((image, index) => {
             const isActive = index === imageIndex;
 
             return (
-              <li key={image.src} className="h-20 w-20">
+              <li key={image.src} className="h-16 w-16 shrink-0 sm:h-20 sm:w-20">
                 <button
                   formAction={() => {
                     const newState = updateImage(index.toString());
                     updateURL(newState);
                   }}
-                  aria-label="Select product image"
+                  aria-label={`Select product image ${index + 1}`}
+                  aria-current={isActive ? 'true' : undefined}
                   className="h-full w-full"
                 >
                   <GridTileImage
