@@ -37,6 +37,7 @@ import {
   Collection,
   Connection,
   Image,
+  MenuItem,
   Metafield,
   Metaobject,
   Page,
@@ -461,6 +462,101 @@ export async function getCollections(query?: string): Promise<Collection[]> {
   return collections;
 }
 
+function getCollectionHandleFromMenuUrl(url: string): string | null {
+  try {
+    const pathname = url.startsWith("http") ? new URL(url).pathname : url;
+    const parts = pathname.split("/").filter(Boolean);
+    const idx = parts.findIndex((part) => part === "collections");
+    if (idx >= 0 && parts[idx + 1]) {
+      return decodeURIComponent(parts[idx + 1]);
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
+function collectCollectionHandles(items: MenuItem[]): string[] {
+  const handles = new Set<string>();
+
+  const walk = (nodes: MenuItem[]) => {
+    for (const item of nodes) {
+      const handle = getCollectionHandleFromMenuUrl(item.url);
+      if (handle) handles.add(handle);
+      if (item.items?.length) walk(item.items);
+    }
+  };
+
+  walk(items);
+  return [...handles];
+}
+
+async function getNonEmptyCollectionHandles(
+  handles: string[],
+): Promise<Set<string>> {
+  if (handles.length === 0) return new Set();
+
+  const aliases = handles
+    .map(
+      (handle, index) =>
+        `c${index}: collection(handle: ${JSON.stringify(handle)}) {
+          handle
+          products(first: 1) {
+            edges { node { id } }
+          }
+        }`,
+    )
+    .join("\n");
+
+  const res = await shopifyFetch<{
+    data: Record<
+      string,
+      { handle: string; products: { edges: { node: { id: string } }[] } } | null
+    >;
+  }>({
+    query: /* GraphQL */ `query CollectionHasProducts {
+      ${aliases}
+    }`,
+  });
+
+  const nonEmpty = new Set<string>();
+  for (const collection of Object.values(res.body.data)) {
+    if (collection && collection.products.edges.length > 0) {
+      nonEmpty.add(collection.handle);
+    }
+  }
+  return nonEmpty;
+}
+
+function filterEmptyMenuItems(
+  items: MenuItem[],
+  nonEmptyCollections: Set<string>,
+): MenuItem[] {
+  return items
+    .map((item) => ({
+      ...item,
+      items: item.items?.length
+        ? filterEmptyMenuItems(item.items, nonEmptyCollections)
+        : [],
+    }))
+    .filter((item) => {
+      const handle = getCollectionHandleFromMenuUrl(item.url);
+      const hasChildren = item.items.length > 0;
+
+      if (handle) {
+        // Keep collections that have products, or parents that still have visible children.
+        return nonEmptyCollections.has(handle) || hasChildren;
+      }
+
+      // Drop empty grouping-only parents (e.g. "Gold Type" → homepage) once all kids are gone.
+      if (!hasChildren && (item.type as string) === "FRONTPAGE") {
+        return false;
+      }
+
+      return true;
+    });
+}
+
 export async function getMenu(
   handle: string,
 ): Promise<ShopifyMenu | undefined> {
@@ -475,7 +571,18 @@ export async function getMenu(
     },
   });
 
-  return res.body.data.menu;
+  const menu = res.body.data.menu;
+  if (!menu) return undefined;
+
+  const handles = collectCollectionHandles(menu.items);
+  const nonEmptyCollections = await getNonEmptyCollectionHandles(handles);
+  const items = filterEmptyMenuItems(menu.items, nonEmptyCollections);
+
+  return {
+    ...menu,
+    items,
+    itemsCount: items.length,
+  };
 }
 
 export async function getPage(handle: string): Promise<Page> {
