@@ -467,8 +467,9 @@ function getCollectionHandleFromMenuUrl(url: string): string | null {
     const pathname = url.startsWith("http") ? new URL(url).pathname : url;
     const parts = pathname.split("/").filter(Boolean);
     const idx = parts.findIndex((part) => part === "collections");
-    if (idx >= 0 && parts[idx + 1]) {
-      return decodeURIComponent(parts[idx + 1]);
+    const handle = idx >= 0 ? parts[idx + 1] : undefined;
+    if (handle) {
+      return decodeURIComponent(handle);
     }
     return null;
   } catch {
